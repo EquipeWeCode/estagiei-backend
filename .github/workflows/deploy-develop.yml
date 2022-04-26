@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
 
       - name: Run check
         run: ./gradlew check
@@ -17,6 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
 
       - name: Run build
         run: ./gradlew build
