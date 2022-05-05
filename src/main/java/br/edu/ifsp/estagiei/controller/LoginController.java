@@ -6,6 +6,7 @@ import java.security.GeneralSecurityException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +18,7 @@ import com.google.api.client.http.HttpHeaders;
 import br.edu.ifsp.estagiei.dto.LoginGoogleDTO;
 import br.edu.ifsp.estagiei.service.LoginService;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class LoginController {
 
