@@ -6,10 +6,10 @@
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
         <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
-        <property name="hibernate.connection.username" value="postgres"/>
+        <property name="hibernate.connection.username" value="kbexhdiporiymh"/>
         <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
-        <property name="hibernate.connection.password" value="postgres"/>
-        <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/estagiei"/>
+        <property name="hibernate.connection.password" value="a48bfe39e11492c5adafeb6e3f3a39ae116c7073c79377a7e5312906182e9289"/>
+        <property name="hibernate.connection.url" value="jdbc:postgresql://ec2-3-217-113-25.compute-1.amazonaws.com"/>
     </properties>
 </persistence-unit>
 </persistence>
