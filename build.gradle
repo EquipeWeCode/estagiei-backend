@@ -9,15 +9,13 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 apply plugin: "eclipse"
+apply plugin: 'application'
+apply plugin: 'war'
 
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
-}
-
-jar {
-	enabled = false
 }
 
 repositories {
@@ -31,6 +29,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.postgresql:postgresql:42.3.4'
+	compileOnly 'org.hibernate:hibernate-core:5.6.8.Final'
+	compileOnly 'org.hibernate:hibernate-entitymanager:3.6.7.Final'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
 	runtimeOnly 'com.h2database:h2'
