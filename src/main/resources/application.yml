@@ -14,6 +14,3 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     generate-ddl: false
-  flyway:
-    baselineOnMigrate: true
-    validateOnMigrate: false
