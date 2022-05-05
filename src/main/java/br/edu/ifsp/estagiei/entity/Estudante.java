@@ -1,4 +1,4 @@
-package br.edu.ifsp.estagiei.model;
+package br.edu.ifsp.estagiei.entity;
 
 import java.util.Date;
 
@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class Estudante {
 	@Id
 	@Column(name = "cod_estudante")
-	private Integer codEstudante;
+	private String codEstudante;
 	@Column(name = "nome")
 	private String nome;
 	@Column(name = "dt_nasc")
@@ -21,18 +21,18 @@ public class Estudante {
 	private String rg;
 	@Column(name = "cpf")
 	private String cpf;
-	@Column(name = "intituicao_ensino")
-	private String instituicaoEnsino;
+//	@Column(name = "intituicao_ensino")
+//	private String instituicaoEnsino;
 	@Column(name = "nivel_escolaridade")
 	private String nivelEscolaridade;
 	@Column(name = "experiencia_profissional")
 	private String experienciaProfissional;
 
-	public Integer getCodEstudante() {
+	public String getCodEstudante() {
 		return codEstudante;
 	}
 
-	public void setCodEstudante(Integer codEstudante) {
+	public void setCodEstudante(String codEstudante) {
 		this.codEstudante = codEstudante;
 	}
 
@@ -68,13 +68,13 @@ public class Estudante {
 		this.cpf = cpf;
 	}
 
-	public String getInstituicaoEnsino() {
-		return instituicaoEnsino;
-	}
-
-	public void setInstituicaoEnsino(String instituicaoEnsino) {
-		this.instituicaoEnsino = instituicaoEnsino;
-	}
+//	public String getInstituicaoEnsino() {
+//		return instituicaoEnsino;
+//	}
+//
+//	public void setInstituicaoEnsino(String instituicaoEnsino) {
+//		this.instituicaoEnsino = instituicaoEnsino;
+//	}
 
 	public String getNivelEscolaridade() {
 		return nivelEscolaridade;
