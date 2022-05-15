@@ -24,7 +24,6 @@ public class LoginController {
 
 	@Autowired
 	private LoginService service;
-
 	@PostMapping("api/login")
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
@@ -32,14 +31,14 @@ public class LoginController {
 //	mas o ideial é criar uma classe pra excecoes e dar um throw nela la no service
 	public ResponseEntity<String> validateLogin(@RequestBody LoginGoogleDTO loginDTO)
 			throws GeneralSecurityException, IOException {
-
+		
 		HttpHeaders responseHeaders = new HttpHeaders();
 
 		boolean isTokenValid = service.validateToken(loginDTO);
 
 		if (isTokenValid) {
 			responseHeaders.set("Authentication", loginDTO.getToken());
-			return ResponseEntity.ok("ok");
+			return ResponseEntity.ok("");
 		} else {
 			return ResponseEntity.badRequest().build();
 		}
