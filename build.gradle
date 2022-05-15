@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.6.7'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id "org.flywaydb.flyway" version "8.5.10"
 }
 
 group = 'br.edu.ifsp'
@@ -33,6 +34,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.flywaydb:flyway-core'
+	implementation 'io.github.cdimascio:dotenv-java:2.2.3'
 //	implementation 'org.postgresql:postgresql:42.3.4'
 //	compileOnly 'org.hibernate:hibernate-core:5.6.8.Final'
 //	compileOnly 'org.hibernate:hibernate-entitymanager:3.6.7.Final'
@@ -46,4 +48,11 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+flyway {
+    url = 'jdbc:postgresql://localhost:5432/estagiei'
+    user = 'postgres'
+    password = 'postgres'
+    schemas = ['public']
 }

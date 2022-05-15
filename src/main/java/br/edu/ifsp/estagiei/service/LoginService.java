@@ -13,21 +13,23 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 
 import br.edu.ifsp.estagiei.dto.LoginGoogleDTO;
+import io.github.cdimascio.dotenv.Dotenv;
 
 @Service
 public class LoginService {
-
-	private final String CLIENT_ID = "193798791589-6nh8a2vhuvj8m4qli9ra3lkpk35ddpvi.apps.googleusercontent.com";
+//	
+//	@Value("${CLIENT_ID}")
+//	private String CLIENT_ID;
 
 	public boolean validateToken(LoginGoogleDTO loginDTO) throws GeneralSecurityException, IOException {
+		
+		Dotenv dotenv = Dotenv.load();
 		
 		boolean isValid = false;
 		
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier
 				.Builder(new NetHttpTransport(), new GsonFactory())
-				.setAudience(Collections.singletonList(CLIENT_ID)).build();
-
-		// (Receive idTokenString by HTTPS POST)
+				.setAudience(Collections.singletonList(dotenv.get("CLIENT_ID"))).build();
 
 		GoogleIdToken idToken = verifier.verify(loginDTO.getToken());
 		if (idToken != null) {
@@ -42,9 +44,9 @@ public class LoginService {
 			boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
 			String name = (String) payload.get("name");
 			String pictureUrl = (String) payload.get("picture");
-			String locale = (String) payload.get("locale");
-			String familyName = (String) payload.get("family_name");
-			String givenName = (String) payload.get("given_name");
+//			String locale = (String) payload.get("locale");
+//			String familyName = (String) payload.get("family_name");
+//			String givenName = (String) payload.get("given_name");
 
 			// Use or store profile information
 			// ...
@@ -53,7 +55,7 @@ public class LoginService {
 			System.out.println(email + " - " + emailVerified + " - " + name);
 
 		} else {
-			System.out.println("Invalid ID token.");
+			System.out.println("Token Inválido.");
 			isValid = false;
 		}
 		

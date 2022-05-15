@@ -10,24 +10,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "tb_estudante")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Estudante {
+@Entity
+@Table(name = "tb_usuario")
+public class Usuario {
 	@Id
-	@Column(name = "cod_estudante")
-	private Integer codEstudante;
-	@Column(name = "inst_ensino")
-	private String instEnsino;
-	@Column(name = "nvl_ensino")
-	private String nvlEnsino;
-	@Column(name = "expProfissional")
-	private String expProfissional;
+	@Column(name = "cod_usuario")
+	private Integer codUsuario;
+	@Column(name = "senha")
+	private String senha;
+	@Column(name = "papel")
+	private String papel;
+	@Column(name = "email")
+	private String email;
 	@Column(name = "ind_ativo")
 	private Boolean indAtivo;
 	
-	@OneToOne(mappedBy = "estudante")
+	@OneToOne(mappedBy = "usuario")
 	private Pessoa pessoa;
 }

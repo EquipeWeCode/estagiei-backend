@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifsp.estagiei.entity.Estudante;
-import br.edu.ifsp.estagiei.repository.StudentRepository;
+import br.edu.ifsp.estagiei.repository.EstudanteRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class EstudanteController {
 	
-	@Autowired
-	private StudentRepository repositorio;
-	
-	@GetMapping(path = "api/estudante/{id}")
-	@ResponseStatus(value = HttpStatus.OK)
-	public ResponseEntity<Estudante> getEstudante(@PathVariable String id){
-		Optional<Estudante> estudante = repositorio.findById(id);
-		return ResponseEntity.ok(estudante.get());
-	}
+//	@Autowired
+//	private EstudanteRepository repositorio;
+//	
+//	@GetMapping(path = "api/estudante/{id}")
+//	@ResponseStatus(value = HttpStatus.OK)
+//	public ResponseEntity<Estudante> getEstudante(@PathVariable String email){
+//		Optional<Estudante> estudante = repositorio.findByEmail(email);
+//		return ResponseEntity.ok(estudante.get());
+//	}
 }
