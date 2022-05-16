@@ -13,7 +13,6 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 
 import br.edu.ifsp.estagiei.dto.LoginGoogleDTO;
-import io.github.cdimascio.dotenv.Dotenv;
 
 @Service
 public class LoginService {
@@ -23,13 +22,13 @@ public class LoginService {
 
 	public boolean validateToken(LoginGoogleDTO loginDTO) throws GeneralSecurityException, IOException {
 		
-		Dotenv dotenv = Dotenv.load();
+//		Dotenv dotenv = Dotenv.load();
 		
 		boolean isValid = false;
 		
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier
 				.Builder(new NetHttpTransport(), new GsonFactory())
-				.setAudience(Collections.singletonList(dotenv.get("CLIENT_ID"))).build();
+				.setAudience(Collections.singletonList(System.getenv("CLIENT_ID"))).build();
 
 		GoogleIdToken idToken = verifier.verify(loginDTO.getToken());
 		if (idToken != null) {
