@@ -1,12 +1,19 @@
 package br.edu.ifsp.estagiei.entity;
 
-import javax.persistence.CascadeType;
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,10 +26,12 @@ import lombok.Setter;
 @Table(name = "tb_pessoa")
 public class Pessoa {
 	@Id
-	@Column(name = "cod_pessoa")
-	private Integer codPessoa;
-	@Column(name = "dt_nasc")
-	private String dataNascimento;
+	@SequenceGenerator(name = "tb_pessoa_cod_pessoa_seq", sequenceName = "tb_pessoa_cod_pessoa_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_pessoa_cod_pessoa_seq")
+	@Column(name = "cod_pessoa", updatable = false)
+	private Long codPessoa;
+	@Column(name = "dt_nasc", columnDefinition = "DATE")
+	private LocalDate dataNascimento;
 	@Column(name = "rg")
 	private String rg;
 	@Column(name = "cpf")
@@ -35,12 +44,9 @@ public class Pessoa {
 	private String valorContato;
 	@Column(name = "ind_ativo")
 	private Boolean indAtivo;
-	
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-	@JoinColumn(name = "cod_estudante")
-	private Estudante estudante;
-	
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_usuario")
+	@JsonIgnore
 	private Usuario usuario;
 }

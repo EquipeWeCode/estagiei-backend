@@ -4,9 +4,12 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,8 +25,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Vaga {
 	@Id
-	@Column(name = "cod_vaga")
-	private Integer codVaga;
+	@SequenceGenerator(name = "tb_vaga_cod_vaga_seq", sequenceName = "tb_vaga_cod_vaga_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_vaga_cod_vaga_seq")
+	@Column(name = "cod_vaga", updatable = false)
+	private Long codVaga;
 	@Column(name = "descricao")
 	private String descricao;
 	@Column(name = "salario")
@@ -32,9 +37,9 @@ public class Vaga {
 	private String titulo;
 	@Column(name = "ind_ativo")
 	private Boolean indAtivo;
-	
+
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="cod_empresa", nullable=false)
+	@JoinColumn(name = "cod_empresa", nullable = false)
 	private Empresa empresa;
 }
