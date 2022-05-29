@@ -15,12 +15,12 @@ import br.edu.ifsp.estagiei.entity.Vaga;
 import br.edu.ifsp.estagiei.repository.VagaRepository;
 
 @RestController
-public class VagaController {
-	
+public class VagaController implements IController {
+
 	@Autowired
 	VagaRepository repositorio;
-	
-	@GetMapping("api/vaga")
+
+	@GetMapping(ROOT_API + "/vaga")
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public ResponseEntity<List<Vaga>> getVagas() {
@@ -29,5 +29,4 @@ public class VagaController {
 		vagas.forEach(v -> vagasLista.add(v));
 		return ResponseEntity.ok(vagasLista);
 	}
-
 }

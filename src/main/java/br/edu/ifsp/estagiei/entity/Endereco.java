@@ -2,8 +2,11 @@ package br.edu.ifsp.estagiei.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -17,8 +20,10 @@ import lombok.Setter;
 @Table(name = "tb_endereco")
 public class Endereco {
 	@Id
-	@Column(name = "cod_endereco")
-	private Integer codEndereco;
+	@SequenceGenerator(name = "tb_endereco_cod_endereco_seq", sequenceName = "tb_endereco_cod_endereco_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_endereco_cod_endereco_seq")
+	@Column(name = "cod_endereco", updatable = false)
+	private Long codEndereco;
 	@Column(name = "logradouro")
 	private String logradouro;
 	@Column(name = "numero")

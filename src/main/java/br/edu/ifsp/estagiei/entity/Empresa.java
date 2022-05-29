@@ -5,10 +5,13 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -22,8 +25,10 @@ import lombok.Setter;
 @Table(name = "tb_empresa")
 public class Empresa {
 	@Id
-	@Column(name = "cod_empresa")
-	private Integer codEmpresa;
+	@SequenceGenerator(name = "tb_empresa_cod_empresa_seq", sequenceName = "tb_empresa_cod_empresa_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_empresa_cod_empresa_seq")
+	@Column(name = "cod_empresa", updatable = false)
+	private Long codEmpresa;
 	@Column(name = "razao_social")
 	private String razaoSocial;
 	@Column(name = "nome_fantasia")
@@ -32,11 +37,11 @@ public class Empresa {
 	private String cnpj;
 	@Column(name = "ind_ativo")
 	private Boolean indAtivo;
-	
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
 	@JoinColumn(name = "cod_endereco")
 	private Endereco endereco;
-	
+
 	@OneToMany(mappedBy = "empresa")
 	private Set<Vaga> vagas;
 }

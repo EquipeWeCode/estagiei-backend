@@ -12,19 +12,21 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifsp.estagiei.entity.Estudante;
-import br.edu.ifsp.estagiei.repository.EstudanteRepository;
+import br.edu.ifsp.estagiei.service.EstudanteService;
+import br.edu.ifsp.estagiei.utils.ValidacaoException;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-public class EstudanteController {
-	
-//	@Autowired
-//	private EstudanteRepository repositorio;
-//	
-//	@GetMapping(path = "api/estudante/{id}")
-//	@ResponseStatus(value = HttpStatus.OK)
-//	public ResponseEntity<Estudante> getEstudante(@PathVariable String email){
-//		Optional<Estudante> estudante = repositorio.findByEmail(email);
-//		return ResponseEntity.ok(estudante.get());
-//	}
+public class EstudanteController implements IController {
+
+	@Autowired
+	private EstudanteService service;
+
+	@GetMapping(path = ROOT_API + "/estudante/{id}")
+	@ResponseStatus(value = HttpStatus.OK)
+	public ResponseEntity<Estudante> getEstudante(@PathVariable String id) throws ValidacaoException {
+		System.out.println(id);
+		Optional<Estudante> estudante = service.findEstudante(id);
+		return ResponseEntity.ok(estudante.get());
+	}
 }
