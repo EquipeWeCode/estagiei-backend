@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '2.6.7'
+	id 'org.springframework.boot' version '2.7.0'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 	id "org.flywaydb.flyway" version "8.5.10"
@@ -8,20 +8,6 @@ plugins {
 group = 'br.edu.ifsp'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
-
-apply plugin: "eclipse"
-//apply plugin: 'application'
-//apply plugin: 'war'
-
-jar {
-	enabled = false
-}
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
 
 repositories {
 	mavenCentral()
@@ -35,9 +21,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'io.github.cdimascio:dotenv-java:2.2.3'
-//	implementation 'org.postgresql:postgresql:42.3.4'
-//	compileOnly 'org.hibernate:hibernate-core:5.6.8.Final'
-//	compileOnly 'org.hibernate:hibernate-entitymanager:3.6.7.Final'
+	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
+	testImplementation 'org.springdoc:springdoc-openapi-webmvc-core:1.6.9'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
 	runtimeOnly 'com.h2database:h2'
