@@ -18,4 +18,3 @@ logging:
   level:
     '[org.hibernate.sql]': DEBUG
     '[org.hibernate.type.descriptor.sql]': TRACE
-
