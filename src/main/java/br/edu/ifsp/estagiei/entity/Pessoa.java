@@ -49,4 +49,8 @@ public class Pessoa {
 	@JoinColumn(name = "cod_usuario")
 	@JsonIgnore
 	private Usuario usuario;
+	
+	@OneToOne(mappedBy = "pessoa")
+	@JsonIgnore
+	private Estudante estudante;
 }

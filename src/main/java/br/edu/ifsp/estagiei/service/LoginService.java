@@ -13,7 +13,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 
 import br.edu.ifsp.estagiei.dto.LoginGoogleDTO;
-import br.edu.ifsp.estagiei.utils.ValidacaoException;
+import br.edu.ifsp.estagiei.exception.ValidacaoException;
 
 @Service
 public class LoginService {
@@ -44,7 +44,7 @@ public class LoginService {
 			System.out.println(email + " - " + emailVerified + " - " + name);
 
 		} else {
-			throw new ValidacaoException("Token invalido");
+			throw new ValidacaoException("Token inválido");
 		}
 	}
 }
