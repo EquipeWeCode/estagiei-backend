@@ -1,4 +1,4 @@
-package br.edu.ifsp.estagiei.utils;
+package br.edu.ifsp.estagiei.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

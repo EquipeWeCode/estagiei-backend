@@ -1,7 +1,5 @@
 package br.edu.ifsp.estagiei.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.edu.ifsp.estagiei.entity.Estudante;
+import br.edu.ifsp.estagiei.dto.EstudanteDTO;
+import br.edu.ifsp.estagiei.exception.ValidacaoException;
 import br.edu.ifsp.estagiei.service.EstudanteService;
-import br.edu.ifsp.estagiei.utils.ValidacaoException;
 
 @RestController
 public class EstudanteController implements IController {
@@ -22,9 +20,8 @@ public class EstudanteController implements IController {
 
 	@GetMapping(path = ROOT_API + "/estudante/{id}")
 	@ResponseStatus(value = HttpStatus.OK)
-	public ResponseEntity<Estudante> getEstudante(@PathVariable String id) throws ValidacaoException {
-		System.out.println(id);
-		Optional<Estudante> estudante = service.findEstudante(id);
-		return ResponseEntity.ok(estudante.get());
+	public ResponseEntity<EstudanteDTO> getEstudante(@PathVariable String id) throws ValidacaoException {
+		EstudanteDTO estudante = service.findEstudanteByCodUsuario(id);
+		return ResponseEntity.ok(estudante);
 	}
 }

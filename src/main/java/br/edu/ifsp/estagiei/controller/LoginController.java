@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.api.client.http.HttpHeaders;
 
 import br.edu.ifsp.estagiei.dto.LoginGoogleDTO;
+import br.edu.ifsp.estagiei.exception.ValidacaoException;
 import br.edu.ifsp.estagiei.service.LoginService;
-import br.edu.ifsp.estagiei.utils.ValidacaoException;
 
 @RestController
 public class LoginController implements IController {
