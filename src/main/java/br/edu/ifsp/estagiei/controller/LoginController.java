@@ -24,16 +24,15 @@ public class LoginController implements IController {
 	@Autowired
 	private LoginService service;
 
-	@PostMapping(ROOT_API + "/login")
+	@PostMapping(ROOT_API + "/loginEstudante")
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@ResponseBody
 	public ResponseEntity<LoginGoogleDTO> validaLogin(@RequestBody LoginGoogleDTO loginDTO)
 			throws GeneralSecurityException, IOException, ValidacaoException {
 
-		HttpHeaders responseHeaders = new HttpHeaders();
-
 		service.validaToken(loginDTO);
 
+		HttpHeaders responseHeaders = new HttpHeaders(); // TODO: Arrumar
 		responseHeaders.set("Authentication", loginDTO.getToken());
 		return ResponseEntity.ok(loginDTO);
 	}

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -14,37 +16,51 @@ import com.google.api.client.json.gson.GsonFactory;
 
 import br.edu.ifsp.estagiei.dto.LoginGoogleDTO;
 import br.edu.ifsp.estagiei.exception.ValidacaoException;
+import br.edu.ifsp.estagiei.repository.EstudanteRepository;
+import io.github.cdimascio.dotenv.Dotenv;
 
 @Service
 public class LoginService {
 
+	@Autowired
+	private EstudanteRepository estudanteRepository;
+	@Autowired
+	private EstudanteService estudanteService;
+
 	public void validaToken(LoginGoogleDTO loginDTO) throws GeneralSecurityException, IOException, ValidacaoException {
 
+		String clientId = retornaPrimeiroClientId();
+
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
-				.setAudience(Collections.singletonList(System.getenv("CLIENT_ID"))).build();
+				.setAudience(Collections.singletonList(clientId)).build();
 
 		GoogleIdToken idToken = verifier.verify(loginDTO.getToken());
 		if (idToken != null) {
+
 			Payload payload = idToken.getPayload();
+			System.out.println("User ID: " + payload.getSubject());
 
-			String userId = payload.getSubject();
-			System.out.println("User ID: " + userId);
-
-			String email = payload.getEmail();
-			boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
-			String name = (String) payload.get("name");
-			String pictureUrl = (String) payload.get("picture");
-//			String locale = (String) payload.get("locale");
-//			String familyName = (String) payload.get("family_name");
-//			String givenName = (String) payload.get("given_name");
-
-			// Use or store profile information
-			// ...
-
-			System.out.println(email + " - " + emailVerified + " - " + name);
+			insereEstudanteSeNaoExiste(payload);
 
 		} else {
-			throw new ValidacaoException("Token inv·lido");
+			throw new ValidacaoException("Token inv√°lido");
 		}
+	}
+
+	private void insereEstudanteSeNaoExiste(Payload payload) {
+		String estudanteId = payload.getSubject();
+
+		try {
+			estudanteRepository.buscaPorCodUsuario(estudanteId);
+		} catch (EmptyResultDataAccessException e) {
+			estudanteService.insereEstudanteViaGoogle(payload, estudanteId);
+		}
+	}
+
+	public String retornaPrimeiroClientId() {
+		Dotenv dotenv = null;
+		dotenv = Dotenv.configure().load();
+
+		return dotenv.get("CLIENT_ID") != null ? dotenv.get("CLIENT_ID") : System.getenv("CLIENT_ID");
 	}
 }

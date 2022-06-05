@@ -61,12 +61,12 @@ public class GlobalControllerAdvice {
 		String error;
 
 		for (FieldError fieldError : fieldErrors) {
-			error = fieldError.getField() + ", " + fieldError.getDefaultMessage();
+			error = fieldError.getField() + ": " + fieldError.getDefaultMessage();
 			errors.add(error);
 		}
 
 		for (ObjectError objectError : globalErrors) {
-			error = objectError.getObjectName() + ", " + objectError.getDefaultMessage();
+			error = objectError.getObjectName() + ": " + objectError.getDefaultMessage();
 			errors.add(error);
 		}
 

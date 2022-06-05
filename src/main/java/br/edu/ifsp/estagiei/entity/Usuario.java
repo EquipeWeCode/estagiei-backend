@@ -1,5 +1,6 @@
 package br.edu.ifsp.estagiei.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,8 +25,8 @@ public class Usuario {
 	@Id
 	@SequenceGenerator(name = "tb_usuario_cod_usuario_seq", sequenceName = "tb_usuario_cod_usuario_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_usuario_cod_usuario_seq")
-	@Column(name = "cod_usuario", updatable = false)
-	private String codUsuario;
+	@Column(name = "cod_usuario", updatable = false, nullable = false)
+	private Long codUsuario;
 	@Column(name = "senha")
 	private String senha;
 	@Column(name = "papel")
@@ -36,8 +37,8 @@ public class Usuario {
 	private String avatar;
 	@Column(name = "ind_ativo")
 	private Boolean indAtivo;
-	
-	@OneToOne(mappedBy = "usuario")
+
+	@OneToOne(mappedBy = "usuario", cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE })
 	@JsonIgnore
 	private Pessoa pessoa;
 }

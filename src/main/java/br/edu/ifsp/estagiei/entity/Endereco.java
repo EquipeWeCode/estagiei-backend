@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -20,8 +19,7 @@ import lombok.Setter;
 @Table(name = "tb_endereco")
 public class Endereco {
 	@Id
-	@SequenceGenerator(name = "tb_endereco_cod_endereco_seq", sequenceName = "tb_endereco_cod_endereco_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_endereco_cod_endereco_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cod_endereco", updatable = false)
 	private Long codEndereco;
 	@Column(name = "logradouro")

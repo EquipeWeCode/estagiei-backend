@@ -2,6 +2,7 @@ package br.edu.ifsp.estagiei.entity;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -45,12 +46,12 @@ public class Pessoa {
 	@Column(name = "ind_ativo")
 	private Boolean indAtivo;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name = "cod_usuario")
 	@JsonIgnore
 	private Usuario usuario;
 	
-	@OneToOne(mappedBy = "pessoa")
+	@OneToOne(mappedBy = "pessoa", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
 	@JsonIgnore
 	private Estudante estudante;
 }
