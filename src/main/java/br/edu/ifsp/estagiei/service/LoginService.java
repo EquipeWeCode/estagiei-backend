@@ -18,6 +18,7 @@ import br.edu.ifsp.estagiei.dto.LoginGoogleDTO;
 import br.edu.ifsp.estagiei.exception.ValidacaoException;
 import br.edu.ifsp.estagiei.repository.EstudanteRepository;
 import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvException;
 
 @Service
 public class LoginService {
@@ -27,7 +28,8 @@ public class LoginService {
 	@Autowired
 	private EstudanteService estudanteService;
 
-	public String validaToken(LoginGoogleDTO loginDTO) throws GeneralSecurityException, IOException, ValidacaoException {
+	public String validaToken(LoginGoogleDTO loginDTO)
+			throws GeneralSecurityException, IOException, ValidacaoException {
 
 		String clientId = retornaPrimeiroClientId();
 
@@ -36,7 +38,7 @@ public class LoginService {
 
 		GoogleIdToken idToken = verifier.verify(loginDTO.getToken());
 		if (idToken != null) {
-			
+
 			Payload payload = idToken.getPayload();
 			String codEstudante = payload.getSubject();
 
@@ -59,9 +61,12 @@ public class LoginService {
 	}
 
 	public String retornaPrimeiroClientId() {
-		Dotenv dotenv = null;
-		dotenv = Dotenv.configure().load();
-
-		return dotenv.get("CLIENT_ID") != null ? dotenv.get("CLIENT_ID") : System.getenv("CLIENT_ID");
+		try {
+			Dotenv dotenv = null;
+			dotenv = Dotenv.configure().load();
+			return dotenv.get("CLIENT_ID");
+		} catch (DotenvException ex) {
+			return System.getenv("CLIENT_ID");
+		}
 	}
 }
