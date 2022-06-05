@@ -27,7 +27,7 @@ public class EstudanteDTOBuilder {
 		return dto;
 	}
 
-	public EstudanteDTOBuilder codUsuario(String codUsuario) {
+	public EstudanteDTOBuilder codUsuario(Long codUsuario) {
 		estudante.setCodUsuario(codUsuario);
 		return this;
 	}

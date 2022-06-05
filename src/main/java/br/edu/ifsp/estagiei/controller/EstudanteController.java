@@ -21,7 +21,7 @@ public class EstudanteController implements IController {
 	@GetMapping(path = ROOT_API + "/estudante/{id}")
 	@ResponseStatus(value = HttpStatus.OK)
 	public ResponseEntity<EstudanteDTO> getEstudante(@PathVariable String id) throws ValidacaoException {
-		EstudanteDTO estudante = service.findEstudanteByCodUsuario(id);
+		EstudanteDTO estudante = service.findEstudanteByCodEstudante(id);
 		return ResponseEntity.ok(estudante);
 	}
 }

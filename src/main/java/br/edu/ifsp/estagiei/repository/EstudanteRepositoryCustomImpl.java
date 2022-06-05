@@ -26,7 +26,8 @@ public class EstudanteRepositoryCustomImpl implements EstudanteRepositoryCustom 
 		Root<Estudante> r = criteria.from(Estudante.class);
 
 		r.fetch("pessoa", JoinType.LEFT).fetch("usuario", JoinType.LEFT);
-		criteria.where(cb.equal(r.get("pessoa").get("usuario").get("codUsuario"), codUsuario));
+//		criteria.where(cb.equal(r.get("pessoa").get("usuario").get("codUsuario"), codUsuario));
+		criteria.where(cb.equal(r.get("codEstudante"), codUsuario));
 		return em.createQuery(criteria).getSingleResult();
 	}
 }

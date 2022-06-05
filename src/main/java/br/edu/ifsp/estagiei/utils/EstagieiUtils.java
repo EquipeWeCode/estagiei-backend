@@ -5,8 +5,11 @@ import java.time.format.DateTimeFormatter;
 
 public abstract class EstagieiUtils {
 	public static String dataNascimentoParaString(LocalDate data) {
-		DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		String text = data.format(formatters);
+		String text = "";
+		if (data != null) {
+			DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			text = data.format(formatters);
+		}
 		return text;
 	}
 }

@@ -1,5 +1,6 @@
 package br.edu.ifsp.estagiei.dto;
 
+import javax.validation.constraints.NotBlank;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -14,5 +15,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class LoginGoogleDTO {
 	@XmlElement(name = "token", nillable = false)
+	@NotBlank
 	private String token;
 }
