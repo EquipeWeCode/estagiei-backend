@@ -25,7 +25,7 @@ public class LoginController implements IController {
 	private LoginService service;
 
 	@PostMapping(ROOT_API + "/login")
-	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseStatus(value = HttpStatus.CREATED)
 	@ResponseBody
 	public ResponseEntity<LoginGoogleDTO> validaLogin(@RequestBody LoginGoogleDTO loginDTO)
 			throws GeneralSecurityException, IOException, ValidacaoException {
