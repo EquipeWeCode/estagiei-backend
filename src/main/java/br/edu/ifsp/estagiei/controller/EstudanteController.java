@@ -18,7 +18,7 @@ public class EstudanteController implements IController {
 	@Autowired
 	private EstudanteService service;
 
-	@GetMapping(path = ROOT_API + "/estudante/{id}")
+	@GetMapping("/estudante/{id}")
 	@ResponseStatus(value = HttpStatus.OK)
 	public ResponseEntity<EstudanteDTO> getEstudante(@PathVariable String id) throws ValidacaoException {
 		EstudanteDTO estudante = service.findEstudanteByCodEstudante(id);

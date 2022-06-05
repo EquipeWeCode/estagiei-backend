@@ -5,6 +5,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@XmlRootElement(name = "Estudante")
 @XmlAccessorType(XmlAccessType.FIELD)
 @NoArgsConstructor
 public class EstudanteDTO {
@@ -33,6 +35,8 @@ public class EstudanteDTO {
     @Pattern(regexp = "([0-2][0-9]|3[0-1])\\/(0[1-9]|1[0-2])\\/[0-9]{4}")
 	private String dataNascimento;
 	
+	@XmlElement(name = "codEstudante", nillable = false)
+	private String codEstudante;
 	@XmlElement(name = "instEnsino", nillable = false)
 	private String instEnsino;
 	@XmlElement(name = "nvlEnsino", nillable = false)

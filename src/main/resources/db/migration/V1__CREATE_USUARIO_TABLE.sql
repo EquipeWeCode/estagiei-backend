@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS TB_USUARIO (
 	CONSTRAINT pk_usuario PRIMARY KEY(COD_USUARIO)
 );
 
-INSERT INTO TB_USUARIO (COD_USUARIO, EMAIL) VALUES (777666, 'wecodetrabalho@gmail.com');
+INSERT INTO TB_USUARIO (COD_USUARIO, EMAIL, AVATAR) VALUES (777666, 'wecodetrabalho@gmail.com', 'https://lh3.googleusercontent.com/a/AATXAJzVFer4LrcGoSWZfhS3yAdsPFnF14xgql7Z5W8x=s96-c');
 INSERT INTO TB_USUARIO (COD_USUARIO, EMAIL) VALUES (777667, 'emailempresateste@gmail.com');

@@ -27,7 +27,7 @@ public class LoginService {
 	@Autowired
 	private EstudanteService estudanteService;
 
-	public void validaToken(LoginGoogleDTO loginDTO) throws GeneralSecurityException, IOException, ValidacaoException {
+	public String validaToken(LoginGoogleDTO loginDTO) throws GeneralSecurityException, IOException, ValidacaoException {
 
 		String clientId = retornaPrimeiroClientId();
 
@@ -36,11 +36,12 @@ public class LoginService {
 
 		GoogleIdToken idToken = verifier.verify(loginDTO.getToken());
 		if (idToken != null) {
-
+			
 			Payload payload = idToken.getPayload();
-			System.out.println("User ID: " + payload.getSubject());
+			String codEstudante = payload.getSubject();
 
 			insereEstudanteSeNaoExiste(payload);
+			return codEstudante;
 
 		} else {
 			throw new ValidacaoException("Token inválido");

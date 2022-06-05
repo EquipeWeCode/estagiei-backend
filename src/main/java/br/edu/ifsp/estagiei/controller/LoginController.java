@@ -5,6 +5,7 @@ import java.security.GeneralSecurityException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,13 +25,15 @@ public class LoginController implements IController {
 	@Autowired
 	private LoginService service;
 
-	@PostMapping(ROOT_API + "/loginEstudante")
+	@PostMapping(path= "/loginEstudante")
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@ResponseBody
 	public ResponseEntity<LoginGoogleDTO> validaLogin(@RequestBody LoginGoogleDTO loginDTO)
 			throws GeneralSecurityException, IOException, ValidacaoException {
 
-		service.validaToken(loginDTO);
+		String codEstudante = service.validaToken(loginDTO);
+		
+		loginDTO.setCodEstudante(codEstudante);
 
 		HttpHeaders responseHeaders = new HttpHeaders(); // TODO: Arrumar
 		responseHeaders.set("Authentication", loginDTO.getToken());
