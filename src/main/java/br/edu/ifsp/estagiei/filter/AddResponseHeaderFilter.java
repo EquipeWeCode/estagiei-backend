@@ -22,7 +22,7 @@ public class AddResponseHeaderFilter implements Filter {
       FilterChain chain) throws IOException, ServletException {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         httpServletResponse.setHeader("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload");
-        httpServletResponse.setHeader("Content-Security-Policy", "base-uri=self;");
+        httpServletResponse.setHeader("Content-Security-Policy", "default-src 'self' https://estagiei.herokuapp.com");
         httpServletResponse.setHeader("X-Frame-Options", "DENY");
         httpServletResponse.setHeader("X-Content-Type-Options", "nosniff");
         httpServletResponse.setHeader("Referrer-Policy", "same-origin");
