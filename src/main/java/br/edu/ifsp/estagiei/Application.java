@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;
@@ -19,6 +20,7 @@ import io.swagger.v3.oas.annotations.info.License;
 
 @EnableWebMvc
 @SpringBootApplication
+@ServletComponentScan
 @OpenAPIDefinition(
 		info = @Info(
 				title = "Estagiei API", 
