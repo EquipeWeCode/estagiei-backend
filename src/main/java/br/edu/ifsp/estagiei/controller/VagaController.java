@@ -20,7 +20,7 @@ public class VagaController implements IController {
 	@Autowired
 	VagaRepository repositorio;
 
-	@GetMapping(ROOT_API + "/vaga")
+	@GetMapping("/vaga")
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public ResponseEntity<List<Vaga>> getVagas() {

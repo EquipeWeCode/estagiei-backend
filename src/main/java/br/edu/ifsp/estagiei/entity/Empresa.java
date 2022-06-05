@@ -35,8 +35,9 @@ public class Empresa {
 	private String nomeFantasia;
 	@Column(name = "cnpj")
 	private String cnpj;
-	@Column(name = "ind_ativo")
-	private Boolean indAtivo;
+
+	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'FALSE'", nullable = false)
+	private Boolean indAtivo = false;
 
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
 	@JoinColumn(name = "cod_endereco")

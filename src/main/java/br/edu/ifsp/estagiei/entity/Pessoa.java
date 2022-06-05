@@ -43,15 +43,16 @@ public class Pessoa {
 	private String tipContato;
 	@Column(name = "valor_contato")
 	private String valorContato;
-	@Column(name = "ind_ativo")
-	private Boolean indAtivo;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
+	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
+	private Boolean indAtivo = true;
+
+	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE })
 	@JoinColumn(name = "cod_usuario")
 	@JsonIgnore
 	private Usuario usuario;
-	
-	@OneToOne(mappedBy = "pessoa", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
+
+	@OneToOne(mappedBy = "pessoa", cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE })
 	@JsonIgnore
 	private Estudante estudante;
 }

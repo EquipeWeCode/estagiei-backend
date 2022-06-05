@@ -25,7 +25,7 @@ public class EstudanteService {
 
 	public EstudanteDTO findEstudanteByCodEstudante(String id) throws ValidacaoException {
 		try {
-			Estudante estd = estudanteRepository.buscaPorCodUsuario(id);
+			Estudante estd = estudanteRepository.buscaPorCodEstudante(id);
 			return factory.buildEstudante(estd);
 		} catch (EmptyResultDataAccessException e) {
 			throw new ValidacaoException("Estudante não encontrado");

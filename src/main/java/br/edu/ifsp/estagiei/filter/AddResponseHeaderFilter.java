@@ -21,6 +21,7 @@ public class AddResponseHeaderFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, 
       FilterChain chain) throws IOException, ServletException {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        httpServletResponse.setHeader("Accept", "application/json");
         httpServletResponse.setHeader("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload");
         httpServletResponse.setHeader("Content-Security-Policy", "default-src 'self' https://estagiei.herokuapp.com");
         httpServletResponse.setHeader("X-Frame-Options", "DENY");

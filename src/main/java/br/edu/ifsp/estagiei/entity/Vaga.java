@@ -35,8 +35,9 @@ public class Vaga {
 	private BigDecimal salario;
 	@Column(name = "titulo")
 	private String titulo;
-	@Column(name = "ind_ativo")
-	private Boolean indAtivo;
+
+	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
+	private Boolean indAtivo = true;
 
 	@JsonIgnore
 	@ManyToOne

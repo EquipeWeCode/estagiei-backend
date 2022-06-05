@@ -30,10 +30,11 @@ public class Estudante {
 	private String nvlEnsino;
 	@Column(name = "expProfissional")
 	private String expProfissional;
-	@Column(name = "ind_ativo")
-	private Boolean indAtivo;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
+	private Boolean indAtivo = true;
+
+	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinColumn(name = "cod_pessoa")
 	@JsonIgnore
 	private Pessoa pessoa;

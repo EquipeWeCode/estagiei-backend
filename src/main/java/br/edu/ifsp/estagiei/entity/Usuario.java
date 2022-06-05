@@ -28,15 +28,16 @@ public class Usuario {
 	@Column(name = "cod_usuario", updatable = false, nullable = false)
 	private Long codUsuario;
 	@Column(name = "senha")
-	private String senha;
-	@Column(name = "papel")
-	private String papel;
+	private String senha = "1234";
+	@Column(name = "papel", columnDefinition = "VARCHAR(25)	DEFAULT 'COMUM'", nullable = false)
+	private String papel = "COMUM";
 	@Column(name = "email")
 	private String email;
 	@Column(name = "avatar")
 	private String avatar;
-	@Column(name = "ind_ativo")
-	private Boolean indAtivo;
+
+	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
+	private Boolean indAtivo = true;
 
 	@OneToOne(mappedBy = "usuario", cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE })
 	@JsonIgnore

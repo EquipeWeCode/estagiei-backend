@@ -19,7 +19,7 @@ public class EstudanteDTOFactory {
 		String dataFormatada = EstagieiUtils.dataNascimentoParaString(dataNasc);
 		
 		EstudanteDTOBuilder builder =  EstudanteDTOBuilder.newInstance()
-				.codUsuario(estudante.getPessoa().getUsuario().getCodUsuario())
+				.codEstudante(estudante.getCodEstudante())
 				.avatar(estudante.getPessoa().getUsuario().getAvatar())
 				.email(estudante.getPessoa().getUsuario().getEmail())
 				.cpf(estudante.getPessoa().getCpf())

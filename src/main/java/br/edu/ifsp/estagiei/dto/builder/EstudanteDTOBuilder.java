@@ -14,7 +14,7 @@ public class EstudanteDTOBuilder {
 
 	public EstudanteDTO build() {
 		EstudanteDTO dto = new EstudanteDTO();
-		dto.setCodUsuario(estudante.getCodUsuario());
+		dto.setCodEstudante(estudante.getCodEstudante());
 		dto.setCpf(estudante.getCpf());
 		dto.setRg(estudante.getRg());
 		dto.setEmail(estudante.getEmail());
@@ -27,8 +27,8 @@ public class EstudanteDTOBuilder {
 		return dto;
 	}
 
-	public EstudanteDTOBuilder codUsuario(Long codUsuario) {
-		estudante.setCodUsuario(codUsuario);
+	public EstudanteDTOBuilder codEstudante(String codEstudante) {
+		estudante.setCodEstudante(codEstudante);
 		return this;
 	}
 
