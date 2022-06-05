@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -19,7 +20,8 @@ import lombok.Setter;
 @Table(name = "tb_endereco")
 public class Endereco {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "tb_endereco_cod_endereco_seq", sequenceName = "tb_endereco_cod_endereco_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_endereco_cod_endereco_seq")
 	@Column(name = "cod_endereco", updatable = false)
 	private Long codEndereco;
 	@Column(name = "logradouro")
@@ -36,9 +38,10 @@ public class Endereco {
 	private Integer cep;
 	@Column(name = "complemento")
 	private String complemento;
-	@Column(name = "ind_ativo")
-	private Boolean indAtivo;
-	
+
+	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
+	private Boolean indAtivo = true;
+
 	@OneToOne(mappedBy = "endereco")
 	private Empresa empresa;
 }

@@ -52,7 +52,7 @@ public class LoginService {
 		String estudanteId = payload.getSubject();
 
 		try {
-			estudanteRepository.buscaPorCodUsuario(estudanteId);
+			estudanteRepository.buscaPorCodEstudante(estudanteId);
 		} catch (EmptyResultDataAccessException e) {
 			estudanteService.insereEstudanteViaGoogle(payload, estudanteId);
 		}

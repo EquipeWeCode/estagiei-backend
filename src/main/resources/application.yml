@@ -17,7 +17,8 @@ spring:
 logging:
   level:
     '[org.hibernate.sql]': DEBUG
-    '[org.hibernate.type.descriptor.sql]': TRACE
+    '[org.hibernate.type.descriptor.sql.BasicBinder]': TRACE
+    '[org.hibernate.type.descriptor.type]': TRACE
 springdoc:
   use-fqn: true
   swagger-ui:

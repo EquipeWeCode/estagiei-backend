@@ -17,7 +17,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @EnableWebMvc
 @SpringBootApplication
