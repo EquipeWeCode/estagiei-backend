@@ -28,7 +28,7 @@ public class Usuario {
 	@Column(name = "cod_usuario", updatable = false, nullable = false)
 	private Long codUsuario;
 	@Column(name = "senha")
-	private String senha = "1234";
+	private String senha;
 	@Column(name = "papel", columnDefinition = "VARCHAR(25)	DEFAULT 'COMUM'", nullable = false)
 	private String papel = "COMUM";
 	@Column(name = "email")
