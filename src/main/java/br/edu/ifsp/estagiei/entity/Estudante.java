@@ -1,11 +1,14 @@
 package br.edu.ifsp.estagiei.entity;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -30,6 +33,8 @@ public class Estudante {
 	private String nvlEnsino;
 	@Column(name = "expProfissional")
 	private String expProfissional;
+	@OneToMany(mappedBy = "estudante", fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	private Set<CompetenciaEstudante> competencias;
 
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;

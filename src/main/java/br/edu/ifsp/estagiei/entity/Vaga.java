@@ -1,14 +1,18 @@
 package br.edu.ifsp.estagiei.entity;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -35,6 +39,8 @@ public class Vaga {
 	private BigDecimal salario;
 	@Column(name = "titulo")
 	private String titulo;
+	@OneToMany(mappedBy = "vaga", fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	private Set<CompetenciaVaga> competencias;
 
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
