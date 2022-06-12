@@ -1,10 +1,8 @@
 package br.edu.ifsp.estagiei.dto.builder;
 
 import java.util.List;
-import java.util.Set;
 
 import br.edu.ifsp.estagiei.dto.EmpresaDTO;
-import br.edu.ifsp.estagiei.dto.EnderecoDTO;
 import br.edu.ifsp.estagiei.dto.VagaDTO;
 import lombok.NoArgsConstructor;
 
@@ -49,8 +47,8 @@ public class EmpresaDTOBuilder {
 		empresa.setVagas(vagas);
 		return this;
 	}
-	public EmpresaDTOBuilder indAtivo(Long indAtivo) {
-		empresa.setIndAtivoodEmpresa(indAtivo);
+	public EmpresaDTOBuilder indAtivo(Boolean indAtivo) {
+		empresa.setIndAtivo(indAtivo);
 		return this;
 	}
 	

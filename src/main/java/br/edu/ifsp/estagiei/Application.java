@@ -25,7 +25,7 @@ import io.swagger.v3.oas.annotations.info.License;
 		info = @Info(
 				title = "Estagiei API", 
 				version = "0.7", 
-				description = "Informa��es de um sistema de vagas de est�gio",
+				description = "Documentação do sistema de vagas de estágio - Estagiei",
 				license = @License(
 							name = "MIT License",
 							url = "https://github.com/EquipeWeCode/estagiei-backend/blob/develop/LICENSE"
