@@ -125,9 +125,9 @@ public class GlobalControllerAdvice {
 
 	) {
 
-		String unsupported = "Tipo de conteúdo não suportado: " + ex.getContentType();
+		String unsupported = "Tipo de conteÃºdo nÃ£o suportado: " + ex.getContentType();
 
-		String supported = "Tipos de conteúdos suportados: " + MediaType.toString(ex.getSupportedMediaTypes());
+		String supported = "Tipos de conteÃºdos suportados: " + MediaType.toString(ex.getSupportedMediaTypes());
 
 		CustomErrorMessage errorMessage = new CustomErrorMessage(unsupported, supported);
 

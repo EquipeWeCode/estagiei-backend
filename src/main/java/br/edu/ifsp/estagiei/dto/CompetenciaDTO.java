@@ -1,7 +1,5 @@
 package br.edu.ifsp.estagiei.dto;
 
-import javax.validation.constraints.NotBlank;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -12,10 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@JsonInclude(Include.NON_NULL)
-public class LoginGoogleDTO {
-	@NotBlank
-	private String token;
-	@NotBlank
-	private String codEstudante;
+@JsonInclude(Include.NON_NULL)	
+public class CompetenciaDTO {
+	
+	private Long codCompetencia;
+	private String descricaoCompetencia;
 }

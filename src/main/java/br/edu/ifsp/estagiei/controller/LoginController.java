@@ -3,39 +3,15 @@ package br.edu.ifsp.estagiei.controller;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.google.api.client.http.HttpHeaders;
 
 import br.edu.ifsp.estagiei.dto.LoginGoogleDTO;
-import br.edu.ifsp.estagiei.exception.ValidacaoException;
-import br.edu.ifsp.estagiei.service.LoginService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
-@RestController
-public class LoginController implements IController {
-
-	@Autowired
-	private LoginService service;
-
-	@PostMapping(path= "/loginEstudante")
-	@ResponseStatus(value = HttpStatus.CREATED)
-	@ResponseBody
-	public ResponseEntity<LoginGoogleDTO> validaLogin(@RequestBody LoginGoogleDTO loginDTO)
-			throws GeneralSecurityException, IOException, ValidacaoException {
-
-		String codEstudante = service.validaToken(loginDTO);
-		
-		loginDTO.setCodEstudante(codEstudante);
-
-		HttpHeaders responseHeaders = new HttpHeaders(); // TODO: Arrumar
-		responseHeaders.set("Authentication", loginDTO.getToken());
-		return ResponseEntity.ok(loginDTO);
-	}
+public interface LoginController extends Controller {
+	@ApiResponse(responseCode =  "201")
+	@Operation(summary = "Faz o login/cadastro pelo Google", tags = {LOGIN, CADASTRO})
+	public ResponseEntity<LoginGoogleDTO> login(LoginGoogleDTO loginDTO)
+			throws GeneralSecurityException, IOException;
 }

@@ -23,7 +23,7 @@ public class EstudanteService {
 	@Autowired
 	private EstudanteDTOFactory factory;
 
-	public EstudanteDTO findEstudanteByCodEstudante(String id) throws ValidacaoException {
+	public EstudanteDTO findEstudanteByCodEstudante(String id) {
 		try {
 			Estudante estd = estudanteRepository.buscaPorCodEstudante(id);
 			return factory.buildEstudante(estd);

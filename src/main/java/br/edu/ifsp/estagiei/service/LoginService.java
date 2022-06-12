@@ -29,7 +29,7 @@ public class LoginService {
 	private EstudanteService estudanteService;
 
 	public String validaToken(LoginGoogleDTO loginDTO)
-			throws GeneralSecurityException, IOException, ValidacaoException {
+			throws GeneralSecurityException, IOException {
 
 		String clientId = retornaPrimeiroClientId();
 

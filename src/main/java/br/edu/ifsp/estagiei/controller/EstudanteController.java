@@ -1,27 +1,14 @@
 package br.edu.ifsp.estagiei.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifsp.estagiei.dto.EstudanteDTO;
-import br.edu.ifsp.estagiei.exception.ValidacaoException;
-import br.edu.ifsp.estagiei.service.EstudanteService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
-@RestController
-public class EstudanteController implements IController {
-
-	@Autowired
-	private EstudanteService service;
-
-	@GetMapping("/estudante/{id}")
-	@ResponseStatus(value = HttpStatus.OK)
-	public ResponseEntity<EstudanteDTO> getEstudante(@PathVariable String id) throws ValidacaoException {
-		EstudanteDTO estudante = service.findEstudanteByCodEstudante(id);
-		return ResponseEntity.ok(estudante);
-	}
+public interface EstudanteController extends Controller {
+	@ApiResponse(responseCode =  "200")
+	@Operation(summary = "Retorna o estudante por id", tags = {ESTUDANTE})
+	public ResponseEntity<EstudanteDTO> getEstudante(@PathVariable String id);
 }
