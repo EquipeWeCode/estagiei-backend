@@ -17,7 +17,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class VagaDTOFactory {
 	
-	public List<VagaDTO> buildLista(List<Vaga> vagas) {
+	public Set<Vaga> buildVagas(List<VagaDTO> dto) {
+		return dto.stream().map(this::buildEntity).collect(Collectors.toSet());
+	}
+	
+	public Vaga buildEntity(VagaDTO dto) {
+		Vaga vaga = new Vaga();
+		vaga.setCodVaga(dto.getCodVaga());
+		vaga.setDescricao(dto.getDescricao());
+		vaga.setTitulo(dto.getTitulo());
+		vaga.setSalario(dto.getSalario());
+		//vaga.setEmpresa(empresaFactory.buildEntity(dto.getEmpresa()));
+		//vaga.setCompetencias(this.buildEntities(dto.getCompetencias());
+		vaga.setIndAtivo(dto.getIndAtivo());
+		return vaga;
+	}
+	
+	public List<VagaDTO> buildLista(Set<Vaga> vagas) {
 		return vagas.stream().map(this::buildVaga).collect(Collectors.toList());
 	}
 	
@@ -25,16 +41,16 @@ public class VagaDTOFactory {
 		VagaDTOBuilder builder = VagaDTOBuilder.newInstance();
 		
 				builder
-				.codEmpresa(vaga.getEmpresa().getCodEmpresa())
+				//.empresa(vaga.getEmpresa())
 				.codVaga(vaga.getCodVaga())
 				.descricao(vaga.getDescricao())
 				.titulo(vaga.getTitulo())
 				.indAtivo(vaga.getIndAtivo())
 				.salario(vaga.getSalario());
 				
-//				Set<Competencia> competencias = vaga.getCompetencias().stream() TODO: Precisa fazer o fetch join para conseguir pegar esses dados
-//					.map(c -> c.getCompetencia()).collect(Collectors.toSet());
-//				builder.competencias(buildCompetencias(competencias));
+				Set<Competencia> competencias = vaga.getCompetencias().stream() //TODO: Precisa fazer o fetch join para conseguir pegar esses dados
+					.map(c -> c.getCompetencia()).collect(Collectors.toSet());
+				builder.competencias(buildCompetencias(competencias));
 			
 		return builder.build();
 	}
@@ -48,5 +64,16 @@ public class VagaDTOFactory {
 		dto.setCodCompetencia(comp.getCodCompetencia());
 		dto.setDescricaoCompetencia(comp.getDescricao());
 		return dto;
+	}
+	
+	public List<Competencia> buildEntities(List<CompetenciaDTO> dtos) {
+		return dtos.stream().map(this::buildEntity).collect(Collectors.toList());
+	}
+	
+	public Competencia buildEntity(CompetenciaDTO dto) {
+		Competencia entidade = new Competencia();
+		entidade.setCodCompetencia(dto.getCodCompetencia());
+		entidade.setDescricao(dto.getDescricaoCompetencia());
+		return entidade;
 	}
 }

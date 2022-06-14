@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import br.edu.ifsp.estagiei.dto.CompetenciaDTO;
+import br.edu.ifsp.estagiei.dto.EmpresaDTO;
 import br.edu.ifsp.estagiei.dto.VagaDTO;
 
 public class VagaDTOBuilder {
@@ -15,7 +16,7 @@ public class VagaDTOBuilder {
 
 	public VagaDTO build() {
 		VagaDTO dto = new VagaDTO();
-		dto.setCodEmpresa(vaga.getCodEmpresa());
+		dto.setEmpresa(vaga.getEmpresa());
 		dto.setCodVaga(vaga.getCodVaga());
 		dto.setCompetencias(vaga.getCompetencias());
 		dto.setDescricao(vaga.getDescricao());
@@ -27,10 +28,11 @@ public class VagaDTOBuilder {
 		return dto;
 	}
 	
-	public VagaDTOBuilder codEmpresa(Long codEmpresa) {
-		vaga.setCodEmpresa(codEmpresa);
+	public VagaDTOBuilder empresa(EmpresaDTO empresa) {
+		vaga.setEmpresa(empresa);
 		return this;
 	}
+	
 	public VagaDTOBuilder codVaga(Long codVaga) {
 		vaga.setCodVaga(codVaga);
 		return this;

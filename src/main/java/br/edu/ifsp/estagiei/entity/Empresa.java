@@ -24,11 +24,16 @@ import lombok.Setter;
 @Entity
 @Table(name = "tb_empresa")
 public class Empresa {
+	
 	@Id
 	@SequenceGenerator(name = "tb_empresa_cod_empresa_seq", sequenceName = "tb_empresa_cod_empresa_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_empresa_cod_empresa_seq")
 	@Column(name = "cod_empresa", updatable = false)
 	private Long codEmpresa;
+	
+	@Column(name = "cod_usuario")
+	private Long codUsuario = 777666L; //Apenas para questões de teste, assim que o login de empresas estiver pronto, mudar
+	
 	@Column(name = "razao_social")
 	private String razaoSocial;
 	@Column(name = "nome_fantasia")
@@ -45,4 +50,8 @@ public class Empresa {
 
 	@OneToMany(mappedBy = "empresa")
 	private Set<Vaga> vagas;
+	
+	public boolean hasVagas() {
+		return vagas != null && !vagas.isEmpty();
+	}
 }

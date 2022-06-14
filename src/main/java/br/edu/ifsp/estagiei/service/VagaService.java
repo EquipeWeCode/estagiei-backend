@@ -1,11 +1,13 @@
 package br.edu.ifsp.estagiei.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+
+import com.google.common.collect.Sets;
 
 import br.edu.ifsp.estagiei.dto.VagaDTO;
 import br.edu.ifsp.estagiei.dto.factory.VagaDTOFactory;
@@ -24,7 +26,7 @@ public class VagaService {
 	public List<VagaDTO> findAll() throws ValidacaoException {
 		try {
 			Iterable<Vaga> vagas = repositorio.findAll();
-			List<Vaga> vagasLista = new ArrayList<>();
+			Set<Vaga> vagasLista = Sets.newHashSet();
 			vagas.forEach(v -> vagasLista.add(v));
 			
 			return factory.buildLista(vagasLista);

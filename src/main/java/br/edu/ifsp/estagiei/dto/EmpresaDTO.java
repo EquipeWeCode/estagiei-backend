@@ -21,4 +21,20 @@ public class EmpresaDTO {
 	private EnderecoDTO endereco;
 	private List<VagaDTO> vagas;
 	private Boolean indAtivo;
+	
+	public boolean hasCodEmpresa() {
+		return codEmpresa != null;
+	}
+	
+	public boolean hasCnpj() {
+		return cnpj != null;
+	}
+
+	public boolean hasEndereco() {
+		return endereco != null;
+	}
+	
+	public boolean hasVagas() {
+		return vagas != null && !vagas.isEmpty();
+	}
 }

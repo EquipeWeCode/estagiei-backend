@@ -20,7 +20,7 @@ public class VagaDTO {
 	
 	private String descricao;
 	
-	private Long codEmpresa;
+	private EmpresaDTO empresa;
 	
 	private String razaoSocial;
 	
