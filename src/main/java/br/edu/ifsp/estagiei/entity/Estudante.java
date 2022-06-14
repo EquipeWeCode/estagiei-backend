@@ -8,7 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -33,8 +34,13 @@ public class Estudante {
 	private String nvlEnsino;
 	@Column(name = "expProfissional")
 	private String expProfissional;
-	@OneToMany(mappedBy = "estudante", fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	private Set<CompetenciaEstudante> competencias;
+
+	@ManyToMany
+	@JoinTable(
+		name = "tb_comp_estud",
+		joinColumns = @JoinColumn(name="cod_estudante"),
+		inverseJoinColumns = @JoinColumn(name="cod_competencia"))
+	private Set<Competencia> competencias;
 
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;

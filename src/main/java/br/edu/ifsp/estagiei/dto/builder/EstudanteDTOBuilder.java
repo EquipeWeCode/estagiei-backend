@@ -1,5 +1,8 @@
 package br.edu.ifsp.estagiei.dto.builder;
 
+import java.util.List;
+
+import br.edu.ifsp.estagiei.dto.CompetenciaDTO;
 import br.edu.ifsp.estagiei.dto.EstudanteDTO;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +27,7 @@ public class EstudanteDTOBuilder {
 		dto.setAvatar(estudante.getAvatar());
 		dto.setInstEnsino(estudante.getInstEnsino());
 		dto.setNvlEnsino(estudante.getNvlEnsino());
+		dto.setCompetencias(estudante.getCompetencias());
 		return dto;
 	}
 
@@ -74,6 +78,11 @@ public class EstudanteDTOBuilder {
 
 	public EstudanteDTOBuilder expProfissional(String expProfissional) {
 		estudante.setExpProfissional(expProfissional);
+		return this;
+	}
+
+	public EstudanteDTOBuilder competencias(List<CompetenciaDTO> competencias) {
+		estudante.setCompetencias(competencias);
 		return this;
 	}
 

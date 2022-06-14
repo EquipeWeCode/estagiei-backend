@@ -2,12 +2,15 @@ package br.edu.ifsp.estagiei.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,7 +44,8 @@ public class Endereco {
 
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
-
-	@OneToOne(mappedBy = "endereco")
+	
+	@JsonIgnore
+	@OneToOne(mappedBy = "endereco", fetch = FetchType.LAZY)
 	private Empresa empresa;
 }

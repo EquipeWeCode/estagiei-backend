@@ -1,4 +1,4 @@
-package br.edu.ifsp.estagiei.repository;
+package br.edu.ifsp.estagiei.repository.custom;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,7 +20,8 @@ public class EstudanteRepositoryCustomImpl implements EstudanteRepositoryCustom 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Estudante> criteria = cb.createQuery(Estudante.class);
 		Root<Estudante> r = criteria.from(Estudante.class);
-
+		
+		r.fetch("competencias", JoinType.LEFT);
 		r.fetch("pessoa", JoinType.LEFT).fetch("usuario", JoinType.LEFT);
 		criteria.where(cb.equal(r.get("codEstudante"), codUsuario));
 		return em.createQuery(criteria).getSingleResult();
