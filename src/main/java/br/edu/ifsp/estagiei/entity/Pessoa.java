@@ -52,7 +52,7 @@ public class Pessoa {
 	@JsonIgnore
 	private Usuario usuario;
 
-	@OneToOne(mappedBy = "pessoa", cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE })
+	@OneToOne(mappedBy = "pessoa", cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private Estudante estudante;
 }

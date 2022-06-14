@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,11 +45,11 @@ public class Empresa {
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'FALSE'", nullable = false)
 	private Boolean indAtivo = false;
 
-	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_endereco")
 	private Endereco endereco;
 
-	@OneToMany(mappedBy = "empresa")
+	@OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY)
 	private Set<Vaga> vagas;
 	
 	public boolean hasVagas() {

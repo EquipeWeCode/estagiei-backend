@@ -1,5 +1,7 @@
 package br.edu.ifsp.estagiei.dto;
 
+import java.util.List;
+
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -39,4 +41,6 @@ public class EstudanteDTO {
 	private String nvlEnsino;
 
 	private String expProfissional;	
+	
+	private List<CompetenciaDTO> competencias;
 }

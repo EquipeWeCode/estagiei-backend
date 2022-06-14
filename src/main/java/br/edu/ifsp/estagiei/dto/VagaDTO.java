@@ -33,5 +33,4 @@ public class VagaDTO {
 	private List<CompetenciaDTO> competencias;
 
 	private Boolean indAtivo;
-
 }

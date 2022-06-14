@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.edu.ifsp.estagiei.dto.CompetenciaDTO;
 import br.edu.ifsp.estagiei.dto.VagaDTO;
 import br.edu.ifsp.estagiei.dto.builder.VagaDTOBuilder;
 import br.edu.ifsp.estagiei.entity.Competencia;
@@ -34,6 +34,10 @@ public class VagaDTOFactory {
 	}
 	
 	public List<VagaDTO> buildLista(Set<Vaga> vagas) {
+	@Autowired
+	CompetenciaDTOFactory competenciaFactory;
+	
+	public List<VagaDTO> buildLista(List<Vaga> vagas) {
 		return vagas.stream().map(this::buildVaga).collect(Collectors.toList());
 	}
 	
@@ -75,5 +79,10 @@ public class VagaDTOFactory {
 		entidade.setCodCompetencia(dto.getCodCompetencia());
 		entidade.setDescricao(dto.getDescricaoCompetencia());
 		return entidade;
+	}
+				Set<Competencia> competencias = vaga.getCompetencias().stream().collect(Collectors.toSet());
+				builder.competencias(competenciaFactory.buildCompetencias(competencias));
+			
+		return builder.build();
 	}
 }
