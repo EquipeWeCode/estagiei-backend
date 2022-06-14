@@ -1,8 +1,12 @@
 package br.edu.ifsp.estagiei.entity;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -22,4 +26,10 @@ public class Competencia {
 	private String descricao;
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
+	
+	@ManyToMany(mappedBy="competencias", fetch = FetchType.LAZY)
+	private Set<Vaga> vagas;
+	
+	@ManyToMany(mappedBy="competencias", fetch = FetchType.LAZY)
+	private Set<Estudante> estudantes;
 }

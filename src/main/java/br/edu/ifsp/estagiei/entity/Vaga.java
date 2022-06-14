@@ -3,7 +3,6 @@ package br.edu.ifsp.estagiei.entity;
 import java.math.BigDecimal;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,8 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -39,14 +39,18 @@ public class Vaga {
 	private BigDecimal salario;
 	@Column(name = "titulo")
 	private String titulo;
-	@OneToMany(mappedBy = "vaga", fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	private Set<CompetenciaVaga> competencias;
-
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+		name = "tb_comp_vaga",
+		joinColumns = @JoinColumn(name="cod_vaga"),
+		inverseJoinColumns = @JoinColumn(name="cod_competencia"))
+	private Set<Competencia> competencias;
 
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_empresa", nullable = false)
 	private Empresa empresa;
 }
