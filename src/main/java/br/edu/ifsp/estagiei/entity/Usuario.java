@@ -29,6 +29,7 @@ public class Usuario {
 	@Column(name = "cod_usuario", updatable = false, nullable = false)
 	private Long codUsuario;
 	@Column(name = "senha")
+//	@ColumnTransformer( read="decrypt(pswd)" write="encrypt(?)" ) //teste
 	private String senha;
 	@Column(name = "papel", columnDefinition = "VARCHAR(25)	DEFAULT 'COMUM'", nullable = false)
 	private String papel = "COMUM";

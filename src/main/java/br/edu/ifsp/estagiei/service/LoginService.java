@@ -54,7 +54,7 @@ public class LoginService {
 		String estudanteId = payload.getSubject();
 
 		try {
-			estudanteRepository.buscaPorCodEstudante(estudanteId);
+			estudanteRepository.findByCodEstudante(estudanteId);
 		} catch (EmptyResultDataAccessException e) {
 			estudanteService.insereEstudanteViaGoogle(payload, estudanteId);
 		}

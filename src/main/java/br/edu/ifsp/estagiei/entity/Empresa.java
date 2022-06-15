@@ -1,5 +1,6 @@
 package br.edu.ifsp.estagiei.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Persistence;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -33,7 +35,7 @@ public class Empresa {
 	private Long codEmpresa;
 	
 	@Column(name = "cod_usuario")
-	private Long codUsuario = 777666L; //Apenas para questões de teste, assim que o login de empresas estiver pronto, mudar
+	private Long codUsuario = 777666L; //Apenas para questoes de teste, assim que o login de empresas estiver pronto, mudar
 	
 	@Column(name = "razao_social")
 	private String razaoSocial;
@@ -50,9 +52,9 @@ public class Empresa {
 	private Endereco endereco;
 
 	@OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY)
-	private Set<Vaga> vagas;
+	private Set<Vaga> vagas = new HashSet<>();
 	
 	public boolean hasVagas() {
-		return vagas != null && !vagas.isEmpty();
+		return Persistence.getPersistenceUtil().isLoaded(this,"vagas");
 	}
 }

@@ -23,4 +23,15 @@ public class CompetenciaDTOFactory {
 		dto.setDescricaoCompetencia(comp.getDescricao());
 		return dto;
 	}
+	
+	public List<Competencia> buildEntities(List<CompetenciaDTO> dtos) {
+		return dtos.stream().map(this::buildEntity).collect(Collectors.toList());
+	}
+
+	public Competencia buildEntity(CompetenciaDTO dto) {
+		Competencia entidade = new Competencia();
+		entidade.setCodCompetencia(dto.getCodCompetencia());
+		entidade.setDescricao(dto.getDescricaoCompetencia());
+		return entidade;
+	}
 }

@@ -13,9 +13,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
-public class LoginGoogleDTO {
-	@NotBlank
+public class LoginGoogleDTO implements DTOUtils {
+	@NotBlank(message = MSG_NOT_NULL)
 	private String token;
-	@NotBlank
+	@NotBlank(message = MSG_NOT_NULL)
 	private String codEstudante;
 }

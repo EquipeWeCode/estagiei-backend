@@ -1,6 +1,7 @@
 package br.edu.ifsp.estagiei.entity;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Persistence;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -47,10 +49,14 @@ public class Vaga {
 		name = "tb_comp_vaga",
 		joinColumns = @JoinColumn(name="cod_vaga"),
 		inverseJoinColumns = @JoinColumn(name="cod_competencia"))
-	private Set<Competencia> competencias;
+	private Set<Competencia> competencias = new HashSet<>();
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_empresa", nullable = false)
 	private Empresa empresa;
+	
+	public Boolean hasCompetencias() {
+		return Persistence.getPersistenceUtil().isLoaded(this,"competencias");
+	}
 }

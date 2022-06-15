@@ -1,5 +1,6 @@
 package br.edu.ifsp.estagiei.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Persistence;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -40,7 +42,7 @@ public class Estudante {
 		name = "tb_comp_estud",
 		joinColumns = @JoinColumn(name="cod_estudante"),
 		inverseJoinColumns = @JoinColumn(name="cod_competencia"))
-	private Set<Competencia> competencias;
+	private Set<Competencia> competencias = new HashSet<>();
 
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
@@ -49,4 +51,8 @@ public class Estudante {
 	@JoinColumn(name = "cod_pessoa")
 	@JsonIgnore
 	private Pessoa pessoa;
+	
+	public Boolean hasCompetencias() {
+		return Persistence.getPersistenceUtil().isLoaded(this,"competencias");
+	}
 }

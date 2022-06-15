@@ -16,30 +16,20 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
-public class EstudanteDTO {
+public class EstudanteDTO implements DTOUtils {
 	
 	private Long codUsuario;
-	
 	private String email;
-	
 	private String avatar;
-
-	@Size(min = 11, max=14, message = "cpf deve estar entre 11 e 14 caracteres")
+	@Size(min = 11, max=14, message = "deve estar entre 11 e 14 caracteres")
 	private String cpf;
-
 	private String rg;
-
 	private String nome;
-
     @Pattern(regexp = "([0-2][0-9]|3[0-1])\\/(0[1-9]|1[0-2])\\/[0-9]{4}")
 	private String dataNascimento;
-	
 	private String codEstudante;
-
 	private String instEnsino;
-
 	private String nvlEnsino;
-
 	private String expProfissional;	
 	
 	private List<CompetenciaDTO> competencias;

@@ -1,5 +1,7 @@
 package br.edu.ifsp.estagiei.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -7,29 +9,46 @@ import org.springframework.stereotype.Service;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 
 import br.edu.ifsp.estagiei.dto.EstudanteDTO;
+import br.edu.ifsp.estagiei.dto.VagaDTO;
 import br.edu.ifsp.estagiei.dto.factory.EstudanteDTOFactory;
+import br.edu.ifsp.estagiei.dto.factory.VagaDTOFactory;
 import br.edu.ifsp.estagiei.entity.Estudante;
 import br.edu.ifsp.estagiei.entity.Pessoa;
 import br.edu.ifsp.estagiei.entity.Usuario;
+import br.edu.ifsp.estagiei.entity.Vaga;
 import br.edu.ifsp.estagiei.exception.ValidacaoException;
 import br.edu.ifsp.estagiei.repository.EstudanteRepository;
+import br.edu.ifsp.estagiei.repository.VagaRepository;
 
 @Service
 public class EstudanteService {
 
 	@Autowired
-	private EstudanteRepository estudanteRepository;
+	private EstudanteRepository estudanteRepositorio;
+	@Autowired
+	private VagaRepository vagaRepositorio;
+	@Autowired
+	private VagaDTOFactory vagaFactory;
 
 	@Autowired
 	private EstudanteDTOFactory factory;
 
 	public EstudanteDTO findEstudanteByCodEstudante(String id) {
 		try {
-			Estudante estd = estudanteRepository.buscaPorCodEstudante(id);
+			Estudante estd = estudanteRepositorio.findByCodEstudante(id);
 			return factory.buildEstudante(estd);
 		} catch (EmptyResultDataAccessException e) {
 			throw new ValidacaoException("Estudante não encontrado");
 		}
+	}
+
+	public List<VagaDTO> buscaVagasRecomendadas(String codEstudante) {
+
+		estudanteRepositorio.findById(codEstudante)
+				.orElseThrow(() -> new ValidacaoException("Estudante não encontrado"));
+
+		List<Vaga> vagas = vagaRepositorio.buscaVagasRecomendadas(codEstudante);
+		return vagaFactory.buildLista(vagas);
 	}
 
 	public void insereEstudanteViaGoogle(Payload payload, String estudanteId) {
@@ -49,6 +68,6 @@ public class EstudanteService {
 		estudante.setCodEstudante(estudanteId);
 		estudante.setPessoa(pessoa);
 
-		estudanteRepository.save(estudante);
+		estudanteRepositorio.save(estudante);
 	}
 }

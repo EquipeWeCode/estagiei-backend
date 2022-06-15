@@ -21,8 +21,6 @@ public class VagaDTOBuilder {
 		dto.setCompetencias(vaga.getCompetencias());
 		dto.setDescricao(vaga.getDescricao());
 		dto.setIndAtivo(vaga.getIndAtivo());
-		dto.setNomeFantasia(vaga.getNomeFantasia());
-		dto.setRazaoSocial(vaga.getRazaoSocial());
 		dto.setSalario(vaga.getSalario());
 		dto.setTitulo(vaga.getTitulo());
 		return dto;
@@ -47,14 +45,6 @@ public class VagaDTOBuilder {
 	}
 	public VagaDTOBuilder indAtivo(Boolean indAtivo) {
 		vaga.setIndAtivo(indAtivo);
-		return this;
-	}
-	public VagaDTOBuilder nomeFantasia(String nomeFantasia) {
-		vaga.setNomeFantasia(nomeFantasia);
-		return this;
-	}
-	public VagaDTOBuilder razaoSocial(String razaoSocial) {
-		vaga.setRazaoSocial(razaoSocial);
 		return this;
 	}
 	public VagaDTOBuilder salario(BigDecimal salario) {

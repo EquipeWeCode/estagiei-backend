@@ -1,11 +1,15 @@
 package br.edu.ifsp.estagiei.dto.factory;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.edu.ifsp.estagiei.dto.EmpresaDTO;
 import br.edu.ifsp.estagiei.dto.builder.EmpresaDTOBuilder;
 import br.edu.ifsp.estagiei.entity.Empresa;
+import br.edu.ifsp.estagiei.entity.Vaga;
 import lombok.NoArgsConstructor;
 
 @Component
@@ -26,11 +30,12 @@ public class EmpresaDTOFactory {
 				.razaoSocial(empresa.getRazaoSocial())
 				.cnpj(empresa.getCnpj())
 				.indAtivo(empresa.getIndAtivo());
+		
 		if(empresa.hasVagas()) {
-			builder.vagas(vagaFactory.buildLista(empresa.getVagas()));
+			List<Vaga> vagasEmpresa = empresa.getVagas().stream().collect(Collectors.toList());
+			builder.vagas(vagaFactory.buildLista(vagasEmpresa));
 		}
-				
-				return builder.build();
+		return builder.build();
 	}
 
 	public Empresa buildEntity(EmpresaDTO dto) {
@@ -39,6 +44,7 @@ public class EmpresaDTOFactory {
 		entidade.setNomeFantasia(dto.getNomeFantasia());
 		entidade.setRazaoSocial(dto.getRazaoSocial());
 		entidade.setCnpj(dto.getCnpj());
+		
 		if (dto.hasEndereco()) {
 			entidade.setEndereco(enderecoFactory.buildEntity(dto.getEndereco()));
 		}
