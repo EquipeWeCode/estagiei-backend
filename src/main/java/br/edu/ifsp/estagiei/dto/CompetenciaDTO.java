@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)	
-public class CompetenciaDTO {
+public class CompetenciaDTO implements DTOUtils {
 	
 	private Long codCompetencia;
 	private String descricaoCompetencia;

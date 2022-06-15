@@ -21,7 +21,7 @@ public class EstudanteDTOFactory {
 
 	@Autowired
 	CompetenciaDTOFactory competenciaFactory;
-	
+
 	public List<EstudanteDTO> buildLista(List<Estudante> estudantes) {
 		return estudantes.stream().map(this::buildEstudante).collect(Collectors.toList());
 	}
@@ -38,8 +38,10 @@ public class EstudanteDTOFactory {
 				.instEnsino(estudante.getInstEnsino()).nvlEnsino(estudante.getNvlEnsino())
 				.expProfissional(estudante.getExpProfissional()).dataNascimento(dataFormatada);
 
-		Set<Competencia> competencias = estudante.getCompetencias().stream().collect(Collectors.toSet());
-		builder.competencias(competenciaFactory.buildCompetencias(competencias));
+		if (estudante.hasCompetencias()) {
+			Set<Competencia> competencias = estudante.getCompetencias().stream().collect(Collectors.toSet());
+			builder.competencias(competenciaFactory.buildCompetencias(competencias));
+		}
 
 		return builder.build();
 	}

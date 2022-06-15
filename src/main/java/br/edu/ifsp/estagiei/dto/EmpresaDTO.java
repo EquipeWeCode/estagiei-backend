@@ -2,6 +2,8 @@ package br.edu.ifsp.estagiei.dto;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -13,10 +15,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
-public class EmpresaDTO {
+public class EmpresaDTO implements DTOUtils {
+	@NotBlank(message = MSG_NOT_NULL)
 	private Long codEmpresa;
 	private String razaoSocial;
 	private String nomeFantasia;
+	@NotBlank(message = MSG_NOT_NULL)
 	private String cnpj;
 	private EnderecoDTO endereco;
 	private List<VagaDTO> vagas;

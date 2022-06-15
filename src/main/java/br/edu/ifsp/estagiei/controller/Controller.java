@@ -3,7 +3,7 @@ package br.edu.ifsp.estagiei.controller;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/api")
+@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public interface Controller {
 	public static final String VAGA = "Vaga";
 	public static final String LOGIN = "Login";

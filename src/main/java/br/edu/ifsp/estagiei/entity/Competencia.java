@@ -1,5 +1,6 @@
 package br.edu.ifsp.estagiei.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -28,8 +29,8 @@ public class Competencia {
 	private Boolean indAtivo = true;
 	
 	@ManyToMany(mappedBy="competencias", fetch = FetchType.LAZY)
-	private Set<Vaga> vagas;
+	private Set<Vaga> vagas = new HashSet<>();
 	
 	@ManyToMany(mappedBy="competencias", fetch = FetchType.LAZY)
-	private Set<Estudante> estudantes;
+	private Set<Estudante> estudantes = new HashSet<>();
 }
