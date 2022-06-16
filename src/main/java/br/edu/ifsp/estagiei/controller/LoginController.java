@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 public interface LoginController extends Controller {
 	@ApiResponse(responseCode =  "201")
-	@Operation(summary = "Faz o login/cadastro pelo Google", tags = {LOGIN, CADASTRO})
+	@Operation(summary = "Faz o login/cadastro do estudante pelo Google", tags = {ESTUDANTE})
 	public ResponseEntity<LoginGoogleDTO> login(LoginGoogleDTO loginDTO)
 			throws GeneralSecurityException, IOException;
 }

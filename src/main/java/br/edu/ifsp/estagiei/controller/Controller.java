@@ -10,4 +10,5 @@ public interface Controller {
 	public static final String CADASTRO = "Cadastro";
 	public static final String ESTUDANTE = "Estudante";
 	public static final String EMPRESA = "Empresa";
+	public static final String COMPETENCIA = "Competência";
 }
