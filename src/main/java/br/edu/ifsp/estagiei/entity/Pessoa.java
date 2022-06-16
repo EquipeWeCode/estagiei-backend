@@ -1,6 +1,7 @@
 package br.edu.ifsp.estagiei.entity;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -52,7 +53,25 @@ public class Pessoa {
 	@JsonIgnore
 	private Usuario usuario;
 
-	@OneToOne(mappedBy = "pessoa", cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "pessoa", cascade = { CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private Estudante estudante;
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(codPessoa);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Pessoa))
+			return false;
+		Pessoa other = (Pessoa) obj;
+		return Objects.equals(codPessoa, other.codPessoa);
+	}
 }

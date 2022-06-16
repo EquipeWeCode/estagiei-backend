@@ -10,6 +10,8 @@ import javax.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 import br.edu.ifsp.estagiei.entity.Estudante;
+import br.edu.ifsp.estagiei.entity.Estudante_;
+import br.edu.ifsp.estagiei.entity.Pessoa_;
 
 @Repository
 public class EstudanteRepositoryCustomImpl implements EstudanteRepositoryCustom {
@@ -21,9 +23,9 @@ public class EstudanteRepositoryCustomImpl implements EstudanteRepositoryCustom 
 		CriteriaQuery<Estudante> criteria = cb.createQuery(Estudante.class);
 		Root<Estudante> r = criteria.from(Estudante.class);
 		
-		r.fetch("competencias", JoinType.LEFT);
-		r.fetch("pessoa", JoinType.LEFT).fetch("usuario", JoinType.LEFT);
-		criteria.where(cb.equal(r.get("codEstudante"), codUsuario));
+		r.fetch(Estudante_.competencias, JoinType.LEFT);
+		r.fetch(Estudante_.pessoa, JoinType.LEFT).fetch(Pessoa_.usuario, JoinType.LEFT);
+		criteria.where(cb.equal(r.get(Estudante_.codEstudante), codUsuario));
 		return em.createQuery(criteria).getSingleResult();
 	}
 }

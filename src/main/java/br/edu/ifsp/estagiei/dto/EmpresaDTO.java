@@ -3,7 +3,6 @@ package br.edu.ifsp.estagiei.dto;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -17,8 +16,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
 public class EmpresaDTO implements DTOUtils {
-	@NotNull(message = MSG_NOT_NULL)
 	private Long codEmpresa;
+	@NotBlank(message = MSG_NOT_NULL)
 	private String razaoSocial;
 	private String nomeFantasia;
 	@NotBlank(message = MSG_NOT_NULL)

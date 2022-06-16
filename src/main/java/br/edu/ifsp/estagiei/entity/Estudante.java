@@ -1,6 +1,7 @@
 package br.edu.ifsp.estagiei.entity;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -38,10 +39,7 @@ public class Estudante {
 	private String expProfissional;
 
 	@ManyToMany
-	@JoinTable(
-		name = "tb_comp_estud",
-		joinColumns = @JoinColumn(name="cod_estudante"),
-		inverseJoinColumns = @JoinColumn(name="cod_competencia"))
+	@JoinTable(name = "tb_comp_estud", joinColumns = @JoinColumn(name = "cod_estudante"), inverseJoinColumns = @JoinColumn(name = "cod_competencia"))
 	private Set<Competencia> competencias = new HashSet<>();
 
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
@@ -51,8 +49,25 @@ public class Estudante {
 	@JoinColumn(name = "cod_pessoa")
 	@JsonIgnore
 	private Pessoa pessoa;
-	
+
 	public Boolean hasCompetencias() {
-		return Persistence.getPersistenceUtil().isLoaded(this,"competencias");
+		return Persistence.getPersistenceUtil().isLoaded(this, "competencias");
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(codEstudante);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Estudante))
+			return false;
+		Estudante other = (Estudante) obj;
+		return Objects.equals(codEstudante, other.codEstudante);
 	}
 }

@@ -1,5 +1,7 @@
 package br.edu.ifsp.estagiei.entity;
 
+import java.util.Objects;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,7 +43,25 @@ public class Usuario {
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE })
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = { CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REMOVE })
 	@JsonIgnore
 	private Pessoa pessoa;
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(codUsuario);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Usuario))
+			return false;
+		Usuario other = (Usuario) obj;
+		return Objects.equals(codUsuario, other.codUsuario);
+	}
 }
