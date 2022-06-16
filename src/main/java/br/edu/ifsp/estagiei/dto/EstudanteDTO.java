@@ -2,6 +2,7 @@ package br.edu.ifsp.estagiei.dto;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -27,6 +28,7 @@ public class EstudanteDTO implements DTOUtils {
 	private String nome;
     @Pattern(regexp = "([0-2][0-9]|3[0-1])\\/(0[1-9]|1[0-2])\\/[0-9]{4}")
 	private String dataNascimento;
+    @NotNull(message = MSG_NOT_NULL)
 	private String codEstudante;
 	private String instEnsino;
 	private String nvlEnsino;

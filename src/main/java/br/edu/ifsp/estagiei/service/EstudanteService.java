@@ -44,11 +44,15 @@ public class EstudanteService {
 
 	public List<VagaDTO> buscaVagasRecomendadas(String codEstudante) {
 
-		estudanteRepositorio.findById(codEstudante)
-				.orElseThrow(() -> new ValidacaoException("Estudante não encontrado"));
+		validaEstudanteVaga(codEstudante);
 
 		List<Vaga> vagas = vagaRepositorio.buscaVagasRecomendadas(codEstudante);
 		return vagaFactory.buildLista(vagas);
+	}
+
+	private void validaEstudanteVaga(String codEstudante) {
+		estudanteRepositorio.findById(codEstudante)
+				.orElseThrow(() -> new ValidacaoException("Estudante não encontrado"));
 	}
 
 	public void insereEstudanteViaGoogle(Payload payload, String estudanteId) {

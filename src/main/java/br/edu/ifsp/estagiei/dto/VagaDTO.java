@@ -3,7 +3,7 @@ package br.edu.ifsp.estagiei.dto;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -17,7 +17,7 @@ import lombok.Setter;
 @JsonInclude(Include.NON_NULL)
 @NoArgsConstructor
 public class VagaDTO implements DTOUtils {
-	@NotBlank(message = MSG_NOT_NULL)
+	@NotNull(message = MSG_NOT_NULL)
 	private Long codVaga;
 	private String titulo;
 	private String descricao;

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.google.common.collect.Lists;
 
-import br.edu.ifsp.estagiei.dto.VagaFiltroDTO;
+import br.edu.ifsp.estagiei.dto.filter.VagaFiltroDTO;
 import br.edu.ifsp.estagiei.entity.Competencia;
 import br.edu.ifsp.estagiei.entity.Competencia_;
 import br.edu.ifsp.estagiei.entity.Estudante;
