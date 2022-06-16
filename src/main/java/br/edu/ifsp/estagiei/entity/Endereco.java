@@ -1,5 +1,7 @@
 package br.edu.ifsp.estagiei.entity;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -44,8 +46,25 @@ public class Endereco {
 
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
-	
+
 	@JsonIgnore
 	@OneToOne(mappedBy = "endereco", fetch = FetchType.LAZY)
 	private Empresa empresa;
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(codEndereco);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Endereco))
+			return false;
+		Endereco other = (Endereco) obj;
+		return Objects.equals(codEndereco, other.codEndereco);
+	}
 }

@@ -1,6 +1,7 @@
 package br.edu.ifsp.estagiei.entity;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -27,10 +28,27 @@ public class Competencia {
 	private String descricao;
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
-	
-	@ManyToMany(mappedBy="competencias", fetch = FetchType.LAZY)
+
+	@ManyToMany(mappedBy = "competencias", fetch = FetchType.LAZY)
 	private Set<Vaga> vagas = new HashSet<>();
-	
-	@ManyToMany(mappedBy="competencias", fetch = FetchType.LAZY)
+
+	@ManyToMany(mappedBy = "competencias", fetch = FetchType.LAZY)
 	private Set<Estudante> estudantes = new HashSet<>();
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(codCompetencia);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Competencia))
+			return false;
+		Competencia other = (Competencia) obj;
+		return Objects.equals(codCompetencia, other.codCompetencia);
+	}
 }

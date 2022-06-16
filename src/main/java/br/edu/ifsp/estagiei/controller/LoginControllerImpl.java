@@ -3,6 +3,8 @@ package br.edu.ifsp.estagiei.controller;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +25,7 @@ public class LoginControllerImpl implements LoginController {
 
 	@PostMapping(path= "/loginEstudante")
 	@ResponseBody
-	public ResponseEntity<LoginGoogleDTO> login(@RequestBody LoginGoogleDTO loginDTO)
+	public ResponseEntity<LoginGoogleDTO> login(@RequestBody @Valid LoginGoogleDTO loginDTO)
 			throws GeneralSecurityException, IOException {
 
 		String codEstudante = service.validaToken(loginDTO);

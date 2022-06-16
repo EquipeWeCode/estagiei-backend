@@ -16,6 +16,5 @@ import lombok.Setter;
 public class LoginGoogleDTO implements DTOUtils {
 	@NotBlank(message = MSG_NOT_NULL)
 	private String token;
-	@NotBlank(message = MSG_NOT_NULL)
 	private String codEstudante;
 }
