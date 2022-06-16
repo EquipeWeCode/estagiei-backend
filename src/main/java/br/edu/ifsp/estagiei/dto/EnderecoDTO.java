@@ -1,6 +1,6 @@
 package br.edu.ifsp.estagiei.dto;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -14,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
 public class EnderecoDTO implements DTOUtils {
-	@NotBlank(message = MSG_NOT_NULL)
+	@NotNull(message = MSG_NOT_NULL)
 	private Long codEndereco;
 	private String logradouro;
 	private String numero;

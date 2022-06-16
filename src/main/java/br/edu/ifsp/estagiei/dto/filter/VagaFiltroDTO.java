@@ -1,5 +1,6 @@
-package br.edu.ifsp.estagiei.dto;
+package br.edu.ifsp.estagiei.dto.filter;
 
+import br.edu.ifsp.estagiei.dto.FiltroDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

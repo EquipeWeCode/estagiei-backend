@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 import br.edu.ifsp.estagiei.dto.VagaDTO;
-import br.edu.ifsp.estagiei.dto.VagaFiltroDTO;
+import br.edu.ifsp.estagiei.dto.filter.VagaFiltroDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifsp.estagiei.dto.VagaDTO;
-import br.edu.ifsp.estagiei.dto.VagaFiltroDTO;
+import br.edu.ifsp.estagiei.dto.filter.VagaFiltroDTO;
 import br.edu.ifsp.estagiei.service.VagaService;
 
 @RestController

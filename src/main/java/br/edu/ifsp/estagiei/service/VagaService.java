@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifsp.estagiei.dto.VagaDTO;
-import br.edu.ifsp.estagiei.dto.VagaFiltroDTO;
 import br.edu.ifsp.estagiei.dto.factory.VagaDTOFactory;
+import br.edu.ifsp.estagiei.dto.filter.VagaFiltroDTO;
 import br.edu.ifsp.estagiei.entity.Vaga;
 import br.edu.ifsp.estagiei.repository.VagaRepository;
 
