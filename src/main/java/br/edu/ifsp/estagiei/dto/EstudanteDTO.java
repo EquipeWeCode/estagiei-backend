@@ -17,6 +17,7 @@ import lombok.Setter;
 @JsonInclude(Include.NON_NULL)
 public class EstudanteDTO implements DTOUtils {
 	
+	private String codEstudante;
 	private Long codUsuario;
 	private String email;
 	private String avatar;
@@ -25,7 +26,6 @@ public class EstudanteDTO implements DTOUtils {
 	private String rg;
 	private String nome;
 	private String dataNascimento;
-	private String codEstudante;
 	private String instEnsino;
 	private String nvlEnsino;
 	private String expProfissional;
