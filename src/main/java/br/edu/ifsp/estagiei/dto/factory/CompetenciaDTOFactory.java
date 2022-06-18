@@ -1,5 +1,6 @@
 package br.edu.ifsp.estagiei.dto.factory;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,8 +25,11 @@ public class CompetenciaDTOFactory {
 		return dto;
 	}
 	
-	public List<Competencia> buildEntities(List<CompetenciaDTO> dtos) {
-		return dtos.stream().map(this::buildEntity).collect(Collectors.toList());
+	public Set<Competencia> buildEntities(List<CompetenciaDTO> dtos) {
+		if(dtos != null && dtos.size() > 0) {			
+			return dtos.stream().map(this::buildEntity).collect(Collectors.toSet());
+		}
+		return new HashSet<>();
 	}
 
 	public Competencia buildEntity(CompetenciaDTO dto) {

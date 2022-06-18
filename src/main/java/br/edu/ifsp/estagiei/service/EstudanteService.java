@@ -1,17 +1,23 @@
 package br.edu.ifsp.estagiei.service;
 
+import java.time.LocalDate;
 import java.util.List;
+
+import javax.persistence.NoResultException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+import com.google.common.collect.Lists;
 
+import br.edu.ifsp.estagiei.dto.CompetenciaDTO;
 import br.edu.ifsp.estagiei.dto.EstudanteDTO;
 import br.edu.ifsp.estagiei.dto.VagaDTO;
 import br.edu.ifsp.estagiei.dto.factory.EstudanteDTOFactory;
 import br.edu.ifsp.estagiei.dto.factory.VagaDTOFactory;
+import br.edu.ifsp.estagiei.entity.Competencia;
 import br.edu.ifsp.estagiei.entity.Estudante;
 import br.edu.ifsp.estagiei.entity.Pessoa;
 import br.edu.ifsp.estagiei.entity.Usuario;
@@ -29,14 +35,13 @@ public class EstudanteService {
 	private VagaRepository vagaRepositorio;
 	@Autowired
 	private VagaDTOFactory vagaFactory;
-
 	@Autowired
-	private EstudanteDTOFactory factory;
+	private EstudanteDTOFactory estudanteFactory;
 
 	public EstudanteDTO findEstudanteByCodEstudante(String id) {
 		try {
 			Estudante estd = estudanteRepositorio.findByCodEstudante(id);
-			return factory.buildEstudante(estd);
+			return estudanteFactory.buildEstudante(estd);
 		} catch (EmptyResultDataAccessException e) {
 			throw new ValidacaoException("Estudante não encontrado");
 		}
@@ -55,7 +60,7 @@ public class EstudanteService {
 				.orElseThrow(() -> new ValidacaoException("Estudante não encontrado"));
 	}
 
-	public void insereEstudanteViaGoogle(Payload payload, String estudanteId) {
+	public void insereEstudanteViaGoogle(Payload payload, String codEstudante) {
 		String email = payload.getEmail();
 		String nome = (String) payload.get("name");
 		String avatarUrl = (String) payload.get("picture");
@@ -69,9 +74,64 @@ public class EstudanteService {
 		pessoa.setUsuario(usuario);
 
 		Estudante estudante = new Estudante();
-		estudante.setCodEstudante(estudanteId);
+		estudante.setCodEstudante(codEstudante);
 		estudante.setPessoa(pessoa);
 
 		estudanteRepositorio.save(estudante);
+	}
+
+	public EstudanteDTO salvaEstudante(EstudanteDTO dto) {
+		Estudante estudanteBuscado = null;
+		try {			
+			estudanteBuscado = estudanteRepositorio.findByCodEstudante(dto.getCodEstudante());
+		} catch(NoResultException ex) {
+			throw new ValidacaoException("Estudante não encontrado");
+		}
+
+		atualizaDadosEstudante(estudanteBuscado, dto);
+		
+		Estudante estudanteSalvo = estudanteRepositorio.save(estudanteBuscado);
+		return estudanteFactory.buildEstudante(estudanteSalvo);
+	}
+
+	private void atualizaDadosEstudante(Estudante estudanteBuscado, EstudanteDTO dto) {
+		salvaPessoa(estudanteBuscado, dto);
+		List<CompetenciaDTO> competencias = Lists.newArrayList();
+		if(dto.hasCompetencias()) {			
+			competencias = dto.getCompetencias();
+		}
+		salvaCompetencias(estudanteBuscado, competencias);
+
+	}
+	
+	private void salvaPessoa(Estudante estudanteBuscado, EstudanteDTO dto) {
+		Pessoa pessoa = estudanteBuscado.getPessoa();
+		
+		String cpfNumeros = dto.hasCpf() ? dto.getCpf().replaceAll("\\D+","") : "";
+		
+		pessoa.setCpf(cpfNumeros);
+		
+		if(dto.hasDataNascimento()) {			
+			LocalDate localDate = LocalDate.parse(dto.getDataNascimento());
+			pessoa.setDataNascimento(localDate);
+		}
+		
+		if(dto.hasNome()) {			
+			pessoa.setNome(dto.getNome());
+		}
+		pessoa.setRg(dto.getRg());
+		pessoa.setTipContato("TEL"); // fixo por enquanto
+		pessoa.setValorContato(dto.getContato());
+		estudanteBuscado.setPessoa(pessoa);
+	}
+
+	private void salvaCompetencias(Estudante estudanteBuscado, List<CompetenciaDTO> competencias) {
+		List<Competencia> novasCompetencias = Lists.newArrayList();
+
+		for (CompetenciaDTO dto : competencias) {
+			Competencia novaCompetencia = estudanteBuscado.novaCompetencia(dto.getCodCompetencia());
+			novasCompetencias.add(novaCompetencia);
+		}
+		estudanteBuscado.getCompetencias().retainAll(novasCompetencias);
 	}
 }

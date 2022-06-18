@@ -21,6 +21,7 @@ public class EstudanteDTOBuilder {
 		dto.setCpf(estudante.getCpf());
 		dto.setRg(estudante.getRg());
 		dto.setEmail(estudante.getEmail());
+		dto.setContato(estudante.getContato());
 		dto.setDataNascimento(estudante.getDataNascimento());
 		dto.setExpProfissional(estudante.getExpProfissional());
 		dto.setNome(estudante.getNome());
@@ -58,6 +59,11 @@ public class EstudanteDTOBuilder {
 
 	public EstudanteDTOBuilder nome(String nome) {
 		estudante.setNome(nome);
+		return this;
+	}
+	
+	public EstudanteDTOBuilder contato(String contato) {
+		estudante.setContato(contato);
 		return this;
 	}
 
