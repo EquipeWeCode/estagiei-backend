@@ -15,6 +15,7 @@ public abstract class Empresa_ {
 	public static volatile SingularAttribute<Empresa, Endereco> endereco;
 	public static volatile SingularAttribute<Empresa, Long> codEmpresa;
 	public static volatile SingularAttribute<Empresa, Boolean> indAtivo;
+	public static volatile SingularAttribute<Empresa, Usuario> usuario;
 	public static volatile SingularAttribute<Empresa, String> cnpj;
 	public static volatile SingularAttribute<Empresa, String> razaoSocial;
 
@@ -24,6 +25,7 @@ public abstract class Empresa_ {
 	public static final String ENDERECO = "endereco";
 	public static final String COD_EMPRESA = "codEmpresa";
 	public static final String IND_ATIVO = "indAtivo";
+	public static final String USUARIO = "usuario";
 	public static final String CNPJ = "cnpj";
 	public static final String RAZAO_SOCIAL = "razaoSocial";
 

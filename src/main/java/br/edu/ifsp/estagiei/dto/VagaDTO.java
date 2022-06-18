@@ -3,6 +3,7 @@ package br.edu.ifsp.estagiei.dto;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -14,13 +15,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@JsonInclude(Include.NON_NULL)
 @NoArgsConstructor
+@JsonInclude(Include.NON_NULL)
 public class VagaDTO implements DTOUtils {
-	@NotNull(message = MSG_NOT_NULL)
 	private Long codVaga;
+	@NotBlank(message = MSG_NOT_NULL)
 	private String titulo;
 	private String descricao;
+	@NotNull(message = MSG_NOT_NULL)
 	private BigDecimal salario;
 	private EmpresaDTO empresa;	
 	private List<CompetenciaDTO> competencias;

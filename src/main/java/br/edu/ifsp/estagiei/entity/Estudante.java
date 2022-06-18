@@ -54,6 +54,20 @@ public class Estudante {
 		return Persistence.getPersistenceUtil().isLoaded(this, "competencias");
 	}
 
+	public Boolean hasPessoa() {
+		return Persistence.getPersistenceUtil().isLoaded(this, "pessoa");
+	}
+
+	public Competencia novaCompetencia(Long codCompetencia) {
+		Competencia novaCompetencia = new Competencia();
+		novaCompetencia.setCodCompetencia(codCompetencia);
+
+		Competencia competencia = competencias.stream().filter(c -> c.equals(novaCompetencia)).findFirst()
+				.orElse(novaCompetencia);
+		competencias.add(competencia);
+		return competencia;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(codEstudante);

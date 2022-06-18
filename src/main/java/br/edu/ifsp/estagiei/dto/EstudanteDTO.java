@@ -2,9 +2,7 @@ package br.edu.ifsp.estagiei.dto;
 
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -22,17 +20,32 @@ public class EstudanteDTO implements DTOUtils {
 	private Long codUsuario;
 	private String email;
 	private String avatar;
-	@Size(min = 11, max=14, message = "deve estar entre 11 e 14 caracteres")
+	@CPF(message = "CPF Inválido")
 	private String cpf;
 	private String rg;
 	private String nome;
-    @Pattern(regexp = "([0-2][0-9]|3[0-1])\\/(0[1-9]|1[0-2])\\/[0-9]{4}")
 	private String dataNascimento;
-    @NotNull(message = MSG_NOT_NULL)
 	private String codEstudante;
 	private String instEnsino;
 	private String nvlEnsino;
-	private String expProfissional;	
+	private String expProfissional;
+	private String contato;
 	
 	private List<CompetenciaDTO> competencias;
+
+	public boolean hasDataNascimento() {
+		return dataNascimento != null && !dataNascimento.isEmpty();
+	}
+	
+	public boolean hasNome() {
+		return nome != null && !nome.isEmpty();
+	}
+	
+	public boolean hasCpf() {
+		return cpf != null && !cpf.isEmpty();
+	}
+	
+	public boolean hasCompetencias() {
+		return getCompetencias() != null && getCompetencias().size()>0;
+	}
 }

@@ -2,10 +2,14 @@ package br.edu.ifsp.estagiei.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,10 +32,18 @@ public class EstudanteControllerImpl implements EstudanteController {
 		EstudanteDTO estudante = service.findEstudanteByCodEstudante(codEstudante);
 		return ResponseEntity.ok(estudante);
 	}
-	
+
 	@GetMapping(PATH_ID + "/recomendacao")
 	public ResponseEntity<List<VagaDTO>> getVagasRecomendadas(@PathVariable String codEstudante) {
 		List<VagaDTO> vagas = service.buscaVagasRecomendadas(codEstudante);
 		return ResponseEntity.ok(vagas);
+	}
+
+	@PutMapping(PATH_ID)
+	public ResponseEntity<EstudanteDTO> putEstudante(@PathVariable String codEstudante,
+			@RequestBody @Valid EstudanteDTO dto) {
+		dto.setCodEstudante(codEstudante);
+		EstudanteDTO estudante = service.salvaEstudante(dto);
+		return ResponseEntity.ok(estudante);
 	}
 }
