@@ -57,6 +57,10 @@ public class Vaga {
 	public Boolean hasCompetencias() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "competencias");
 	}
+	
+	public Boolean hasEmpresa() {
+		return Persistence.getPersistenceUtil().isLoaded(this, "empresa");
+	}
 
 	@Override
 	public int hashCode() {

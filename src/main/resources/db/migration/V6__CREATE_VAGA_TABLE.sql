@@ -10,5 +10,6 @@ CREATE TABLE IF NOT EXISTS TB_VAGA (
 );
 
 INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO) VALUES (777666, 777666, 'Vaga disponível para atuar no desenvolvimento front-end do nosso sistema focado em vagas de estágio!', 3500.98, 'Desenvolvedor Front-End');
-INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO) VALUES (777667, 777666, 'Aqui você irá aprender: Java com Spring Boot e Oracle PLSQL, venha conosco nessa jornada!', 2567.42, 'Desenvolvedor Back-End Java');
-INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO) VALUES (777668, 777666, 'Se você é dedicado e gosta de aprender, essa vaga é para você!', 1200.56, 'Manutenção de computadores');
+INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO) VALUES (777667, 777667, 'Aqui você irá aprender: Java com Spring Boot e Oracle PLSQL, venha conosco nessa jornada!', 2567.42, 'Desenvolvedor Back-End Java');
+INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO) VALUES (777668, 777667, 'Se você é dedicado e gosta de aprender, essa vaga é para você!', 1200.56, 'Manutenção de computadores');
+INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO) VALUES (777669, 777668, 'Venha com a gente aprender a ser um desenvolvedor web!', 1780.56, 'Desenvolvimento Web');

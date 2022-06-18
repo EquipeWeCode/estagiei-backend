@@ -20,6 +20,8 @@ public class VagaDTOFactory {
 	@Autowired
 	private CompetenciaDTOFactory competenciaFactory;
 
+	private EmpresaDTOFactory empresaFactory = new EmpresaDTOFactory();
+
 	public Set<Vaga> buildVagas(List<VagaDTO> dto) {
 		return dto.stream().map(this::buildEntity).collect(Collectors.toSet());
 	}
@@ -30,8 +32,8 @@ public class VagaDTOFactory {
 		vaga.setDescricao(dto.getDescricao());
 		vaga.setTitulo(dto.getTitulo());
 		vaga.setSalario(dto.getSalario());
-		// vaga.setEmpresa(empresaFactory.buildEntity(dto.getEmpresa()));
-		// vaga.setCompetencias(this.buildEntities(dto.getCompetencias());
+//		 vaga.setEmpresa(empresaFactory.buildEntity(dto.getEmpresa()));
+//		 vaga.setCompetencias(this.buildEntities(dto.getCompetencias());
 		vaga.setIndAtivo(dto.getIndAtivo());
 		return vaga;
 	}
@@ -44,9 +46,15 @@ public class VagaDTOFactory {
 		VagaDTOBuilder builder = VagaDTOBuilder.newInstance();
 
 		builder
-				// .empresa(vaga.getEmpresa())
-				.codVaga(vaga.getCodVaga()).descricao(vaga.getDescricao()).titulo(vaga.getTitulo())
-				.indAtivo(vaga.getIndAtivo()).salario(vaga.getSalario());
+				.codVaga(vaga.getCodVaga())
+				.descricao(vaga.getDescricao())
+				.titulo(vaga.getTitulo())
+				.indAtivo(vaga.getIndAtivo())
+				.salario(vaga.getSalario());
+		
+		if(vaga.hasEmpresa()) {
+			builder.empresa(empresaFactory.buildEmpresa(vaga.getEmpresa()));
+		}
 
 		if (vaga.hasCompetencias()) {
 			Set<Competencia> competencias = vaga.getCompetencias().stream().collect(Collectors.toSet());
