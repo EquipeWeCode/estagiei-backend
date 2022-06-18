@@ -28,21 +28,32 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	public List<Vaga> buscaVagasRecomendadas(String codEstudante) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Vaga> criteria = cb.createQuery(Vaga.class);
 		Root<Vaga> r = criteria.from(Vaga.class);
-		
+
 		Join<Vaga, Competencia> joinCompetencias = r.join(Vaga_.competencias, JoinType.LEFT);
 		Join<Competencia, Estudante> joinEstudantes = joinCompetencias.join(Competencia_.estudantes, JoinType.LEFT);
 
 		criteria.distinct(true).select(r).where(cb.equal(joinEstudantes.get(Estudante_.codEstudante), codEstudante));
-		
+
 		criteria.groupBy(r.get(Vaga_.codVaga));
 		criteria.orderBy(cb.asc(r.get(Vaga_.titulo)));
 
-		return em.createQuery(criteria).getResultList();
+		List<Vaga> vagasRecomendadas = em.createQuery(criteria).getResultList();
+
+		VagaFiltroDTO filtroVaga = new VagaFiltroDTO();
+		List<Long> ids = Lists.newArrayList();
+
+		for (Vaga vaga : vagasRecomendadas) {
+			ids.add(vaga.getCodVaga());
+		}
+
+		filtroVaga.setIds(ids);
+
+		return buscaTodosPorFiltro(filtroVaga);
 	}
 
 	@Override
@@ -51,15 +62,16 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 		CriteriaQuery<Vaga> criteria = cb.createQuery(Vaga.class);
 		Root<Vaga> r = criteria.from(Vaga.class);
 
-		r.fetch("competencias", JoinType.LEFT);
+		r.fetch(Vaga_.competencias, JoinType.LEFT);
+		r.fetch(Vaga_.empresa, JoinType.INNER);
 
 		criteria.distinct(true).select(r).where(aplicaFiltros(r, filtro));
 
 		if (filtro.hasOrdem()) {
 			if ("DESC".equals(filtro.getOrdemFiltro())) {
-				criteria.orderBy(cb.desc(r.get("titulo")));
+				criteria.orderBy(cb.desc(r.get(Vaga_.titulo)));
 			} else {
-				criteria.orderBy(cb.asc(r.get("titulo")));
+				criteria.orderBy(cb.asc(r.get(Vaga_.titulo)));
 			}
 		}
 
@@ -71,10 +83,13 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 		List<Predicate> predicates = Lists.newArrayList();
 
 		if (filtro.hasDescricao()) {
-			predicates.add(cb.like(cb.upper(root.get("descricao")), filtro.getDescricaoFiltro()));
+			predicates.add(cb.like(cb.upper(root.get(Vaga_.descricao)), filtro.getDescricaoFiltro()));
 		}
 		if (filtro.hasTitulo()) {
-			predicates.add(cb.like(cb.upper(root.get("titulo")), filtro.getTituloFiltro()));
+			predicates.add(cb.like(cb.upper(root.get(Vaga_.titulo)), filtro.getTituloFiltro()));
+		}
+		if (filtro.hasIds()) {
+			predicates.add(root.get(Vaga_.codVaga).in(filtro.getIds()));
 		}
 
 		return predicates.stream().toArray(Predicate[]::new);
