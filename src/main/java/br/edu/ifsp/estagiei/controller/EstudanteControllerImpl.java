@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifsp.estagiei.dto.EstudanteDTO;
 import br.edu.ifsp.estagiei.dto.VagaDTO;
+import br.edu.ifsp.estagiei.dto.filter.EstudanteFiltroDTO;
 import br.edu.ifsp.estagiei.service.EstudanteService;
 
 @RestController
@@ -31,6 +32,12 @@ public class EstudanteControllerImpl implements EstudanteController {
 	public ResponseEntity<EstudanteDTO> getEstudante(@PathVariable String codEstudante) {
 		EstudanteDTO estudante = service.findEstudanteByCodEstudante(codEstudante);
 		return ResponseEntity.ok(estudante);
+	}
+	
+	@GetMapping()
+	public ResponseEntity<List<EstudanteDTO>> getEstudantes(EstudanteFiltroDTO filtro) {
+		List<EstudanteDTO> estudantes = service.buscaTodos(filtro);
+		return ResponseEntity.ok(estudantes);
 	}
 
 	@GetMapping(PATH_ID + "/recomendacao")

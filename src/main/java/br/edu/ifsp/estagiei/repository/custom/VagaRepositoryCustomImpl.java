@@ -52,11 +52,13 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 		}
 
 		filtroVaga.setIds(ids);
-
-		return buscaTodosPorFiltro(filtroVaga);
+		
+		if(filtroVaga.hasIds()) {			
+			return buscaTodosPorFiltro(filtroVaga);
+		}
+		return vagasRecomendadas;
 	}
 
-	@Override
 	public List<Vaga> buscaTodosPorFiltro(VagaFiltroDTO filtro) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Vaga> criteria = cb.createQuery(Vaga.class);

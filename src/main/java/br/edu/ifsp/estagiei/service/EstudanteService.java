@@ -17,6 +17,7 @@ import br.edu.ifsp.estagiei.dto.EstudanteDTO;
 import br.edu.ifsp.estagiei.dto.VagaDTO;
 import br.edu.ifsp.estagiei.dto.factory.EstudanteDTOFactory;
 import br.edu.ifsp.estagiei.dto.factory.VagaDTOFactory;
+import br.edu.ifsp.estagiei.dto.filter.EstudanteFiltroDTO;
 import br.edu.ifsp.estagiei.entity.Competencia;
 import br.edu.ifsp.estagiei.entity.Estudante;
 import br.edu.ifsp.estagiei.entity.Pessoa;
@@ -67,7 +68,7 @@ public class EstudanteService {
 
 		Usuario usuario = new Usuario();
 		Pessoa pessoa = new Pessoa();
-		pessoa.setNome(nome);
+		pessoa.setNome(!nome.isEmpty() ? nome.toUpperCase() : "");
 
 		usuario.setAvatar(avatarUrl);
 		usuario.setEmail(email);
@@ -117,7 +118,7 @@ public class EstudanteService {
 		}
 		
 		if(dto.hasNome()) {			
-			pessoa.setNome(dto.getNome());
+			pessoa.setNome(dto.getNome().toUpperCase());
 		}
 		pessoa.setRg(dto.getRg());
 		pessoa.setTipContato("TEL"); // fixo por enquanto
@@ -134,4 +135,10 @@ public class EstudanteService {
 		}
 		estudanteBuscado.getCompetencias().retainAll(novasCompetencias);
 	}
+
+	public List<EstudanteDTO> buscaTodos(EstudanteFiltroDTO filtro) {
+		List<Estudante> estudantes = estudanteRepositorio.buscaTodosPorFiltro(filtro);
+		return estudanteFactory.buildLista(estudantes);
+	}
+
 }
