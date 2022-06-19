@@ -2,6 +2,8 @@ package br.edu.ifsp.estagiei.dto;
 
 import java.util.List;
 
+import javax.validation.constraints.Pattern;
+
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -25,6 +27,7 @@ public class EstudanteDTO implements DTOUtils {
 	private String cpf;
 	private String rg;
 	private String nome;
+	@Pattern(regexp = DATE_PATTERN, message = "Formato errado (yyyy-mm-dd)")
 	private String dataNascimento;
 	private String instEnsino;
 	private String nvlEnsino;

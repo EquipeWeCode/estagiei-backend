@@ -8,7 +8,7 @@ public abstract class EstagieiUtils {
 	public static String dataNascimentoParaString(LocalDate data) {
 		String text = "";
 		if (data != null) {
-			DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			DateTimeFormatter formatters = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			text = data.format(formatters);
 		}
 		return text;
