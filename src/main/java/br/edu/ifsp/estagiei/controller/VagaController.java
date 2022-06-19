@@ -13,4 +13,8 @@ public interface VagaController extends Controller {
 	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Retorna a lista de todas as vagas cadastradas", tags = { VAGA })
 	public ResponseEntity<List<VagaDTO>> getVagas(VagaFiltroDTO filtro);
+	
+	@ApiResponse(responseCode = "201")
+	@Operation(summary = "Cria uma nova vaga", tags = { VAGA })
+	public ResponseEntity<VagaDTO> postVaga(VagaDTO dto);
 }

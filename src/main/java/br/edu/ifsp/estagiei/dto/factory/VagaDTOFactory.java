@@ -7,9 +7,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.edu.ifsp.estagiei.dto.EmpresaDTO;
 import br.edu.ifsp.estagiei.dto.VagaDTO;
 import br.edu.ifsp.estagiei.dto.builder.VagaDTOBuilder;
 import br.edu.ifsp.estagiei.entity.Competencia;
+import br.edu.ifsp.estagiei.entity.Empresa;
 import br.edu.ifsp.estagiei.entity.Vaga;
 import lombok.NoArgsConstructor;
 
@@ -32,10 +34,16 @@ public class VagaDTOFactory {
 		vaga.setDescricao(dto.getDescricao());
 		vaga.setTitulo(dto.getTitulo());
 		vaga.setSalario(dto.getSalario());
-//		 vaga.setEmpresa(empresaFactory.buildEntity(dto.getEmpresa()));
-//		 vaga.setCompetencias(this.buildEntities(dto.getCompetencias());
+		vaga.setEmpresa(this.buildEmpresa(dto.getEmpresa()));
+		vaga.setCompetencias(competenciaFactory.buildEntities(dto.getCompetencias()));
 		vaga.setIndAtivo(dto.getIndAtivo());
 		return vaga;
+	}
+
+	private Empresa buildEmpresa(EmpresaDTO dto) {
+		Empresa empresa = new Empresa();
+		empresa.setCodEmpresa(dto.getCodEmpresa());
+		return empresa;
 	}
 
 	public List<VagaDTO> buildLista(List<Vaga> vagas) {
