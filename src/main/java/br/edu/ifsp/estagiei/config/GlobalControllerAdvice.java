@@ -8,8 +8,10 @@ import java.util.UUID;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -76,25 +78,15 @@ public class GlobalControllerAdvice {
 
 	}
 
-	@ExceptionHandler(ConstraintViolationException.class)
+	@ExceptionHandler(DataIntegrityViolationException.class)
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	public ResponseEntity<CustomErrorMessage> handleConstraintViolatedException(ConstraintViolationException ex
+	public ResponseEntity<CustomErrorMessage> handleConstraintViolatedException(DataIntegrityViolationException ex
 
 	) {
+			
+		String erro = "Violação de constraint no banco de dados";
 
-		Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
-
-		List<String> errors = new ArrayList<>(constraintViolations.size());
-
-		String error;
-
-		for (@SuppressWarnings("rawtypes")
-		ConstraintViolation constraintViolation : constraintViolations) {
-			error = constraintViolation.getMessage();
-			errors.add(error);
-		}
-
-		CustomErrorMessage errorMessage = new CustomErrorMessage(errors);
+		CustomErrorMessage errorMessage = new CustomErrorMessage(erro);
 
 		return new ResponseEntity<CustomErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
 
@@ -152,11 +144,20 @@ public class GlobalControllerAdvice {
 		}
 		return new ResponseEntity<CustomErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
 	}
-	
+
+//	@ExceptionHandler(ConstraintViolationException.class)
+//	@ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
+//	public ResponseEntity<CustomErrorMessage> handleSqlException(ValidacaoException ex) {
+//		List<String> errors = new ArrayList<>();
+//		String error = ex.getMessage();
+//		errors.add(error);
+//		CustomErrorMessage errorMessage = new CustomErrorMessage(errors);
+//		return new ResponseEntity<CustomErrorMessage>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+//	}
+
 	@ExceptionHandler(ValidacaoException.class)
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	public ResponseEntity<CustomErrorMessage> handleValidacaoException(
-			ValidacaoException ex
+	public ResponseEntity<CustomErrorMessage> handleValidacaoException(ValidacaoException ex
 
 	) {
 
