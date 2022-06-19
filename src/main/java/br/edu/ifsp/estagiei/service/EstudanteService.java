@@ -101,6 +101,7 @@ public class EstudanteService {
 		if(dto.hasCompetencias()) {			
 			competencias = dto.getCompetencias();
 		}
+		estudanteBuscado.setInstEnsino(dto.getInstEnsino());
 		salvaCompetencias(estudanteBuscado, competencias);
 
 	}
