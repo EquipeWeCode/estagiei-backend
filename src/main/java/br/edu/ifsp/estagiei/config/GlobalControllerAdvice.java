@@ -2,13 +2,8 @@ package br.edu.ifsp.estagiei.config;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-
-import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
