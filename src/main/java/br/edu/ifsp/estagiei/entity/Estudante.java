@@ -31,12 +31,6 @@ public class Estudante {
 	@Id
 	@Column(name = "cod_estudante", updatable = false)
 	private String codEstudante;
-	@Column(name = "inst_ensino")
-	private String instEnsino;
-	@Column(name = "nvl_ensino")
-	private String nvlEnsino;
-	@Column(name = "expProfissional")
-	private String expProfissional;
 
 	@ManyToMany
 	@JoinTable(name = "tb_comp_estud", joinColumns = @JoinColumn(name = "cod_estudante"), inverseJoinColumns = @JoinColumn(name = "cod_competencia"))

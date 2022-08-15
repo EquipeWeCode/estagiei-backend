@@ -40,10 +40,6 @@ public class Pessoa {
 	private String cpf;
 	@Column(name = "nome")
 	private String nome;
-	@Column(name = "tip_contato")
-	private String tipContato;
-	@Column(name = "valor_contato")
-	private String valorContato;
 
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
