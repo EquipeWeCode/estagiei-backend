@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.edu.ifsp.estagiei.dto.EmpresaDTO;
-import br.edu.ifsp.estagiei.dto.builder.EmpresaDTOBuilder;
+import br.edu.ifsp.estagiei.dto.EmpresaDTO.EmpresaDTOBuilder;
 import br.edu.ifsp.estagiei.entity.Empresa;
 import br.edu.ifsp.estagiei.entity.Vaga;
 import lombok.NoArgsConstructor;
@@ -24,7 +24,7 @@ public class EmpresaDTOFactory {
 
 	public EmpresaDTO buildEmpresa(Empresa empresa) {
 		
-		EmpresaDTOBuilder builder =  EmpresaDTOBuilder.newInstance()
+		EmpresaDTOBuilder builder =  EmpresaDTO.builder()
 				.codEmpresa(empresa.getCodEmpresa())
 				.nomeFantasia(empresa.getNomeFantasia())
 				.razaoSocial(empresa.getRazaoSocial())

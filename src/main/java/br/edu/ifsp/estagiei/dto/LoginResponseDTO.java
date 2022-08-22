@@ -17,9 +17,11 @@ public class LoginResponseDTO {
 	private String accessToken;
 	private final String tokenType = "bearer";
 	private List<String> roles;
+	private Long expiresIn;
 	
-	public LoginResponseDTO(String accessToken, List<String> roles) {
+	public LoginResponseDTO(String accessToken, List<String> roles, Long expiresIn) {
 		this.accessToken = accessToken;
 		this.roles = roles;
+		this.expiresIn = expiresIn;
 	}
 }

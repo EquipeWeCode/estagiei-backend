@@ -25,7 +25,7 @@ public class LoginService {
 
 		Set<Permissao> permissoes = user.getPermissoes();
 		List<String> permissoesString = permissoes.stream().map(p -> p.toString()).collect(Collectors.toList());
-		LoginResponseDTO dto = new LoginResponseDTO(accessToken, permissoesString);
+		LoginResponseDTO dto = new LoginResponseDTO(accessToken, permissoesString, JwtTokenUtil.EXPIRE_DURATION);
 
 		return dto;
 	}

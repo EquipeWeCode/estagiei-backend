@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import br.edu.ifsp.estagiei.dto.EmpresaDTO;
 import br.edu.ifsp.estagiei.dto.VagaDTO;
-import br.edu.ifsp.estagiei.dto.builder.VagaDTOBuilder;
+import br.edu.ifsp.estagiei.dto.VagaDTO.VagaDTOBuilder;
 import br.edu.ifsp.estagiei.entity.Competencia;
 import br.edu.ifsp.estagiei.entity.Empresa;
 import br.edu.ifsp.estagiei.entity.Vaga;
@@ -51,16 +51,12 @@ public class VagaDTOFactory {
 	}
 
 	public VagaDTO buildVaga(Vaga vaga) {
-		VagaDTOBuilder builder = VagaDTOBuilder.newInstance();
+		VagaDTOBuilder builder = VagaDTO.builder();
 
-		builder
-				.codVaga(vaga.getCodVaga())
-				.descricao(vaga.getDescricao())
-				.titulo(vaga.getTitulo())
-				.indAtivo(vaga.getIndAtivo())
-				.salario(vaga.getSalario());
-		
-		if(vaga.hasEmpresa()) {
+		builder.codVaga(vaga.getCodVaga()).descricao(vaga.getDescricao()).titulo(vaga.getTitulo())
+				.indAtivo(vaga.getIndAtivo()).salario(vaga.getSalario());
+
+		if (vaga.hasEmpresa()) {
 			builder.empresa(empresaFactory.buildEmpresa(vaga.getEmpresa()));
 		}
 

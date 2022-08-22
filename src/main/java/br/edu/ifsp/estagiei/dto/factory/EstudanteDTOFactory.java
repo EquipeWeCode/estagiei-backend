@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.edu.ifsp.estagiei.dto.EstudanteDTO;
+import br.edu.ifsp.estagiei.dto.EstudanteDTO.EstudanteDTOBuilder;
 import br.edu.ifsp.estagiei.entity.Competencia;
 import br.edu.ifsp.estagiei.entity.Estudante;
 import br.edu.ifsp.estagiei.utils.EstagieiUtils;
@@ -30,7 +31,7 @@ public class EstudanteDTOFactory {
 		LocalDate dataNasc = estudante.getPessoa().getDataNascimento();
 		String dataFormatada = EstagieiUtils.dateParaString(dataNasc);
 
-		br.edu.ifsp.estagiei.dto.EstudanteDTO.EstudanteDTOBuilder builder = EstudanteDTO.builder()
+		EstudanteDTOBuilder builder = EstudanteDTO.builder()
 				.codEstudante(estudante.getCodEstudante()).avatar(estudante.getPessoa().getUsuario().getAvatar())
 				.email(estudante.getPessoa().getUsuario().getEmail()).cpf(formataCpf(estudante.getPessoa().getCpf()))
 				.rg(estudante.getPessoa().getRg()).nome(estudante.getPessoa().getNome())
