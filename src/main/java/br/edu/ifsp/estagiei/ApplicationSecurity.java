@@ -27,9 +27,6 @@ import br.edu.ifsp.estagiei.jwt.JwtTokenFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class ApplicationSecurity {
 
-//	@Autowired
-//	private UsuarioRepository userRepo;
-
 	AuthenticationManager authenticationManager;
 
 	@Autowired
@@ -46,11 +43,6 @@ public class ApplicationSecurity {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-//		AuthenticationManagerBuilder authenticationManagerBuilder = http
-//				.getSharedObject(AuthenticationManagerBuilder.class);
-//		authenticationManagerBuilder.userDetailsService(username -> userRepo.findByEmail(username)
-//				.orElseThrow(() -> new UsernameNotFoundException("Usuário " + username + " não encontrado.")));
-
 		AuthenticationManagerBuilder authenticationManagerBuilder = http
 				.getSharedObject(AuthenticationManagerBuilder.class);
 		authenticationManagerBuilder.userDetailsService(userDetailsService);
@@ -59,7 +51,7 @@ public class ApplicationSecurity {
 		http.csrf().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-		http.authorizeRequests().antMatchers("/api/login", "/login", "/swagger-ui/**", "/api/vaga", "/api/competencia")
+		http.authorizeRequests().antMatchers("/login", "/v3/**", "/swagger-ui/**")
 				.permitAll().anyRequest().authenticated();
 
 		http.exceptionHandling().authenticationEntryPoint((request, response, ex) -> {
@@ -78,9 +70,4 @@ public class ApplicationSecurity {
 			throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
-
-//	@Bean
-//	AuthenticationManager authenticationManager(AuthenticationManagerBuilder builder) throws Exception {
-//		return builder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder()).and().build();
-//	}
 }
