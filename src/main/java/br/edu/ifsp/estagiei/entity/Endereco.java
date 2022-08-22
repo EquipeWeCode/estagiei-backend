@@ -43,6 +43,8 @@ public class Endereco {
 	private Integer cep;
 	@Column(name = "complemento")
 	private String complemento;
+	@Column(name = "ponto_referencia")
+	private String pontoReferencia;
 
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
