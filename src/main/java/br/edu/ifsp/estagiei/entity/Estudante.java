@@ -30,7 +30,7 @@ import lombok.Setter;
 public class Estudante {
 	@Id
 	@Column(name = "cod_estudante", updatable = false)
-	private String codEstudante;
+	private Long codEstudante;
 	@Column(name = "inst_ensino")
 	private String instEnsino;
 	@Column(name = "nvl_ensino")

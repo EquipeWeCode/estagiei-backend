@@ -26,7 +26,7 @@ public class EstudanteRepositoryCustomImpl implements EstudanteRepositoryCustom 
 	@PersistenceContext
 	private EntityManager em;
 
-	public Estudante findByCodEstudante(String codUsuario) {
+	public Estudante findByCodEstudante(Long codUsuario) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Estudante> criteria = cb.createQuery(Estudante.class);
 		Root<Estudante> r = criteria.from(Estudante.class);

@@ -29,7 +29,7 @@ public class EstudanteControllerImpl implements EstudanteController {
 	private EstudanteService service;
 
 	@GetMapping(PATH_ID)
-	public ResponseEntity<EstudanteDTO> getEstudante(@PathVariable String codEstudante) {
+	public ResponseEntity<EstudanteDTO> getEstudante(@PathVariable Long codEstudante) {
 		EstudanteDTO estudante = service.findEstudanteByCodEstudante(codEstudante);
 		return ResponseEntity.ok(estudante);
 	}
@@ -41,15 +41,15 @@ public class EstudanteControllerImpl implements EstudanteController {
 	}
 
 	@GetMapping(PATH_ID + "/recomendacao")
-	public ResponseEntity<List<VagaDTO>> getVagasRecomendadas(@PathVariable String codEstudante) {
+	public ResponseEntity<List<VagaDTO>> getVagasRecomendadas(@PathVariable Long codEstudante) {
 		List<VagaDTO> vagas = service.buscaVagasRecomendadas(codEstudante);
 		return ResponseEntity.ok(vagas);
 	}
 
 	@PutMapping(PATH_ID)
-	public ResponseEntity<EstudanteDTO> putEstudante(@PathVariable String codEstudante,
+	public ResponseEntity<EstudanteDTO> putEstudante(@PathVariable Long codEstudante,
 			@RequestBody @Valid EstudanteDTO dto) {
-		dto.setCodEstudante(codEstudante);
+//		dto.setCodEstudante(codEstudante);
 		EstudanteDTO estudante = service.salvaEstudante(dto);
 		return ResponseEntity.ok(estudante);
 	}

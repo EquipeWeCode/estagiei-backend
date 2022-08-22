@@ -9,6 +9,8 @@ import org.hibernate.validator.constraints.br.CPF;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,10 +18,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @JsonInclude(Include.NON_NULL)
 public class EstudanteDTO implements DTOUtils {
 	
-	private String codEstudante;
+	private Long codEstudante;
 	private Long codUsuario;
 	private String email;
 	private String avatar;

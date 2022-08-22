@@ -12,7 +12,7 @@ public abstract class Estudante_ {
 	public static volatile SingularAttribute<Estudante, String> nvlEnsino;
 	public static volatile SingularAttribute<Estudante, String> expProfissional;
 	public static volatile SingularAttribute<Estudante, Pessoa> pessoa;
-	public static volatile SingularAttribute<Estudante, String> codEstudante;
+	public static volatile SingularAttribute<Estudante, Long> codEstudante;
 	public static volatile SingularAttribute<Estudante, String> instEnsino;
 	public static volatile SingularAttribute<Estudante, Boolean> indAtivo;
 	public static volatile SetAttribute<Estudante, Competencia> competencias;

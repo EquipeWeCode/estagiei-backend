@@ -13,7 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 public interface EstudanteController extends Controller {
 	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Retorna o estudante por id", tags = { ESTUDANTE })
-	public ResponseEntity<EstudanteDTO> getEstudante(String codEstudante);
+	public ResponseEntity<EstudanteDTO> getEstudante(Long codEstudante);
 	
 	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Retorna todos os estudantes", tags = { ESTUDANTE })
@@ -22,9 +22,9 @@ public interface EstudanteController extends Controller {
 	
 	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Retorna a lista de vagas recomendadas de acordo com o estudante", tags = { VAGA, ESTUDANTE })
-	public ResponseEntity<List<VagaDTO>> getVagasRecomendadas(String codEstudante);
+	public ResponseEntity<List<VagaDTO>> getVagasRecomendadas(Long codEstudante);
 	
 	@ApiResponse(responseCode = "201")
 	@Operation(summary = "Atualiza um estudante", tags = { ESTUDANTE })
-	public ResponseEntity<EstudanteDTO> putEstudante(String codEstudante, EstudanteDTO body);
+	public ResponseEntity<EstudanteDTO> putEstudante(Long codEstudante, EstudanteDTO body);
 }

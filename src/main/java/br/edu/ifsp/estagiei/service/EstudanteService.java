@@ -3,8 +3,6 @@ package br.edu.ifsp.estagiei.service;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.NoResultException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -39,7 +37,7 @@ public class EstudanteService {
 	@Autowired
 	private EstudanteDTOFactory estudanteFactory;
 
-	public EstudanteDTO findEstudanteByCodEstudante(String id) {
+	public EstudanteDTO findEstudanteByCodEstudante(Long id) {
 		try {
 			Estudante estd = estudanteRepositorio.findByCodEstudante(id);
 			return estudanteFactory.buildEstudante(estd);
@@ -48,7 +46,7 @@ public class EstudanteService {
 		}
 	}
 
-	public List<VagaDTO> buscaVagasRecomendadas(String codEstudante) {
+	public List<VagaDTO> buscaVagasRecomendadas(Long codEstudante) {
 
 		validaEstudanteVaga(codEstudante);
 
@@ -56,12 +54,12 @@ public class EstudanteService {
 		return vagaFactory.buildLista(vagas);
 	}
 
-	private void validaEstudanteVaga(String codEstudante) {
+	private void validaEstudanteVaga(Long codEstudante) {
 		estudanteRepositorio.findById(codEstudante)
 				.orElseThrow(() -> new ValidacaoException("Estudante não encontrado"));
 	}
 
-	public void insereEstudanteViaGoogle(Payload payload, String codEstudante) {
+	public void insereEstudanteViaGoogle(Payload payload, Long codEstudante) {
 		String email = payload.getEmail();
 		String nome = (String) payload.get("name");
 		String avatarUrl = (String) payload.get("picture");
@@ -83,11 +81,11 @@ public class EstudanteService {
 
 	public EstudanteDTO salvaEstudante(EstudanteDTO dto) {
 		Estudante estudanteBuscado = null;
-		try {			
-			estudanteBuscado = estudanteRepositorio.findByCodEstudante(dto.getCodEstudante());
-		} catch(NoResultException ex) {
-			throw new ValidacaoException("Estudante não encontrado");
-		}
+//		try {			
+//			estudanteBuscado = estudanteRepositorio.findByCodEstudante(dto.getCodEstudante());
+//		} catch(NoResultException ex) {
+//			throw new ValidacaoException("Estudante não encontrado");
+//		}
 
 		atualizaDadosEstudante(estudanteBuscado, dto);
 		

@@ -16,6 +16,8 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     generate-ddl: false
+  flyway:
+    baseline-on-migrate: true
 logging:
   level:
     '[org.hibernate.sql]': DEBUG
