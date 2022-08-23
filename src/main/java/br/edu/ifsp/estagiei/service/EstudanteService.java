@@ -3,6 +3,8 @@ package br.edu.ifsp.estagiei.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -81,11 +83,11 @@ public class EstudanteService {
 
 	public EstudanteDTO salvaEstudante(EstudanteDTO dto) {
 		Estudante estudanteBuscado = null;
-//		try {			
-//			estudanteBuscado = estudanteRepositorio.findByCodEstudante(dto.getCodEstudante());
-//		} catch(NoResultException ex) {
-//			throw new ValidacaoException("Estudante não encontrado");
-//		}
+		try {			
+			estudanteBuscado = estudanteRepositorio.findByCodEstudante(dto.getCodEstudante());
+		} catch(NoResultException ex) {
+			throw new ValidacaoException("Estudante não encontrado");
+		}
 
 		atualizaDadosEstudante(estudanteBuscado, dto);
 		
@@ -99,7 +101,7 @@ public class EstudanteService {
 		if(dto.hasCompetencias()) {			
 			competencias = dto.getCompetencias();
 		}
-		estudanteBuscado.setInstEnsino(dto.getInstEnsino());
+//		estudanteBuscado.setInstEnsino(dto.getInstEnsino());
 		salvaCompetencias(estudanteBuscado, competencias);
 
 	}
@@ -120,8 +122,7 @@ public class EstudanteService {
 			pessoa.setNome(dto.getNome().toUpperCase());
 		}
 		pessoa.setRg(dto.getRg());
-		pessoa.setTipContato("TEL"); // fixo por enquanto
-		pessoa.setValorContato(dto.getContato());
+		// TODO setar contato e endereco
 		estudanteBuscado.setPessoa(pessoa);
 	}
 

@@ -19,7 +19,6 @@ public interface EstudanteController extends Controller {
 	@Operation(summary = "Retorna todos os estudantes", tags = { ESTUDANTE })
 	public ResponseEntity<List<EstudanteDTO>> getEstudantes(EstudanteFiltroDTO filtro);
 	
-	
 	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Retorna a lista de vagas recomendadas de acordo com o estudante", tags = { VAGA, ESTUDANTE })
 	public ResponseEntity<List<VagaDTO>> getVagasRecomendadas(Long codEstudante);

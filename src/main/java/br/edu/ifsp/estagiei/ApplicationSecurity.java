@@ -39,7 +39,7 @@ public class ApplicationSecurity {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -51,7 +51,8 @@ public class ApplicationSecurity {
 		http.csrf().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-		http.authorizeRequests().antMatchers("/login", "/v3/**", "/swagger-ui/**")
+		http.authorizeRequests()
+				.antMatchers("/login", "/v3/**", "/swagger-ui/**", "/estudante/**", "/vaga/**", "/empresa/**", "/competencia/**")
 				.permitAll().anyRequest().authenticated();
 
 		http.exceptionHandling().authenticationEntryPoint((request, response, ex) -> {
