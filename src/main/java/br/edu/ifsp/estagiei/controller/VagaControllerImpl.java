@@ -2,6 +2,7 @@ package br.edu.ifsp.estagiei.controller;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifsp.estagiei.dto.VagaDTO;
@@ -27,17 +27,16 @@ public class VagaControllerImpl implements VagaController {
 	private VagaService service;
 
 	@GetMapping
-	@ResponseBody
 	public ResponseEntity<List<VagaDTO>> getVagas(VagaFiltroDTO filtro) {
 		List<VagaDTO> vagas = service.buscaTodos(filtro);
 		return ResponseEntity.ok(vagas);
 	}
 	
 	@PostMapping
+	@RolesAllowed({ROLE_ADMIN, ROLE_EMPRESA})
 	public ResponseEntity<VagaDTO> postVaga(@RequestBody @Valid VagaDTO dto) {
 		VagaDTO vaga = service.salvaVaga(dto);
 		return ResponseEntity.ok(vaga);
 	}
-	
 	
 }

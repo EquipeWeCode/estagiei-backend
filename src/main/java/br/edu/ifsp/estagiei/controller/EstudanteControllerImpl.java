@@ -2,6 +2,7 @@ package br.edu.ifsp.estagiei.controller;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,32 +23,34 @@ import br.edu.ifsp.estagiei.service.EstudanteService;
 @RequestMapping(EstudanteControllerImpl.PATH)
 public class EstudanteControllerImpl implements EstudanteController {
 
-	public static final String PATH = "/estudante";
-	private static final String PATH_ID = "/{codEstudante}";
-
 	@Autowired
 	private EstudanteService service;
 
+	public static final String PATH = "/estudante";
+	private static final String PATH_ID = "/{codEstudante}";
+	private static final String PATH_RECOMENDACAO = "/recomendacao";
+
 	@GetMapping(PATH_ID)
-	public ResponseEntity<EstudanteDTO> getEstudante(@PathVariable String codEstudante) {
+	public ResponseEntity<EstudanteDTO> getEstudante(@PathVariable Long codEstudante) {
 		EstudanteDTO estudante = service.findEstudanteByCodEstudante(codEstudante);
 		return ResponseEntity.ok(estudante);
 	}
-	
-	@GetMapping()
+
+	@GetMapping
 	public ResponseEntity<List<EstudanteDTO>> getEstudantes(EstudanteFiltroDTO filtro) {
 		List<EstudanteDTO> estudantes = service.buscaTodos(filtro);
 		return ResponseEntity.ok(estudantes);
 	}
 
-	@GetMapping(PATH_ID + "/recomendacao")
-	public ResponseEntity<List<VagaDTO>> getVagasRecomendadas(@PathVariable String codEstudante) {
+	@GetMapping(PATH_ID + PATH_RECOMENDACAO)
+	public ResponseEntity<List<VagaDTO>> getVagasRecomendadas(@PathVariable(P_COD_ESTUDANTE) Long codEstudante) {
 		List<VagaDTO> vagas = service.buscaVagasRecomendadas(codEstudante);
 		return ResponseEntity.ok(vagas);
 	}
 
 	@PutMapping(PATH_ID)
-	public ResponseEntity<EstudanteDTO> putEstudante(@PathVariable String codEstudante,
+	@RolesAllowed({ ROLE_ADMIN, ROLE_ESTUDANTE })
+	public ResponseEntity<EstudanteDTO> putEstudante(@PathVariable Long codEstudante,
 			@RequestBody @Valid EstudanteDTO dto) {
 		dto.setCodEstudante(codEstudante);
 		EstudanteDTO estudante = service.salvaEstudante(dto);

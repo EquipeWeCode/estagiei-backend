@@ -42,7 +42,7 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 		return em.createQuery(criteria).getSingleResult();
 	}
 
-	public List<Vaga> buscaVagasRecomendadas(String codEstudante) {
+	public List<Vaga> buscaVagasRecomendadas(Long codEstudante) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Vaga> criteria = cb.createQuery(Vaga.class);
 		Root<Vaga> r = criteria.from(Vaga.class);

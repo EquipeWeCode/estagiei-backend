@@ -2,6 +2,7 @@ package br.edu.ifsp.estagiei.controller;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +34,13 @@ public class EmpresaControllerImpl implements EmpresaController {
 	}
 	
 	@GetMapping(PATH_ID)
-	public ResponseEntity<EmpresaDTO> getEmpresa(@PathVariable("codEmpresa") String codEmpresa) {
+	public ResponseEntity<EmpresaDTO> getEmpresa(@PathVariable(P_COD_EMPRESA) String codEmpresa) {
 		EmpresaDTO empresa = service.buscaEmpresa(Long.valueOf(codEmpresa));
 		return ResponseEntity.ok(empresa);
 	}
 	
 	@PostMapping
+	@RolesAllowed({ROLE_ADMIN, ROLE_EMPRESA})
 	public ResponseEntity<EmpresaDTO> postEmpresa(@RequestBody @Valid EmpresaDTO dto) {
 		EmpresaDTO empresa = service.salvaEmpresa(dto);
 		return ResponseEntity.ok(empresa);

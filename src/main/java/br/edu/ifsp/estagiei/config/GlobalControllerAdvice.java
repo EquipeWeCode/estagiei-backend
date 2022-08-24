@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -36,7 +37,7 @@ public class GlobalControllerAdvice {
 	public ResponseEntity<ProblemException> problem(final Throwable e) {
 		String message = e.getMessage();
 
-		message = "Ocorreu um erro";
+		message = "Ocorreu um erro na solicitação";
 		UUID uuid = UUID.randomUUID();
 		String logRef = uuid.toString();
 		logger.error("logRef=" + logRef, message, e);
@@ -46,13 +47,9 @@ public class GlobalControllerAdvice {
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	public ResponseEntity<CustomErrorMessage> handleMethodArgumentNotValid(MethodArgumentNotValidException ex
-
-	) {
+	public ResponseEntity<CustomErrorMessage> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
 		List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
-
 		List<ObjectError> globalErrors = ex.getBindingResult().getGlobalErrors();
-
 		List<String> errors = new ArrayList<>(fieldErrors.size() + globalErrors.size());
 
 		String error;
@@ -61,65 +58,42 @@ public class GlobalControllerAdvice {
 			error = fieldError.getField() + ": " + fieldError.getDefaultMessage();
 			errors.add(error);
 		}
-
 		for (ObjectError objectError : globalErrors) {
 			error = objectError.getObjectName() + ": " + objectError.getDefaultMessage();
 			errors.add(error);
 		}
 
 		CustomErrorMessage errorMessage = new CustomErrorMessage(errors);
-
 		return new ResponseEntity<CustomErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
-
 	}
 
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	public ResponseEntity<CustomErrorMessage> handleConstraintViolatedException(DataIntegrityViolationException ex
-
-	) {
-			
-		String erro = "Violação de constraint no banco de dados";
-
+	public ResponseEntity<CustomErrorMessage> handleConstraintViolatedException(DataIntegrityViolationException ex) {
+		String erro = "Violação de constraint do banco de dados";
 		CustomErrorMessage errorMessage = new CustomErrorMessage(erro);
-
 		return new ResponseEntity<CustomErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
-
 	}
 
 	@ExceptionHandler(MissingServletRequestParameterException.class)
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	public ResponseEntity<CustomErrorMessage> handleMissingServletRequestParameterException(
-			MissingServletRequestParameterException ex
-
-	) {
-
+			MissingServletRequestParameterException ex) {
 		List<String> errors = new ArrayList<>();
-
 		String error = ex.getParameterName() + ", " + ex.getMessage();
-
 		errors.add(error);
-
 		CustomErrorMessage errorMessage = new CustomErrorMessage(errors);
-
 		return new ResponseEntity<CustomErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
 
 	}
 
 	@ExceptionHandler(HttpMediaTypeNotSupportedException.class)
 	@ResponseStatus(code = HttpStatus.UNSUPPORTED_MEDIA_TYPE)
-	public ResponseEntity<CustomErrorMessage> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex
-
-	) {
-
+	public ResponseEntity<CustomErrorMessage> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex) {
 		String unsupported = "Tipo de conteúdo não suportado: " + ex.getContentType();
-
 		String supported = "Tipos de conteúdos suportados: " + MediaType.toString(ex.getSupportedMediaTypes());
-
 		CustomErrorMessage errorMessage = new CustomErrorMessage(unsupported, supported);
-
 		return new ResponseEntity<CustomErrorMessage>(errorMessage, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
-
 	}
 
 	@ExceptionHandler(HttpMessageNotReadableException.class)
@@ -140,31 +114,22 @@ public class GlobalControllerAdvice {
 		return new ResponseEntity<CustomErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
 	}
 
-//	@ExceptionHandler(ConstraintViolationException.class)
-//	@ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
-//	public ResponseEntity<CustomErrorMessage> handleSqlException(ValidacaoException ex) {
-//		List<String> errors = new ArrayList<>();
-//		String error = ex.getMessage();
-//		errors.add(error);
-//		CustomErrorMessage errorMessage = new CustomErrorMessage(errors);
-//		return new ResponseEntity<CustomErrorMessage>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
-//	}
+	@ExceptionHandler(AccessDeniedException.class)
+	@ResponseStatus(code = HttpStatus.UNAUTHORIZED)
+	public ResponseEntity<CustomErrorMessage> handleAccessDenied(AccessDeniedException ex) {
+		String erro = "Usuário não possui permissão para acessar o recurso";
+
+		CustomErrorMessage errorMessage = new CustomErrorMessage(erro);
+		return new ResponseEntity<CustomErrorMessage>(errorMessage, HttpStatus.UNAUTHORIZED);
+	}
 
 	@ExceptionHandler(ValidacaoException.class)
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	public ResponseEntity<CustomErrorMessage> handleValidacaoException(ValidacaoException ex
-
-	) {
-
+	public ResponseEntity<CustomErrorMessage> handleValidacaoException(ValidacaoException ex) {
 		List<String> errors = new ArrayList<>();
-
 		String error = ex.getMessage();
-
 		errors.add(error);
-
 		CustomErrorMessage errorMessage = new CustomErrorMessage(errors);
-
 		return new ResponseEntity<CustomErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
-
 	}
 }

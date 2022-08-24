@@ -1,6 +1,11 @@
 package br.edu.ifsp.estagiei.entity;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,9 +14,16 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,17 +36,17 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_usuario")
-public class Usuario {
+public class Usuario implements UserDetails {
+
+	private static final long serialVersionUID = 8024417533446604625L;
+	
 	@Id
 	@SequenceGenerator(name = "tb_usuario_cod_usuario_seq", sequenceName = "tb_usuario_cod_usuario_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_usuario_cod_usuario_seq")
 	@Column(name = "cod_usuario", updatable = false, nullable = false)
 	private Long codUsuario;
 	@Column(name = "senha")
-//	@ColumnTransformer( read="decrypt(pswd)" write="encrypt(?)" ) //teste
 	private String senha;
-	@Column(name = "papel", columnDefinition = "VARCHAR(25)	DEFAULT 'COMUM'", nullable = false)
-	private String papel = "COMUM";
 	@Column(name = "email")
 	private String email;
 	@Column(name = "avatar")
@@ -47,6 +59,14 @@ public class Usuario {
 			CascadeType.REMOVE })
 	@JsonIgnore
 	private Pessoa pessoa;
+	
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "tb_usu_perm",
+        joinColumns = @JoinColumn(name = "cod_usuario"),
+        inverseJoinColumns = @JoinColumn(name = "cod_permissao")
+    )
+    private Set<Permissao> permissoes = new HashSet<>();
 
 	@Override
 	public int hashCode() {
@@ -63,5 +83,48 @@ public class Usuario {
 			return false;
 		Usuario other = (Usuario) obj;
 		return Objects.equals(codUsuario, other.codUsuario);
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        for (Permissao permissao : permissoes) {
+            authorities.add(new SimpleGrantedAuthority(permissao.getDescricao()));
+        }
+        return authorities;
+	}
+	
+    public void addPermissao(Permissao permissao) {
+        this.permissoes.add(permissao);
+    }
+
+	@Override
+	public String getPassword() {
+		return this.senha;
+	}
+
+	@Override
+	public String getUsername() {
+		return this.email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 }

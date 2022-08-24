@@ -30,14 +30,15 @@ import lombok.Setter;
 public class Estudante {
 	@Id
 	@Column(name = "cod_estudante", updatable = false)
-	private String codEstudante;
+	private Long codEstudante;	
+	@Column(name = "cod_pessoa", updatable = false, insertable = false)
+	private Long codPessoa;
+	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
+	private Boolean indAtivo = true;
 
 	@ManyToMany
 	@JoinTable(name = "tb_comp_estud", joinColumns = @JoinColumn(name = "cod_estudante"), inverseJoinColumns = @JoinColumn(name = "cod_competencia"))
 	private Set<Competencia> competencias = new HashSet<>();
-
-	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
-	private Boolean indAtivo = true;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinColumn(name = "cod_pessoa")

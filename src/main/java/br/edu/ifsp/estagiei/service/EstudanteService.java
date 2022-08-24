@@ -39,7 +39,7 @@ public class EstudanteService {
 	@Autowired
 	private EstudanteDTOFactory estudanteFactory;
 
-	public EstudanteDTO findEstudanteByCodEstudante(String id) {
+	public EstudanteDTO findEstudanteByCodEstudante(Long id) {
 		try {
 			Estudante estd = estudanteRepositorio.findByCodEstudante(id);
 			return estudanteFactory.buildEstudante(estd);
@@ -48,7 +48,7 @@ public class EstudanteService {
 		}
 	}
 
-	public List<VagaDTO> buscaVagasRecomendadas(String codEstudante) {
+	public List<VagaDTO> buscaVagasRecomendadas(Long codEstudante) {
 
 		validaEstudanteVaga(codEstudante);
 
@@ -56,12 +56,12 @@ public class EstudanteService {
 		return vagaFactory.buildLista(vagas);
 	}
 
-	private void validaEstudanteVaga(String codEstudante) {
+	private void validaEstudanteVaga(Long codEstudante) {
 		estudanteRepositorio.findById(codEstudante)
 				.orElseThrow(() -> new ValidacaoException("Estudante não encontrado"));
 	}
 
-	public void insereEstudanteViaGoogle(Payload payload, String codEstudante) {
+	public void insereEstudanteViaGoogle(Payload payload, Long codEstudante) {
 		String email = payload.getEmail();
 		String nome = (String) payload.get("name");
 		String avatarUrl = (String) payload.get("picture");
@@ -101,7 +101,7 @@ public class EstudanteService {
 		if(dto.hasCompetencias()) {			
 			competencias = dto.getCompetencias();
 		}
-		estudanteBuscado.setInstEnsino(dto.getInstEnsino());
+//		estudanteBuscado.setInstEnsino(dto.getInstEnsino());
 		salvaCompetencias(estudanteBuscado, competencias);
 
 	}
@@ -122,8 +122,7 @@ public class EstudanteService {
 			pessoa.setNome(dto.getNome().toUpperCase());
 		}
 		pessoa.setRg(dto.getRg());
-		pessoa.setTipContato("TEL"); // fixo por enquanto
-		pessoa.setValorContato(dto.getContato());
+		// TODO setar contato e endereco
 		estudanteBuscado.setPessoa(pessoa);
 	}
 
