@@ -9,8 +9,6 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Pessoa.class)
 public abstract class Pessoa_ {
 
-	public static volatile SingularAttribute<Pessoa, String> valorContato;
-	public static volatile SingularAttribute<Pessoa, String> tipContato;
 	public static volatile SingularAttribute<Pessoa, String> rg;
 	public static volatile SingularAttribute<Pessoa, Boolean> indAtivo;
 	public static volatile SingularAttribute<Pessoa, String> cpf;
@@ -20,8 +18,6 @@ public abstract class Pessoa_ {
 	public static volatile SingularAttribute<Pessoa, Estudante> estudante;
 	public static volatile SingularAttribute<Pessoa, Long> codPessoa;
 
-	public static final String VALOR_CONTATO = "valorContato";
-	public static final String TIP_CONTATO = "tipContato";
 	public static final String RG = "rg";
 	public static final String IND_ATIVO = "indAtivo";
 	public static final String CPF = "cpf";

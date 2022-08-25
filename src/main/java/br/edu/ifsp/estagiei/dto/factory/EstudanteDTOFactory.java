@@ -37,12 +37,12 @@ public class EstudanteDTOFactory {
 				.email(estudante.getPessoa().getUsuario().getEmail())
 				.cpf(formataCpf(estudante.getPessoa().getCpf()))
 				.rg(estudante.getPessoa().getRg())
-				.nome(estudante.getPessoa().getNome())
-				.instEnsino(estudante.getInstEnsino())
-				.nvlEnsino(estudante.getNvlEnsino())
-				.expProfissional(estudante.getExpProfissional())
-				.dataNascimento(dataFormatada)
-				.contato(estudante.getPessoa().getValorContato());
+				.nome(estudante.getPessoa().getNome());
+//				.instEnsino(estudante.getInstEnsino())
+//				.nvlEnsino(estudante.getNvlEnsino())
+//				.expProfissional(estudante.getExpProfissional())
+//				.dataNascimento(dataFormatada)
+//				.contato(estudante.getPessoa().getValorContato());
 
 		if (estudante.hasCompetencias()) {
 			Set<Competencia> competencias = estudante.getCompetencias().stream().collect(Collectors.toSet());

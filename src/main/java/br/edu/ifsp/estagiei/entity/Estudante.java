@@ -44,6 +44,9 @@ public class Estudante {
 	@JsonIgnore
 	private Pessoa pessoa;
 
+	@ManyToMany(mappedBy = "estudantes", fetch = FetchType.LAZY)
+	private Set<Vaga> vagas = new HashSet<>();
+
 	public Boolean hasCompetencias() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "competencias");
 	}

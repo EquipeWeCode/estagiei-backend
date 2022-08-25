@@ -101,7 +101,7 @@ public class EstudanteService {
 		if(dto.hasCompetencias()) {			
 			competencias = dto.getCompetencias();
 		}
-		estudanteBuscado.setInstEnsino(dto.getInstEnsino());
+		// estudanteBuscado.setInstEnsino(dto.getInstEnsino());
 		salvaCompetencias(estudanteBuscado, competencias);
 
 	}
@@ -122,8 +122,8 @@ public class EstudanteService {
 			pessoa.setNome(dto.getNome().toUpperCase());
 		}
 		pessoa.setRg(dto.getRg());
-		pessoa.setTipContato("TEL"); // fixo por enquanto
-		pessoa.setValorContato(dto.getContato());
+//		pessoa.setTipContato("TEL"); // fixo por enquanto
+//		pessoa.setValorContato(dto.getContato());
 		estudanteBuscado.setPessoa(pessoa);
 	}
 
