@@ -14,11 +14,11 @@ import lombok.NoArgsConstructor;
 @Component
 @NoArgsConstructor
 public class CompetenciaDTOFactory {
-	public List<CompetenciaDTO> buildCompetencias(Set<Competencia> competencias) {
-		return competencias.stream().map(this::buildCompetencia).collect(Collectors.toList());
+	public List<CompetenciaDTO> buildDTOs(Set<Competencia> competencias) {
+		return competencias.stream().map(this::buildDTO).collect(Collectors.toList());
 	}
 
-	public CompetenciaDTO buildCompetencia(Competencia comp) {
+	public CompetenciaDTO buildDTO(Competencia comp) {
 		CompetenciaDTO dto = new CompetenciaDTO();
 		dto.setCodCompetencia(comp.getCodCompetencia());
 		dto.setDescricaoCompetencia(comp.getDescricao());

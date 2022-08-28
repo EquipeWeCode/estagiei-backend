@@ -42,7 +42,7 @@ public class EstudanteService {
 	public EstudanteDTO findEstudanteByCodEstudante(Long id) {
 		try {
 			Estudante estd = estudanteRepositorio.findByCodEstudante(id);
-			return estudanteFactory.buildEstudante(estd);
+			return estudanteFactory.buildDTO(estd);
 		} catch (EmptyResultDataAccessException e) {
 			throw new ValidacaoException("Estudante não encontrado");
 		}
@@ -53,7 +53,7 @@ public class EstudanteService {
 		validaEstudanteVaga(codEstudante);
 
 		List<Vaga> vagas = vagaRepositorio.buscaVagasRecomendadas(codEstudante);
-		return vagaFactory.buildLista(vagas);
+		return vagaFactory.buildDTOs(vagas);
 	}
 
 	private void validaEstudanteVaga(Long codEstudante) {
@@ -92,7 +92,7 @@ public class EstudanteService {
 		atualizaDadosEstudante(estudanteBuscado, dto);
 		
 		Estudante estudanteSalvo = estudanteRepositorio.save(estudanteBuscado);
-		return estudanteFactory.buildEstudante(estudanteSalvo);
+		return estudanteFactory.buildDTO(estudanteSalvo);
 	}
 
 	private void atualizaDadosEstudante(Estudante estudanteBuscado, EstudanteDTO dto) {
@@ -138,7 +138,7 @@ public class EstudanteService {
 
 	public List<EstudanteDTO> buscaTodos(EstudanteFiltroDTO filtro) {
 		List<Estudante> estudantes = estudanteRepositorio.buscaTodosPorFiltro(filtro);
-		return estudanteFactory.buildLista(estudantes);
+		return estudanteFactory.buildDTOs(estudantes);
 	}
 
 }

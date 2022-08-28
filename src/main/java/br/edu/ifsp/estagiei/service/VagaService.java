@@ -23,13 +23,13 @@ public class VagaService {
 
 	public List<VagaDTO> buscaTodos(VagaFiltroDTO filtro) {
 		List<Vaga> vagas = vagaRepositorio.buscaTodosPorFiltro(filtro);
-		return factory.buildLista(vagas);
+		return factory.buildDTOs(vagas);
 	}
 
 	public VagaDTO salvaVaga(@Valid VagaDTO dto) {
 		Vaga novaVaga = vagaRepositorio.save(factory.buildEntity(dto));
 
 		Vaga vagaCadastrada = vagaRepositorio.buscaVagaPorId(novaVaga.getCodVaga());
-		return factory.buildVaga(vagaCadastrada);
+		return factory.buildDTO(vagaCadastrada);
 	}
 }

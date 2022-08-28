@@ -22,7 +22,12 @@ import lombok.Setter;
 public class EmpresaDTO implements DTOUtils {
 	private Long codEmpresa;
 	@NotBlank(message = MSG_NOT_NULL)
+	private String email;
+	@NotBlank(message = MSG_NOT_NULL)
+	private String senha;
+	@NotBlank(message = MSG_NOT_NULL)
 	private String razaoSocial;
+	@NotBlank(message = MSG_NOT_NULL)
 	private String nomeFantasia;
 	@NotBlank(message = MSG_NOT_NULL)
 	private String cnpj;
@@ -30,19 +35,11 @@ public class EmpresaDTO implements DTOUtils {
 	private List<VagaDTO> vagas;
 	private Boolean indAtivo;
 	
-	public boolean hasCodEmpresa() {
-		return codEmpresa != null;
-	}
-	
-	public boolean hasCnpj() {
-		return cnpj != null;
-	}
-
-	public boolean hasEndereco() {
-		return endereco != null;
-	}
-	
 	public boolean hasVagas() {
 		return vagas != null && !vagas.isEmpty();
+	}
+	
+	public boolean hasEndereco() {
+		return endereco != null;
 	}
 }

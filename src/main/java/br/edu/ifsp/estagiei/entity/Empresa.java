@@ -38,8 +38,7 @@ public class Empresa {
 	private Long codEmpresa;
 
 	@Column(name = "cod_usuario")
-	private Long codUsuario = 777666L; // Apenas para questoes de teste, assim que o login de empresas estiver pronto,
-										// mudar
+	private Long codUsuario;
 
 	@Column(name = "razao_social")
 	private String razaoSocial;
@@ -65,6 +64,10 @@ public class Empresa {
 
 	public boolean hasVagas() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "vagas");
+	}
+	
+	public boolean hasEndereco() {
+		return Persistence.getPersistenceUtil().isLoaded(this, "endereco");
 	}
 
 	@Override

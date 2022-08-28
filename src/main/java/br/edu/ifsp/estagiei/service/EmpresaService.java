@@ -24,21 +24,21 @@ public class EmpresaService {
 
 	public EmpresaDTO salvaEmpresa(EmpresaDTO dto) {
 		Empresa novaEmpresa = empresaRepositorio.save(factory.buildEntity(dto));
-		return factory.buildEmpresa(novaEmpresa);
+		return factory.buildDTO(novaEmpresa);
 	}
 
 	public EmpresaDTO buscaEmpresa(Long codEmpresa) {
 		Empresa empresaBuscada = empresaRepositorio.findById(codEmpresa)
 				.orElseThrow(() -> new ValidacaoException("Empresa não encontrada"));
 
-		return factory.buildEmpresa(empresaBuscada);
+		return factory.buildDTO(empresaBuscada);
 	}
 
 	public List<EmpresaDTO> buscaEmpresas() {
-		Iterable<Empresa> todasEmpresas = empresaRepositorio.findAll();
+		List<Empresa> todasEmpresas = empresaRepositorio.findAll();
 		List<EmpresaDTO> empresasDTO = Lists.newArrayList();
 
-		todasEmpresas.forEach(e -> empresasDTO.add(factory.buildEmpresa(e)));
+		todasEmpresas.forEach(e -> empresasDTO.add(factory.buildDTO(e)));
 		return empresasDTO;
 	}
 
