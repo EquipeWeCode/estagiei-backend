@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS TB_USUARIO (
 	DATA_ALTERACAO TIMESTAMP,
 	CONSTRAINT pk_usuario PRIMARY KEY(COD_USUARIO)
 );
-                                                                                        /* senha: 1234 */
+/* senha: 1234 */
 INSERT INTO TB_USUARIO (COD_USUARIO, EMAIL, SENHA) VALUES (777666, 'wecodetrabalho@gmail.com', '$2a$10$Arj2K2FcDDHgWV/NffeuJ.h47ylM7M22Kctz9GZ0/ed8rmQbZIjsa');
 INSERT INTO TB_USUARIO (COD_USUARIO, EMAIL, SENHA) VALUES (777667, 'aluno@aluno.com', '$2a$10$Arj2K2FcDDHgWV/NffeuJ.h47ylM7M22Kctz9GZ0/ed8rmQbZIjsa');
 INSERT INTO TB_USUARIO (COD_USUARIO, EMAIL, SENHA) VALUES (777668, 'empresa@empresa.com', '$2a$10$Arj2K2FcDDHgWV/NffeuJ.h47ylM7M22Kctz9GZ0/ed8rmQbZIjsa');

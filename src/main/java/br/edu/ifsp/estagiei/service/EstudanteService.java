@@ -101,7 +101,6 @@ public class EstudanteService {
 		if(dto.hasCompetencias()) {			
 			competencias = dto.getCompetencias();
 		}
-//		estudanteBuscado.setInstEnsino(dto.getInstEnsino());
 		salvaCompetencias(estudanteBuscado, competencias);
 
 	}
@@ -122,7 +121,6 @@ public class EstudanteService {
 			pessoa.setNome(dto.getNome().toUpperCase());
 		}
 		pessoa.setRg(dto.getRg());
-		// TODO setar contato e endereco
 		estudanteBuscado.setPessoa(pessoa);
 	}
 

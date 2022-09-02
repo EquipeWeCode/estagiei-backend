@@ -60,6 +60,9 @@ public class Vaga {
 	@JoinColumn(name = "cod_endereco")
 	private Endereco endereco;
 
+	@ManyToMany(mappedBy = "estudantes", fetch = FetchType.LAZY)
+	private Set<Estudante> estudantes = new HashSet<>();
+
 	public Boolean hasCompetencias() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "competencias");
 	}
