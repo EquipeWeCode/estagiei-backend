@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -46,6 +47,8 @@ public class Vaga {
 	private String titulo;
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
+	@Embedded
+	private Auditoria auditoria;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "tb_comp_vaga", joinColumns = @JoinColumn(name = "cod_vaga"), inverseJoinColumns = @JoinColumn(name = "cod_competencia"))
@@ -60,7 +63,7 @@ public class Vaga {
 	@JoinColumn(name = "cod_endereco")
 	private Endereco endereco;
 
-	@ManyToMany(mappedBy = "estudantes", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "vagas", fetch = FetchType.LAZY)
 	private Set<Estudante> estudantes = new HashSet<>();
 
 	public Boolean hasCompetencias() {

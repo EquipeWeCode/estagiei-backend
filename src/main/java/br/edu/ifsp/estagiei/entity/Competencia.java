@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -28,13 +29,14 @@ public class Competencia {
 	private String descricao;
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
+	@Embedded
+	private Auditoria auditoria;
 
 	@ManyToMany(mappedBy = "competencias", fetch = FetchType.LAZY)
 	private Set<Vaga> vagas = new HashSet<>();
-
 	@ManyToMany(mappedBy = "competencias", fetch = FetchType.LAZY)
 	private Set<Estudante> estudantes = new HashSet<>();
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(codCompetencia);

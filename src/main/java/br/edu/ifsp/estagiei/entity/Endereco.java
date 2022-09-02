@@ -3,6 +3,7 @@ package br.edu.ifsp.estagiei.entity;
 import java.util.Objects;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -45,13 +46,26 @@ public class Endereco {
 	private String complemento;
 	@Column(name = "ponto_referencia")
 	private String pontoReferencia;
-
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
+	@Embedded
+	private Auditoria auditoria;
 
 	@JsonIgnore
 	@OneToOne(mappedBy = "endereco", fetch = FetchType.LAZY)
 	private Empresa empresa;
+	
+	@JsonIgnore
+	@OneToOne(mappedBy = "endereco", fetch = FetchType.LAZY)
+	private Pessoa pessoa;
+	
+	@JsonIgnore
+	@OneToOne(mappedBy = "endereco", fetch = FetchType.LAZY)
+	private ExperienciaProfissional experienciaProfissional;
+	
+	@JsonIgnore
+	@OneToOne(mappedBy = "endereco", fetch = FetchType.LAZY)
+	private Vaga vaga;
 
 	@Override
 	public int hashCode() {

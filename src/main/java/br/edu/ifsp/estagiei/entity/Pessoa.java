@@ -5,7 +5,20 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,17 +37,18 @@ public class Pessoa {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_pessoa_cod_pessoa_seq")
 	@Column(name = "cod_pessoa", updatable = false)
 	private Long codPessoa;
+	@Column(name = "nome")
+	private String nome;
 	@Column(name = "dt_nasc", columnDefinition = "DATE")
 	private LocalDate dataNascimento;
 	@Column(name = "rg")
 	private String rg;
 	@Column(name = "cpf")
 	private String cpf;
-	@Column(name = "nome")
-	private String nome;
-
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
+	@Embedded
+	private Auditoria auditoria;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE })
 	@JoinColumn(name = "cod_usuario")
@@ -45,6 +59,14 @@ public class Pessoa {
 			CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private Estudante estudante;
+	
+	@ManyToMany
+	@JoinTable(name = "tb_cont_pessoa", joinColumns = @JoinColumn(name = "cod_pessoa"), inverseJoinColumns = @JoinColumn(name = "cod_contato"))
+	private Set<Contato> contatos = new HashSet<>();
+	
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "cod_endereco")
+	private Endereco endereco;
 
 	@Override
 	public int hashCode() {

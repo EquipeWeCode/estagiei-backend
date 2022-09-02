@@ -1,11 +1,23 @@
 package br.edu.ifsp.estagiei.entity;
 
+import java.sql.Timestamp;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.*;
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -13,31 +25,29 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "tb_exp_profissional")
 public class ExperienciaProfissional {
-
+	
     @Id
-    @SequenceGenerator(name = "tb_ext_profissional_cod_exp_profissional_seq", sequenceName = "tb_ext_profissional_cod_exp_profissional_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_ext_profissional_cod_exp_profissional_seq")
+    @SequenceGenerator(name = "tb_exp_profissional_cod_exp_profissional_seq", sequenceName = "tb_exp_profissional_cod_exp_profissional_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_exp_profissional_cod_exp_profissional_seq")
     @Column(name = "cod_exp_profissional", updatable = false)
     private Long codExpProfissional;
-
     @Column(name = "nome_empresa")
     private String nomeEmpresa;
-
     @Column(name = "cargo")
     private String cargo;
-
     @Column(name = "descricao")
     private String descricao;
-
     @Column(name = "data_inicio")
-    private LocalDate dataInicio;
-
+    private Timestamp dataInicio;
     @Column(name = "data_fim")
-    private LocalDate dataFim;
+    private Timestamp dataFim;
+    @Embedded
+    private Auditoria auditoria;
 
-    @OneToOne
+    @OneToOne(mappedBy = "experienciaProfissional", fetch = FetchType.LAZY)
     private Estudante estudante;
-
-    @ManyToOne
-    private Endereco endereco;
+    
+    @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "cod_endereco")
+	private Endereco endereco;
 }

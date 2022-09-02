@@ -13,6 +13,21 @@ CREATE TABLE IF NOT EXISTS TB_VAGA (
 	CONSTRAINT fk_vaga_emprs FOREIGN KEY(COD_EMPRESA) REFERENCES TB_EMPRESA(COD_EMPRESA)
 );
 
+-- CREATE OR REPLACE FUNCTION TRG_AUDITORIA() RETURNS TRIGGER AS $trg_audit$
+--     BEGIN
+--         IF (TG_OP = 'UPDATE') THEN
+--             UPDATE TB_VAGA SET DATA_ALTERACAO = NOW() WHERE COD_VAGA = NEW.COD_VAGA;
+--         ELSIF (TG_OP = 'INSERT') THEN
+--             UPDATE TB_VAGA SET DATA_INCLUSAO = NOW() WHERE COD_VAGA = NEW.COD_VAGA;
+--         END IF;
+--         RETURN NULL; 
+--     END;
+-- $trg_audit$ LANGUAGE plpgsql;
+
+-- CREATE TRIGGER trg_audit
+-- AFTER INSERT OR UPDATE ON TB_VAGA
+--     FOR EACH ROW EXECUTE FUNCTION TRG_AUDITORIA();
+
 INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO) VALUES (777666, 777666, 'Vaga disponível para atuar no desenvolvimento front-end do nosso sistema focado em vagas de estágio!', 3500.98, 'Desenvolvedor Front-End');
 INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO) VALUES (777667, 777666, 'Aqui você irá aprender: Java com Spring Boot e Oracle PLSQL, venha conosco nessa jornada!', 2567.42, 'Desenvolvedor Back-End Java');
 INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO) VALUES (777668, 777666, 'Se você é dedicado e gosta de aprender, essa vaga é para você!', 1200.56, 'Manutenção de computadores');
