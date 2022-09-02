@@ -30,7 +30,7 @@ public class CompetenciaControllerImpl implements CompetenciaController {
 	@ResponseBody
 	public ResponseEntity<List<CompetenciaDTO>> getCompetencias() {
 		List<CompetenciaDTO> competenciasDTO = Lists.newArrayList();
-		repositorio.findAll().forEach(c -> competenciasDTO.add(factory.buildCompetencia(c)));
+		repositorio.findAll().forEach(c -> competenciasDTO.add(factory.buildDTO(c)));
 		return ResponseEntity.ok(competenciasDTO);
 	}
 

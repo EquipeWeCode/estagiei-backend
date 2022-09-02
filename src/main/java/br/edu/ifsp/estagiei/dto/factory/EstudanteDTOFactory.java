@@ -22,11 +22,11 @@ public class EstudanteDTOFactory {
 	@Autowired
 	CompetenciaDTOFactory competenciaFactory;
 
-	public List<EstudanteDTO> buildLista(List<Estudante> estudantes) {
-		return estudantes.stream().map(this::buildEstudante).collect(Collectors.toList());
+	public List<EstudanteDTO> buildDTOs(List<Estudante> estudantes) {
+		return estudantes.stream().map(this::buildDTO).collect(Collectors.toList());
 	}
 
-	public EstudanteDTO buildEstudante(Estudante estudante) {
+	public EstudanteDTO buildDTO(Estudante estudante) {
 
 		LocalDate dataNasc = estudante.getPessoa().getDataNascimento();
 		String dataFormatada = EstagieiUtils.dateParaString(dataNasc);
@@ -39,7 +39,7 @@ public class EstudanteDTOFactory {
 //				.contato(estudante.getPessoa().getContato());
 		if (estudante.hasCompetencias()) {
 			Set<Competencia> competencias = estudante.getCompetencias().stream().collect(Collectors.toSet());
-			builder.competencias(competenciaFactory.buildCompetencias(competencias));
+			builder.competencias(competenciaFactory.buildDTOs(competencias));
 		}
 
 		return builder.build();

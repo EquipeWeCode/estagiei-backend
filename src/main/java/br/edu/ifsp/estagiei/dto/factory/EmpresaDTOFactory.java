@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import br.edu.ifsp.estagiei.dto.EmpresaDTO;
 import br.edu.ifsp.estagiei.dto.EmpresaDTO.EmpresaDTOBuilder;
 import br.edu.ifsp.estagiei.entity.Empresa;
+import br.edu.ifsp.estagiei.entity.Endereco;
 import br.edu.ifsp.estagiei.entity.Vaga;
 import lombok.NoArgsConstructor;
 
@@ -22,7 +23,7 @@ public class EmpresaDTOFactory {
 	@Autowired
 	private EnderecoDTOFactory enderecoFactory;
 
-	public EmpresaDTO buildEmpresa(Empresa empresa) {
+	public EmpresaDTO buildDTO(Empresa empresa) {
 		
 		EmpresaDTOBuilder builder =  EmpresaDTO.builder()
 				.codEmpresa(empresa.getCodEmpresa())
@@ -33,8 +34,14 @@ public class EmpresaDTOFactory {
 		
 		if(empresa.hasVagas()) {
 			List<Vaga> vagasEmpresa = empresa.getVagas().stream().collect(Collectors.toList());
-			builder.vagas(vagaFactory.buildLista(vagasEmpresa));
+			builder.vagas(vagaFactory.buildDTOs(vagasEmpresa));
 		}
+		
+		if(empresa.hasEndereco()) {
+			Endereco enderecoEmpresa = empresa.getEndereco();
+			builder.endereco(enderecoFactory.buildDTO(enderecoEmpresa));
+		}
+		
 		return builder.build();
 	}
 
@@ -49,7 +56,7 @@ public class EmpresaDTOFactory {
 			entidade.setEndereco(enderecoFactory.buildEntity(dto.getEndereco()));
 		}
 		if (dto.hasVagas()) {
-			entidade.setVagas(vagaFactory.buildVagas(dto.getVagas()));
+			entidade.setVagas(vagaFactory.buildEntities(dto.getVagas()));
 		}
 		return entidade;
 	}

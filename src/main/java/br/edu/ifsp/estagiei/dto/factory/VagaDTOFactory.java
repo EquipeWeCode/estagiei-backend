@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import br.edu.ifsp.estagiei.dto.EmpresaDTO;
@@ -22,9 +23,14 @@ public class VagaDTOFactory {
 	@Autowired
 	private CompetenciaDTOFactory competenciaFactory;
 
-	private EmpresaDTOFactory empresaFactory = new EmpresaDTOFactory();
+    private EmpresaDTOFactory empresaFactory;
 
-	public Set<Vaga> buildVagas(List<VagaDTO> dto) {
+    @Autowired
+    public VagaDTOFactory(@Lazy EmpresaDTOFactory empresaFactory) {
+        this.empresaFactory = empresaFactory;
+    }
+
+	public Set<Vaga> buildEntities(List<VagaDTO> dto) {
 		return dto.stream().map(this::buildEntity).collect(Collectors.toSet());
 	}
 
@@ -46,23 +52,23 @@ public class VagaDTOFactory {
 		return empresa;
 	}
 
-	public List<VagaDTO> buildLista(List<Vaga> vagas) {
-		return vagas.stream().map(this::buildVaga).collect(Collectors.toList());
+	public List<VagaDTO> buildDTOs(List<Vaga> vagas) {
+		return vagas.stream().map(this::buildDTO).collect(Collectors.toList());
 	}
 
-	public VagaDTO buildVaga(Vaga vaga) {
+	public VagaDTO buildDTO(Vaga vaga) {
 		VagaDTOBuilder builder = VagaDTO.builder();
 
 		builder.codVaga(vaga.getCodVaga()).descricao(vaga.getDescricao()).titulo(vaga.getTitulo())
 				.indAtivo(vaga.getIndAtivo()).salario(vaga.getSalario());
 
 		if (vaga.hasEmpresa()) {
-			builder.empresa(empresaFactory.buildEmpresa(vaga.getEmpresa()));
+			builder.empresa(empresaFactory.buildDTO(vaga.getEmpresa()));
 		}
 
 		if (vaga.hasCompetencias()) {
 			Set<Competencia> competencias = vaga.getCompetencias().stream().collect(Collectors.toSet());
-			builder.competencias(competenciaFactory.buildCompetencias(competencias));
+			builder.competencias(competenciaFactory.buildDTOs(competencias));
 		}
 
 		return builder.build();
