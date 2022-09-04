@@ -11,7 +11,6 @@ public abstract class HistoricoEscolar_ {
 
 	public static volatile SingularAttribute<HistoricoEscolar, String> instEnsino;
 	public static volatile SingularAttribute<HistoricoEscolar, LocalDate> dataFim;
-	public static volatile SingularAttribute<HistoricoEscolar, Curso> curso;
 	public static volatile SingularAttribute<HistoricoEscolar, Long> codHistEscolar;
 	public static volatile SingularAttribute<HistoricoEscolar, LocalDate> dataInicio;
 	public static volatile SingularAttribute<HistoricoEscolar, String> nvlEscolaridade;
