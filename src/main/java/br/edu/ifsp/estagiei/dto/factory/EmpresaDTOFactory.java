@@ -42,7 +42,7 @@ public class EmpresaDTOFactory {
 		}
 
 		if (empresa.hasEndereco()) {
-			Endereco enderecoEmpresa = empresa.getEndereco();
+			Endereco enderecoEmpresa = empresa.getEndereco() != null ? empresa.getEndereco() : new Endereco();
 			builder.endereco(enderecoFactory.buildDTO(enderecoEmpresa));
 		}
 

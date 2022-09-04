@@ -2,6 +2,7 @@ package br.edu.ifsp.estagiei.entity;
 
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -29,6 +31,8 @@ public class HistoricoEscolar {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_empresa_cod_empresa_seq")
 	@Column(name = "cod_hist_escolar", updatable = false)
 	private Long codHistEscolar;
+    @Column(name = "cod_estudante", insertable = false, updatable = false)
+    private Long codEstudante;
 	@Column(name = "curso")
 	private String curso;
 	@Column(name = "nvl_escolaridade")
@@ -44,6 +48,7 @@ public class HistoricoEscolar {
 	@Embedded
 	private Auditoria auditoria;
 
-	@OneToOne(mappedBy = "historicoEscolar", fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@JoinColumn(name = "cod_estudante")
 	private Estudante estudante;
 }
