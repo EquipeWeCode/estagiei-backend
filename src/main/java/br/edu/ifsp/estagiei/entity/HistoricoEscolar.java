@@ -26,7 +26,7 @@ public class HistoricoEscolar {
 
 	@Id
 	@SequenceGenerator(name = "tb_hist_escolar_cod_hist_escolar_seq", sequenceName = "tb_hist_escolar_cod_hist_escolar_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_empresa_cod_empresa_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_hist_escolar_cod_hist_escolar_seq")
 	@Column(name = "cod_hist_escolar", updatable = false)
 	private Long codHistEscolar;
 	@Column(name = "curso")
