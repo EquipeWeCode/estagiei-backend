@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.common.collect.Lists;
 
 import br.edu.ifsp.estagiei.dto.CompetenciaDTO;
@@ -21,7 +20,6 @@ import br.edu.ifsp.estagiei.dto.filter.EstudanteFiltroDTO;
 import br.edu.ifsp.estagiei.entity.Competencia;
 import br.edu.ifsp.estagiei.entity.Estudante;
 import br.edu.ifsp.estagiei.entity.Pessoa;
-import br.edu.ifsp.estagiei.entity.Usuario;
 import br.edu.ifsp.estagiei.entity.Vaga;
 import br.edu.ifsp.estagiei.exception.ValidacaoException;
 import br.edu.ifsp.estagiei.repository.EstudanteRepository;
