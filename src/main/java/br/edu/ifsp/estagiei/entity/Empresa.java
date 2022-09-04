@@ -1,6 +1,7 @@
 package br.edu.ifsp.estagiei.entity;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -19,8 +20,6 @@ import javax.persistence.Persistence;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,7 +36,7 @@ public class Empresa {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_empresa_cod_empresa_seq")
 	@Column(name = "cod_empresa", updatable = false)
 	private Long codEmpresa;
-	@Column(name = "cod_usuario")
+	@Column(name = "cod_usuario", insertable = false, updatable = false)
 	private Long codUsuario;
 	@Column(name = "razao_social")
 	private String razaoSocial;
@@ -54,20 +53,33 @@ public class Empresa {
 	@JoinColumn(name = "cod_endereco")
 	private Endereco endereco;
 
-	@OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "empresa", cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	private Set<Vaga> vagas = new HashSet<>();
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE })
-	@JoinColumn(name = "cod_usuario", insertable = false, updatable = false)
-	@JsonIgnore
+	@JoinColumn(name = "cod_usuario", referencedColumnName = "cod_usuario")
 	private Usuario usuario;
 
 	public boolean hasVagas() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "vagas");
 	}
-	
+
 	public boolean hasEndereco() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "endereco");
+	}
+	
+	public Vaga novaVaga(Long codVaga) {
+		Vaga novaVaga = new Vaga();
+		novaVaga.setCodVaga(codVaga);
+		
+		Vaga vaga = vagas.stream().filter(v -> v.equals(novaVaga)).findFirst().orElse(novaVaga);
+		vagas.add(vaga);
+		return vaga;
+	}
+	
+	public void retemVagas(List<Vaga> novasVagas) {
+		vagas.retainAll(novasVagas);
 	}
 
 	@Override

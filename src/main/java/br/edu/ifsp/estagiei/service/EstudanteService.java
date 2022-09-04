@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.common.collect.Lists;
 
 import br.edu.ifsp.estagiei.dto.CompetenciaDTO;
@@ -21,7 +20,6 @@ import br.edu.ifsp.estagiei.dto.filter.EstudanteFiltroDTO;
 import br.edu.ifsp.estagiei.entity.Competencia;
 import br.edu.ifsp.estagiei.entity.Estudante;
 import br.edu.ifsp.estagiei.entity.Pessoa;
-import br.edu.ifsp.estagiei.entity.Usuario;
 import br.edu.ifsp.estagiei.entity.Vaga;
 import br.edu.ifsp.estagiei.exception.ValidacaoException;
 import br.edu.ifsp.estagiei.repository.EstudanteRepository;
@@ -61,25 +59,6 @@ public class EstudanteService {
 				.orElseThrow(() -> new ValidacaoException("Estudante não encontrado"));
 	}
 
-	public void insereEstudanteViaGoogle(Payload payload, Long codEstudante) {
-		String email = payload.getEmail();
-		String nome = (String) payload.get("name");
-		String avatarUrl = (String) payload.get("picture");
-
-		Usuario usuario = new Usuario();
-		Pessoa pessoa = new Pessoa();
-		pessoa.setNome(!nome.isEmpty() ? nome.toUpperCase() : "");
-
-		usuario.setAvatar(avatarUrl);
-		usuario.setEmail(email);
-		pessoa.setUsuario(usuario);
-
-		Estudante estudante = new Estudante();
-		estudante.setCodEstudante(codEstudante);
-		estudante.setPessoa(pessoa);
-
-		estudanteRepositorio.save(estudante);
-	}
 
 	public EstudanteDTO salvaEstudante(EstudanteDTO dto) {
 		Estudante estudanteBuscado = null;

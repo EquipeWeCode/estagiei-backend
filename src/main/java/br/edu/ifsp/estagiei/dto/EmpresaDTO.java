@@ -2,7 +2,9 @@ package br.edu.ifsp.estagiei.dto;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -25,12 +27,15 @@ public class EmpresaDTO implements DTOUtils {
 	private String email;
 	@NotBlank(message = MSG_NOT_NULL)
 	private String senha;
+	private String avatar;
 	@NotBlank(message = MSG_NOT_NULL)
 	private String razaoSocial;
 	@NotBlank(message = MSG_NOT_NULL)
 	private String nomeFantasia;
 	@NotBlank(message = MSG_NOT_NULL)
 	private String cnpj;
+	@NotNull(message = MSG_NOT_NULL)
+	@Valid
 	private EnderecoDTO endereco;
 	private List<VagaDTO> vagas;
 	private Boolean indAtivo;

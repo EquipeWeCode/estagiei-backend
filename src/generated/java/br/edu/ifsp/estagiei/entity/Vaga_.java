@@ -12,6 +12,7 @@ public abstract class Vaga_ {
 
 	public static volatile SingularAttribute<Vaga, Long> codVaga;
 	public static volatile SingularAttribute<Vaga, Endereco> endereco;
+	public static volatile SingularAttribute<Vaga, Long> codEmpresa;
 	public static volatile SingularAttribute<Vaga, BigDecimal> salario;
 	public static volatile SingularAttribute<Vaga, Boolean> indAtivo;
 	public static volatile SetAttribute<Vaga, Estudante> estudantes;
@@ -22,6 +23,7 @@ public abstract class Vaga_ {
 
 	public static final String COD_VAGA = "codVaga";
 	public static final String ENDERECO = "endereco";
+	public static final String COD_EMPRESA = "codEmpresa";
 	public static final String SALARIO = "salario";
 	public static final String IND_ATIVO = "indAtivo";
 	public static final String ESTUDANTES = "estudantes";

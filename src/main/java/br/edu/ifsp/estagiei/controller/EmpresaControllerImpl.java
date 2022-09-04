@@ -2,7 +2,6 @@ package br.edu.ifsp.estagiei.controller;
 
 import java.util.List;
 
-import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +39,8 @@ public class EmpresaControllerImpl implements EmpresaController {
 	}
 	
 	@PostMapping
-	@RolesAllowed({ROLE_ADMIN, ROLE_EMPRESA})
 	public ResponseEntity<EmpresaDTO> postEmpresa(@RequestBody @Valid EmpresaDTO dto) {
-		EmpresaDTO empresa = service.salvaEmpresa(dto);
+		EmpresaDTO empresa = service.salvaEmpresa(dto, false);
 		return ResponseEntity.ok(empresa);
 	}
 }
