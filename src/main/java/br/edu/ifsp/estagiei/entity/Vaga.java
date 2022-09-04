@@ -38,6 +38,8 @@ public class Vaga {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_vaga_cod_vaga_seq")
 	@Column(name = "cod_vaga", updatable = false)
 	private Long codVaga;
+	@Column(name = "cod_empresa", insertable = false, updatable = false)
+	private Long codEmpresa;
 	@Column(name = "descricao")
 	private String descricao;
 	@Column(name = "salario")
@@ -55,7 +57,7 @@ public class Vaga {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_empresa", nullable = false)
 	private Empresa empresa;
-	
+
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_endereco")
 	private Endereco endereco;
@@ -63,7 +65,7 @@ public class Vaga {
 	public Boolean hasCompetencias() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "competencias");
 	}
-	
+
 	public Boolean hasEmpresa() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "empresa");
 	}

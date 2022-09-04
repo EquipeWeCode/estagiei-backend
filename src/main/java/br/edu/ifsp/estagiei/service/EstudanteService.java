@@ -61,25 +61,6 @@ public class EstudanteService {
 				.orElseThrow(() -> new ValidacaoException("Estudante não encontrado"));
 	}
 
-	public void insereEstudanteViaGoogle(Payload payload, Long codEstudante) {
-		String email = payload.getEmail();
-		String nome = (String) payload.get("name");
-		String avatarUrl = (String) payload.get("picture");
-
-		Usuario usuario = new Usuario();
-		Pessoa pessoa = new Pessoa();
-		pessoa.setNome(!nome.isEmpty() ? nome.toUpperCase() : "");
-
-		usuario.setAvatar(avatarUrl);
-		usuario.setEmail(email);
-		pessoa.setUsuario(usuario);
-
-		Estudante estudante = new Estudante();
-		estudante.setCodEstudante(codEstudante);
-		estudante.setPessoa(pessoa);
-
-		estudanteRepositorio.save(estudante);
-	}
 
 	public EstudanteDTO salvaEstudante(EstudanteDTO dto) {
 		Estudante estudanteBuscado = null;

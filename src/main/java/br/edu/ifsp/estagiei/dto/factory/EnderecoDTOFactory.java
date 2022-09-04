@@ -26,7 +26,7 @@ public class EnderecoDTOFactory {
 	}
 
 	public EnderecoDTO buildDTO(Endereco endereco) {
-
+		endereco = endereco != null ? endereco : new Endereco();
 		EnderecoDTOBuilder builder = EnderecoDTO.builder().codEndereco(endereco.getCodEndereco())
 				.bairro(endereco.getBairro()).cep(endereco.getCep()).cidade(endereco.getCidade())
 				.complemento(endereco.getComplemento()).logradouro(endereco.getLogradouro())

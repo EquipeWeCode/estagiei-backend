@@ -39,7 +39,7 @@ import lombok.Setter;
 public class Usuario implements UserDetails {
 
 	private static final long serialVersionUID = 8024417533446604625L;
-	
+
 	@Id
 	@SequenceGenerator(name = "tb_usuario_cod_usuario_seq", sequenceName = "tb_usuario_cod_usuario_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_usuario_cod_usuario_seq")
@@ -59,14 +59,15 @@ public class Usuario implements UserDetails {
 			CascadeType.REMOVE })
 	@JsonIgnore
 	private Pessoa pessoa;
-	
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "tb_usu_perm",
-        joinColumns = @JoinColumn(name = "cod_usuario"),
-        inverseJoinColumns = @JoinColumn(name = "cod_permissao")
-    )
-    private Set<Permissao> permissoes = new HashSet<>();
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = { CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REMOVE })
+	@JoinColumn(name = "cod_empresa", referencedColumnName = "cod_empresa", insertable = false, updatable = false)
+	private Empresa empresa;
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "tb_usu_perm", joinColumns = @JoinColumn(name = "cod_usuario"), inverseJoinColumns = @JoinColumn(name = "cod_permissao"))
+	private Set<Permissao> permissoes = new HashSet<>();
 
 	@Override
 	public int hashCode() {
@@ -88,15 +89,15 @@ public class Usuario implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for (Permissao permissao : permissoes) {
-            authorities.add(new SimpleGrantedAuthority(permissao.getDescricao()));
-        }
-        return authorities;
+		for (Permissao permissao : permissoes) {
+			authorities.add(new SimpleGrantedAuthority(permissao.getDescricao()));
+		}
+		return authorities;
 	}
-	
-    public void addPermissao(Permissao permissao) {
-        this.permissoes.add(permissao);
-    }
+
+	public void addPermissao(Permissao permissao) {
+		this.permissoes.add(permissao);
+	}
 
 	@Override
 	public String getPassword() {
@@ -126,5 +127,9 @@ public class Usuario implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	public boolean hasEmpresa() {
+		return this.empresa != null;
 	}
 }

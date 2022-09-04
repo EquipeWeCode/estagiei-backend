@@ -1,6 +1,8 @@
 package br.edu.ifsp.estagiei.dto;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -19,12 +21,17 @@ import lombok.Setter;
 @JsonInclude(Include.NON_NULL)
 public class EnderecoDTO implements DTOUtils {
 	private Long codEndereco;
-	@NotBlank(message = MSG_NOT_NULL)
+	@NotNull(message = MSG_NOT_NULL)
 	private Integer cep;
+	@NotNull(message = MSG_NOT_NULL)
 	private String logradouro;
-	private String numero;
+	private Integer numero;
+	@NotNull(message = MSG_NOT_NULL)
 	private String bairro;
+	@NotNull(message = MSG_NOT_NULL)
 	private String cidade;
+	@NotNull(message = MSG_NOT_NULL)
+	@Length(min = 2, max = 2, message = "Deve ter 2 caracteres")
 	private String estado;
 	private String complemento;
 	private String pontoReferencia;
