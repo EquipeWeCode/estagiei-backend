@@ -11,12 +11,14 @@ public abstract class Representante_ {
 	public static volatile SingularAttribute<Representante, Pessoa> pessoa;
 	public static volatile SingularAttribute<Representante, Boolean> indAtivo;
 	public static volatile SingularAttribute<Representante, String> cargo;
+	public static volatile SingularAttribute<Representante, Auditoria> auditoria;
 	public static volatile SingularAttribute<Representante, Empresa> empresa;
-	public static volatile SingularAttribute<Representante, String> codRepresentante;
+	public static volatile SingularAttribute<Representante, Long> codRepresentante;
 
 	public static final String PESSOA = "pessoa";
 	public static final String IND_ATIVO = "indAtivo";
 	public static final String CARGO = "cargo";
+	public static final String AUDITORIA = "auditoria";
 	public static final String EMPRESA = "empresa";
 	public static final String COD_REPRESENTANTE = "codRepresentante";
 

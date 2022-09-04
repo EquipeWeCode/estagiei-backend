@@ -13,6 +13,9 @@ public abstract class Estudante_ {
 	public static volatile SingularAttribute<Estudante, Pessoa> pessoa;
 	public static volatile SingularAttribute<Estudante, Long> codEstudante;
 	public static volatile SingularAttribute<Estudante, Boolean> indAtivo;
+	public static volatile SingularAttribute<Estudante, HistoricoEscolar> historicoEscolar;
+	public static volatile SingularAttribute<Estudante, ExperienciaProfissional> experienciaProfissional;
+	public static volatile SingularAttribute<Estudante, Auditoria> auditoria;
 	public static volatile SingularAttribute<Estudante, Long> codPessoa;
 	public static volatile SetAttribute<Estudante, Competencia> competencias;
 
@@ -20,6 +23,9 @@ public abstract class Estudante_ {
 	public static final String PESSOA = "pessoa";
 	public static final String COD_ESTUDANTE = "codEstudante";
 	public static final String IND_ATIVO = "indAtivo";
+	public static final String HISTORICO_ESCOLAR = "historicoEscolar";
+	public static final String EXPERIENCIA_PROFISSIONAL = "experienciaProfissional";
+	public static final String AUDITORIA = "auditoria";
 	public static final String COD_PESSOA = "codPessoa";
 	public static final String COMPETENCIAS = "competencias";
 

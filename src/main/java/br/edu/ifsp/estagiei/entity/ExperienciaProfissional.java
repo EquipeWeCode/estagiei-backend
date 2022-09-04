@@ -31,6 +31,8 @@ public class ExperienciaProfissional {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_exp_profissional_cod_exp_profissional_seq")
     @Column(name = "cod_exp_profissional", updatable = false)
     private Long codExpProfissional;
+    @Column(name = "cod_estudante", insertable = false, updatable = false)
+    private Long codEstudante;
     @Column(name = "nome_empresa")
     private String nomeEmpresa;
     @Column(name = "cargo")
@@ -44,8 +46,9 @@ public class ExperienciaProfissional {
     @Embedded
     private Auditoria auditoria;
 
-    @OneToOne(mappedBy = "experienciaProfissional", fetch = FetchType.LAZY)
-    private Estudante estudante;
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "cod_estudante")
+	private Estudante estudante;
     
     @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_endereco")
