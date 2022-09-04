@@ -1,6 +1,7 @@
 package br.edu.ifsp.estagiei.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,6 +28,8 @@ public class Permissao {
 	private Long codPermissao;
 	@Column(name = "descricao")
 	private String descricao;
+	@Embedded
+	private Auditoria auditoria;
 	
 	public Permissao(String descricao) {
 		this.descricao = descricao;
