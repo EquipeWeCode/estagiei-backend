@@ -15,6 +15,7 @@ public abstract class Usuario_ {
 	public static volatile SingularAttribute<Usuario, Pessoa> pessoa;
 	public static volatile SingularAttribute<Usuario, Boolean> indAtivo;
 	public static volatile SingularAttribute<Usuario, String> avatar;
+	public static volatile SingularAttribute<Usuario, Auditoria> auditoria;
 	public static volatile SingularAttribute<Usuario, Empresa> empresa;
 	public static volatile SingularAttribute<Usuario, String> email;
 
@@ -24,6 +25,7 @@ public abstract class Usuario_ {
 	public static final String PESSOA = "pessoa";
 	public static final String IND_ATIVO = "indAtivo";
 	public static final String AVATAR = "avatar";
+	public static final String AUDITORIA = "auditoria";
 	public static final String EMPRESA = "empresa";
 	public static final String EMAIL = "email";
 

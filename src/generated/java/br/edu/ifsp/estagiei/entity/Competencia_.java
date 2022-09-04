@@ -13,12 +13,14 @@ public abstract class Competencia_ {
 	public static volatile SetAttribute<Competencia, Vaga> vagas;
 	public static volatile SingularAttribute<Competencia, Boolean> indAtivo;
 	public static volatile SetAttribute<Competencia, Estudante> estudantes;
+	public static volatile SingularAttribute<Competencia, Auditoria> auditoria;
 	public static volatile SingularAttribute<Competencia, String> descricao;
 
 	public static final String COD_COMPETENCIA = "codCompetencia";
 	public static final String VAGAS = "vagas";
 	public static final String IND_ATIVO = "indAtivo";
 	public static final String ESTUDANTES = "estudantes";
+	public static final String AUDITORIA = "auditoria";
 	public static final String DESCRICAO = "descricao";
 
 }

@@ -48,12 +48,10 @@ public class Estudante {
 	@JsonIgnore
 	private Pessoa pessoa;
 	
-	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.LAZY)
-	@JoinColumn(name = "experiencia_profissional")
+	@OneToOne(mappedBy = "estudante", fetch = FetchType.LAZY)
 	private ExperienciaProfissional experienciaProfissional;
 	
-	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.LAZY)
-	@JoinColumn(name = "historico_escolar")
+	@OneToOne(mappedBy="estudante", fetch = FetchType.LAZY)
 	private HistoricoEscolar historicoEscolar;
 
 	@ManyToMany(fetch = FetchType.LAZY)
