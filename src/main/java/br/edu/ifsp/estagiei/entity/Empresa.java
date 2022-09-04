@@ -72,7 +72,6 @@ public class Empresa {
 	public Vaga novaVaga(Long codVaga) {
 		Vaga novaVaga = new Vaga();
 		novaVaga.setCodVaga(codVaga);
-//		novaVaga.setCodEmpresa(codEmpresa);
 		
 		Vaga vaga = vagas.stream().filter(v -> v.equals(novaVaga)).findFirst().orElse(novaVaga);
 		vagas.add(vaga);
