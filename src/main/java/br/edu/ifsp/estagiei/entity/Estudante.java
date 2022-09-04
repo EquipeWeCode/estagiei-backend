@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -35,6 +36,8 @@ public class Estudante {
 	private Long codPessoa;
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
+	@Embedded
+	private Auditoria auditoria;
 
 	@ManyToMany
 	@JoinTable(name = "tb_comp_estud", joinColumns = @JoinColumn(name = "cod_estudante"), inverseJoinColumns = @JoinColumn(name = "cod_competencia"))
@@ -44,6 +47,17 @@ public class Estudante {
 	@JoinColumn(name = "cod_pessoa")
 	@JsonIgnore
 	private Pessoa pessoa;
+	
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "experiencia_profissional")
+	private ExperienciaProfissional experienciaProfissional;
+	
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "historico_escolar")
+	private HistoricoEscolar historicoEscolar;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	private Set<Vaga> vagas = new HashSet<>();
 
 	public Boolean hasCompetencias() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "competencias");

@@ -37,8 +37,6 @@ public class EstudanteDTOFactory {
 				.rg(estudante.getPessoa().getRg()).nome(estudante.getPessoa().getNome())
 				.dataNascimento(dataFormatada);
 //				.contato(estudante.getPessoa().getContato());
-
-
 		if (estudante.hasCompetencias()) {
 			Set<Competencia> competencias = estudante.getCompetencias().stream().collect(Collectors.toSet());
 			builder.competencias(competenciaFactory.buildDTOs(competencias));

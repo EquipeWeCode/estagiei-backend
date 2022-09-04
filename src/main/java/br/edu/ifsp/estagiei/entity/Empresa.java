@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -35,19 +36,18 @@ public class Empresa {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_empresa_cod_empresa_seq")
 	@Column(name = "cod_empresa", updatable = false)
 	private Long codEmpresa;
-
 	@Column(name = "cod_usuario", insertable = false, updatable = false)
 	private Long codUsuario;
-
 	@Column(name = "razao_social")
 	private String razaoSocial;
 	@Column(name = "nome_fantasia")
 	private String nomeFantasia;
 	@Column(name = "cnpj")
 	private String cnpj;
-
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'FALSE'", nullable = false)
 	private Boolean indAtivo = false;
+	@Embedded
+	private Auditoria auditoria;
 
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_endereco")

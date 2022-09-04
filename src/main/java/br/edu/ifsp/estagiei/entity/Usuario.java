@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -51,9 +52,10 @@ public class Usuario implements UserDetails {
 	private String email;
 	@Column(name = "avatar")
 	private String avatar;
-
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
+	@Embedded
+	private Auditoria auditoria;
 
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = { CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REMOVE })
