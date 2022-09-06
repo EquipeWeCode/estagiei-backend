@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import br.edu.ifsp.estagiei.dto.LoginRequestDTO;
 import br.edu.ifsp.estagiei.dto.LoginResponseDTO;
 import br.edu.ifsp.estagiei.entity.Empresa;
+import br.edu.ifsp.estagiei.entity.Pessoa;
 import br.edu.ifsp.estagiei.exception.ValidacaoException;
 import br.edu.ifsp.estagiei.repository.EmpresaRepository;
+import br.edu.ifsp.estagiei.repository.PessoaRepository;
 import br.edu.ifsp.estagiei.service.LoginService;
 
 @RestController
@@ -30,15 +32,22 @@ public class LoginControllerImpl implements LoginController {
 	private LoginService loginService;
 	@Autowired
 	EmpresaRepository empresaRepositorio;
+	@Autowired
+	PessoaRepository pessoaRepositorio;
 
 	@PostMapping(path = "/login")
 	@ResponseBody
 	public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO loginDTO) {
 
 		String email = loginDTO.getEmail();
+		Pessoa pessoa = pessoaRepositorio.findByUsuarioEmail(email);
 		Empresa empresa = empresaRepositorio.findByUsuarioEmail(email);
 		if (empresa != null && !empresa.getIndAtivo()) {
 			throw new ValidacaoException("A empresa está inativa, aguarde a liberação dos administradores");
+		}
+		
+		if (pessoa == null && empresa == null) {
+			throw new ValidacaoException("Cadastro Inexistente");
 		}
 
 		try {

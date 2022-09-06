@@ -17,5 +17,6 @@ public interface EmpresaRepository extends CrudRepository<Empresa, Long> {
 	@Query("SELECT DISTINCT emp FROM Empresa emp LEFT JOIN FETCH emp.endereco endereco LEFT JOIN FETCH emp.usuario")
 	public List<Empresa> findAll();
 	
+	@Query("SELECT emp FROM Empresa emp LEFT JOIN FETCH emp.usuario usu WHERE usu.email = :email")
 	public Empresa findByUsuarioEmail(String email);
 }
