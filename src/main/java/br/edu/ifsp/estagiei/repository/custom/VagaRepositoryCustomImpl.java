@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.FetchParent;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
@@ -18,6 +19,8 @@ import com.google.common.collect.Lists;
 import br.edu.ifsp.estagiei.dto.filter.VagaFiltroDTO;
 import br.edu.ifsp.estagiei.entity.Competencia;
 import br.edu.ifsp.estagiei.entity.Competencia_;
+import br.edu.ifsp.estagiei.entity.Empresa;
+import br.edu.ifsp.estagiei.entity.Empresa_;
 import br.edu.ifsp.estagiei.entity.Estudante;
 import br.edu.ifsp.estagiei.entity.Estudante_;
 import br.edu.ifsp.estagiei.entity.Vaga;
@@ -35,7 +38,8 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 		Root<Vaga> r = criteria.from(Vaga.class);
 
 		r.fetch(Vaga_.competencias, JoinType.LEFT);
-		r.fetch(Vaga_.empresa, JoinType.INNER);
+		FetchParent<Vaga, Empresa> fetchEmpresa = r.fetch(Vaga_.empresa, JoinType.INNER);
+		fetchEmpresa.fetch(Empresa_.usuario);
 
 		criteria.distinct(true).select(r).where(cb.equal(r.get(Vaga_.codVaga), codVaga));
 
@@ -78,7 +82,8 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 		Root<Vaga> r = criteria.from(Vaga.class);
 
 		r.fetch(Vaga_.competencias, JoinType.LEFT);
-		r.fetch(Vaga_.empresa, JoinType.INNER);
+		FetchParent<Vaga, Empresa> fetchEmpresa = r.fetch(Vaga_.empresa, JoinType.INNER);
+		fetchEmpresa.fetch(Empresa_.usuario);
 
 		criteria.distinct(true).select(r).where(aplicaFiltros(r, filtro));
 
