@@ -1,6 +1,7 @@
 package br.edu.ifsp.estagiei.entity;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Persistence;
 import javax.persistence.Table;
@@ -31,7 +33,7 @@ import lombok.Setter;
 public class Estudante {
 	@Id
 	@Column(name = "cod_estudante", updatable = false)
-	private Long codEstudante;	
+	private Long codEstudante;
 	@Column(name = "cod_pessoa", updatable = false, insertable = false)
 	private Long codPessoa;
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
@@ -47,12 +49,12 @@ public class Estudante {
 	@JoinColumn(name = "cod_pessoa")
 	@JsonIgnore
 	private Pessoa pessoa;
-	
-	@OneToOne(mappedBy = "estudante", fetch = FetchType.LAZY)
-	private ExperienciaProfissional experienciaProfissional;
-	
-	@OneToOne(mappedBy="estudante", fetch = FetchType.LAZY)
-	private HistoricoEscolar historicoEscolar;
+
+	@OneToMany(mappedBy = "estudante", fetch = FetchType.LAZY)
+	private Set<ExperienciaProfissional> experienciaProfissional = new HashSet<>();
+
+	@OneToMany(mappedBy = "estudante", fetch = FetchType.LAZY)
+	private Set<HistoricoEscolar> historicoEscolar = new HashSet<>();
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Vaga> vagas = new HashSet<>();
@@ -73,6 +75,38 @@ public class Estudante {
 				.orElse(novaCompetencia);
 		competencias.add(competencia);
 		return competencia;
+	}
+
+	public void retemCompetencias(List<Competencia> lista) {
+		competencias.retainAll(lista);
+	}
+
+	public ExperienciaProfissional novaExperienciaProfissional(Long chavePrimaria) {
+		ExperienciaProfissional novaEntidade = new ExperienciaProfissional();
+		novaEntidade.setCodExpProfissional(chavePrimaria);
+
+		ExperienciaProfissional entidade = experienciaProfissional.stream().filter(v -> v.equals(novaEntidade))
+				.findFirst().orElse(novaEntidade);
+		experienciaProfissional.add(entidade);
+		return entidade;
+	}
+
+	public void retemExperiencias(List<ExperienciaProfissional> lista) {
+		experienciaProfissional.retainAll(lista);
+	}
+
+	public HistoricoEscolar novoHistoricoEscolar(Long chavePrimaria) {
+		HistoricoEscolar novaEntidade = new HistoricoEscolar();
+		novaEntidade.setCodHistEscolar(chavePrimaria);
+
+		HistoricoEscolar entidade = historicoEscolar.stream().filter(v -> v.equals(novaEntidade)).findFirst()
+				.orElse(novaEntidade);
+		historicoEscolar.add(entidade);
+		return entidade;
+	}
+
+	public void retemHistoricos(List<HistoricoEscolar> lista) {
+		historicoEscolar.retainAll(lista);
 	}
 
 	@Override

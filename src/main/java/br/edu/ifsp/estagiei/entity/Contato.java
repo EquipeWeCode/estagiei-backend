@@ -1,5 +1,7 @@
 package br.edu.ifsp.estagiei.entity;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -33,5 +35,22 @@ public class Contato {
     private String valorContato;
     @Embedded
 	private Auditoria auditoria;
+    
+	@Override
+	public int hashCode() {
+		return Objects.hash(codContato);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Contato))
+			return false;
+		Contato other = (Contato) obj;
+		return Objects.equals(codContato, other.codContato);
+	}
     
 }

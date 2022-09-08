@@ -1,10 +1,10 @@
 package br.edu.ifsp.estagiei.dto;
 
-import java.math.BigDecimal;
-import java.util.List;
+import java.sql.Timestamp;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -21,16 +21,18 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @JsonInclude(Include.NON_NULL)
-public class VagaDTO implements DTOUtils {
-	private Long codVaga;
+public class ExperienciaProfissionalDTO implements DTOUtils {
 	@NotBlank(message = MSG_NOT_NULL)
-	private String titulo;
+	private String nomeEmpresa;
+	@NotBlank(message = MSG_NOT_NULL)
+	private String cargo;
+	@NotBlank(message = MSG_NOT_NULL)
 	private String descricao;
 	@NotNull(message = MSG_NOT_NULL)
-	private BigDecimal salario;
-	private EmpresaDTO empresa;	
-	private List<CompetenciaDTO> competencias;
-	private Boolean indAtivo;
-	
+	@Pattern(regexp = DATE_PATTERN, message = MSG_DATE_FORMAT)
+	private Timestamp dataInicio;
+	@NotNull(message = MSG_NOT_NULL)
+	@Pattern(regexp = DATE_PATTERN, message = MSG_DATE_FORMAT)
+	private Timestamp dataFim;
 	private AuditoriaDTO auditoria;
 }

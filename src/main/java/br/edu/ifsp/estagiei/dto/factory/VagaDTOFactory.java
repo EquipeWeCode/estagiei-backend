@@ -22,13 +22,15 @@ public class VagaDTOFactory {
 
 	@Autowired
 	private CompetenciaDTOFactory competenciaFactory;
+	@Autowired
+	private AuditoriaDTOFactory auditoriaFactory;
 
-    private EmpresaDTOFactory empresaFactory;
+	private EmpresaDTOFactory empresaFactory;
 
-    @Autowired
-    public VagaDTOFactory(@Lazy EmpresaDTOFactory empresaFactory) {
-        this.empresaFactory = empresaFactory;
-    }
+	@Autowired
+	public VagaDTOFactory(@Lazy EmpresaDTOFactory empresaFactory) {
+		this.empresaFactory = empresaFactory;
+	}
 
 	public Set<Vaga> buildEntities(List<VagaDTO> dto) {
 		return dto.stream().map(this::buildEntity).collect(Collectors.toSet());
@@ -60,7 +62,8 @@ public class VagaDTOFactory {
 		VagaDTOBuilder builder = VagaDTO.builder();
 
 		builder.codVaga(vaga.getCodVaga()).descricao(vaga.getDescricao()).titulo(vaga.getTitulo())
-				.indAtivo(vaga.getIndAtivo()).salario(vaga.getSalario());
+				.indAtivo(vaga.getIndAtivo()).salario(vaga.getSalario())
+				.auditoria(auditoriaFactory.buildDTO(vaga.getAuditoria()));
 
 		if (vaga.hasEmpresa()) {
 			builder.empresa(empresaFactory.buildDTO(vaga.getEmpresa()));

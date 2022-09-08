@@ -1,5 +1,6 @@
 package br.edu.ifsp.estagiei.entity;
 
+import br.edu.ifsp.estagiei.constants.RolesEnum;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
@@ -8,7 +9,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Permissao.class)
 public abstract class Permissao_ {
 
-	public static volatile SingularAttribute<Permissao, Long> codPermissao;
+	public static volatile SingularAttribute<Permissao, RolesEnum> codPermissao;
 	public static volatile SingularAttribute<Permissao, Auditoria> auditoria;
 	public static volatile SingularAttribute<Permissao, String> descricao;
 

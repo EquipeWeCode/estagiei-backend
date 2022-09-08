@@ -28,13 +28,17 @@ public class EmpresaDTOFactory {
 	@Autowired
 	private EnderecoDTOFactory enderecoFactory;
 
+	@Autowired
+	private AuditoriaDTOFactory auditoriaFactory;
+
 	public EmpresaDTO buildDTO(Empresa empresa) {
 
 		Usuario usuarioEmpresa = empresa.getUsuario();
 
 		EmpresaDTOBuilder builder = EmpresaDTO.builder().codEmpresa(empresa.getCodEmpresa())
 				.nomeFantasia(empresa.getNomeFantasia()).razaoSocial(empresa.getRazaoSocial()).cnpj(empresa.getCnpj())
-				.indAtivo(empresa.getIndAtivo()).email(usuarioEmpresa.getEmail()).avatar(usuarioEmpresa.getAvatar());
+				.indAtivo(empresa.getIndAtivo()).email(usuarioEmpresa.getEmail()).avatar(usuarioEmpresa.getAvatar())
+				.auditoria(auditoriaFactory.buildDTO(empresa.getAuditoria()));
 
 		if (empresa.hasVagas()) {
 			List<Vaga> vagasEmpresa = empresa.getVagas().stream().collect(Collectors.toList());

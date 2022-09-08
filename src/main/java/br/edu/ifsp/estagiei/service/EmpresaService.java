@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 
+import br.edu.ifsp.estagiei.constants.RolesEnum;
 import br.edu.ifsp.estagiei.dto.EmpresaDTO;
 import br.edu.ifsp.estagiei.dto.factory.EmpresaDTOFactory;
 import br.edu.ifsp.estagiei.entity.Empresa;
@@ -69,7 +70,7 @@ public class EmpresaService {
 			usuario.setEmail(dto.getEmail());
 			usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
 			Permissao permissao = new Permissao();
-			permissao.setCodPermissao(777668L);
+			permissao.setCodPermissao(RolesEnum.EMPRESA.getCodigo());
 			usuario.addPermissao(permissao);
 		}
 

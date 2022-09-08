@@ -42,10 +42,10 @@ public class EstudanteControllerImpl implements EstudanteController {
 		return ResponseEntity.ok(estudantes);
 	}
 
-	@GetMapping(PATH_ID + PATH_RECOMENDACAO)
-	public ResponseEntity<List<VagaDTO>> getVagasRecomendadas(@PathVariable(P_COD_ESTUDANTE) Long codEstudante) {
-		List<VagaDTO> vagas = service.buscaVagasRecomendadas(codEstudante);
-		return ResponseEntity.ok(vagas);
+	@Override
+	public ResponseEntity<EstudanteDTO> postEstudante(@RequestBody @Valid EstudanteDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@PutMapping(PATH_ID)
@@ -55,5 +55,11 @@ public class EstudanteControllerImpl implements EstudanteController {
 		dto.setCodEstudante(codEstudante);
 		EstudanteDTO estudante = service.salvaEstudante(dto);
 		return ResponseEntity.ok(estudante);
+	}
+
+	@GetMapping(PATH_ID + PATH_RECOMENDACAO)
+	public ResponseEntity<List<VagaDTO>> getVagasRecomendadas(@PathVariable(P_COD_ESTUDANTE) Long codEstudante) {
+		List<VagaDTO> vagas = service.buscaVagasRecomendadas(codEstudante);
+		return ResponseEntity.ok(vagas);
 	}
 }

@@ -1,6 +1,7 @@
 package br.edu.ifsp.estagiei.entity;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -48,7 +49,24 @@ public class HistoricoEscolar {
 	@Embedded
 	private Auditoria auditoria;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinColumn(name = "cod_estudante")
 	private Estudante estudante;
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(codHistEscolar);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof HistoricoEscolar))
+			return false;
+		HistoricoEscolar other = (HistoricoEscolar) obj;
+		return Objects.equals(codHistEscolar, other.codHistEscolar);
+	}
 }

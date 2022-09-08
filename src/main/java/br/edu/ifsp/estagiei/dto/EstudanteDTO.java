@@ -2,8 +2,12 @@ package br.edu.ifsp.estagiei.dto;
 
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -25,20 +29,31 @@ public class EstudanteDTO implements DTOUtils {
 	
 	private Long codEstudante;
 	private Long codUsuario;
+	@NotBlank(message = MSG_NOT_NULL)
 	private String email;
-	private String avatar;
+	@NotBlank(message = MSG_NOT_NULL)
+	@Length(min = 8, max = 25, message = MSG_LENGTH_SENHA)
+	private String senha;
 	@CPF(message = "CPF Inválido")
 	private String cpf;
+	@NotBlank(message = MSG_NOT_NULL)
 	private String rg;
+	@NotBlank(message = MSG_NOT_NULL)
 	private String nome;
-	@Pattern(regexp = DATE_PATTERN, message = "Formato errado (yyyy-mm-dd)")
+	private String avatar;
+	@NotNull
+	@Pattern(regexp = DATE_PATTERN, message = MSG_DATE_FORMAT)
 	private String dataNascimento;
 	private String instEnsino;
 	private String nvlEnsino;
-	private String expProfissional;
-	private String contato;
-	
+	@Valid
+	private EnderecoDTO endereco;
+	private List<ExperienciaProfissionalDTO> experienciaProfissional;
 	private List<CompetenciaDTO> competencias;
+//	private List<HistoricoEscolarDTO> historicoEscolar;
+//	private List<ContatoDTO> contatos;
+	
+	private AuditoriaDTO auditoria;
 
 	public boolean hasDataNascimento() {
 		return dataNascimento != null && !dataNascimento.isEmpty();

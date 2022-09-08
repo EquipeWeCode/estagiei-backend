@@ -21,6 +21,8 @@ public class EstudanteDTOFactory {
 
 	@Autowired
 	CompetenciaDTOFactory competenciaFactory;
+	@Autowired
+	private AuditoriaDTOFactory auditoriaFactory;
 
 	public List<EstudanteDTO> buildDTOs(List<Estudante> estudantes) {
 		return estudantes.stream().map(this::buildDTO).collect(Collectors.toList());
@@ -31,11 +33,11 @@ public class EstudanteDTOFactory {
 		LocalDate dataNasc = estudante.getPessoa().getDataNascimento();
 		String dataFormatada = EstagieiUtils.dateParaString(dataNasc);
 
-		EstudanteDTOBuilder builder = EstudanteDTO.builder()
-				.codEstudante(estudante.getCodEstudante()).avatar(estudante.getPessoa().getUsuario().getAvatar())
+		EstudanteDTOBuilder builder = EstudanteDTO.builder().codEstudante(estudante.getCodEstudante())
+				.avatar(estudante.getPessoa().getUsuario().getAvatar())
 				.email(estudante.getPessoa().getUsuario().getEmail()).cpf((estudante.getPessoa().getCpf()))
-				.rg(estudante.getPessoa().getRg()).nome(estudante.getPessoa().getNome())
-				.dataNascimento(dataFormatada);
+				.rg(estudante.getPessoa().getRg()).nome(estudante.getPessoa().getNome()).dataNascimento(dataFormatada)
+				.auditoria(auditoriaFactory.buildDTO(estudante.getAuditoria()));
 //				.contato(estudante.getPessoa().getContato());
 		if (estudante.hasCompetencias()) {
 			Set<Competencia> competencias = estudante.getCompetencias().stream().collect(Collectors.toSet());
