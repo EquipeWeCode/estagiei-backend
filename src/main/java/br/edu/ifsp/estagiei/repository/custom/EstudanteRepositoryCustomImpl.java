@@ -31,8 +31,8 @@ public class EstudanteRepositoryCustomImpl implements EstudanteRepositoryCustom 
 		CriteriaQuery<Estudante> criteria = cb.createQuery(Estudante.class);
 		Root<Estudante> r = criteria.from(Estudante.class);
 
-		r.fetch(Estudante_.competencias, JoinType.LEFT);
-		r.fetch(Estudante_.pessoa, JoinType.LEFT).fetch(Pessoa_.usuario, JoinType.LEFT);
+		fetchEstudanteCampos(r);
+		
 		criteria.where(cb.equal(r.get(Estudante_.codEstudante), codUsuario));
 		return em.createQuery(criteria).getSingleResult();
 	}
@@ -42,9 +42,7 @@ public class EstudanteRepositoryCustomImpl implements EstudanteRepositoryCustom 
 		CriteriaQuery<Estudante> criteria = cb.createQuery(Estudante.class);
 		Root<Estudante> r = criteria.from(Estudante.class);
 
-		r.fetch(Estudante_.competencias, JoinType.LEFT);
-		FetchParent<Estudante, Pessoa> fetchEstudantePessoa = r.fetch(Estudante_.pessoa, JoinType.LEFT);
-		fetchEstudantePessoa.fetch(Pessoa_.usuario, JoinType.LEFT);
+		fetchEstudanteCampos(r);
 		
 		criteria.distinct(true).select(r).where(aplicaFiltros(r, filtro));
 
@@ -53,6 +51,16 @@ public class EstudanteRepositoryCustomImpl implements EstudanteRepositoryCustom 
 		return em.createQuery(criteria).getResultList();
 	}
 
+	private void fetchEstudanteCampos(Root<Estudante> r) {
+		r.fetch(Estudante_.competencias, JoinType.LEFT);
+		FetchParent<Estudante, Pessoa> fetchPessoa = r.fetch(Estudante_.pessoa, JoinType.LEFT);
+		fetchPessoa.fetch(Pessoa_.usuario, JoinType.LEFT);
+		fetchPessoa.fetch(Pessoa_.endereco, JoinType.LEFT);
+		fetchPessoa.fetch(Pessoa_.contatos, JoinType.LEFT);
+		r.fetch(Estudante_.historicoEscolar, JoinType.LEFT);
+		r.fetch(Estudante_.experienciaProfissional, JoinType.LEFT);
+	}
+	
 	private Predicate[] aplicaFiltros(Root<Estudante> root, EstudanteFiltroDTO filtro) {
 		// TODO: Implementar os filtros
 //		CriteriaBuilder cb = em.getCriteriaBuilder();

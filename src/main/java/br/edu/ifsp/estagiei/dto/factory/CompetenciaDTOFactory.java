@@ -1,5 +1,6 @@
 package br.edu.ifsp.estagiei.dto.factory;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Component
 @NoArgsConstructor
 public class CompetenciaDTOFactory {
-	public List<CompetenciaDTO> buildDTOs(Set<Competencia> competencias) {
+	public List<CompetenciaDTO> buildDTOs(Collection<Competencia> competencias) {
 		return competencias.stream().map(this::buildDTO).collect(Collectors.toList());
 	}
 
@@ -25,7 +26,7 @@ public class CompetenciaDTOFactory {
 		return dto;
 	}
 	
-	public Set<Competencia> buildEntities(List<CompetenciaDTO> dtos) {
+	public Set<Competencia> buildEntities(Collection<CompetenciaDTO> dtos) {
 		if(dtos != null && dtos.size() > 0) {			
 			return dtos.stream().map(this::buildEntity).collect(Collectors.toSet());
 		}

@@ -1,8 +1,8 @@
 package br.edu.ifsp.estagiei.dto.factory;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +10,9 @@ import org.springframework.stereotype.Component;
 
 import br.edu.ifsp.estagiei.dto.EstudanteDTO;
 import br.edu.ifsp.estagiei.dto.EstudanteDTO.EstudanteDTOBuilder;
-import br.edu.ifsp.estagiei.entity.Competencia;
 import br.edu.ifsp.estagiei.entity.Estudante;
+import br.edu.ifsp.estagiei.entity.Pessoa;
+import br.edu.ifsp.estagiei.entity.Usuario;
 import br.edu.ifsp.estagiei.utils.EstagieiUtils;
 import lombok.NoArgsConstructor;
 
@@ -23,25 +24,36 @@ public class EstudanteDTOFactory {
 	CompetenciaDTOFactory competenciaFactory;
 	@Autowired
 	private AuditoriaDTOFactory auditoriaFactory;
+	@Autowired
+	private ContatoDTOFactory contatoFactory;
 
-	public List<EstudanteDTO> buildDTOs(List<Estudante> estudantes) {
+	public List<EstudanteDTO> buildDTOs(Collection<Estudante> estudantes) {
 		return estudantes.stream().map(this::buildDTO).collect(Collectors.toList());
 	}
 
 	public EstudanteDTO buildDTO(Estudante estudante) {
 
-		LocalDate dataNasc = estudante.getPessoa().getDataNascimento();
+		Pessoa pessoaEstudante = estudante.getPessoa();
+		Usuario usuarioPessoa = pessoaEstudante.getUsuario();
+		
+		LocalDate dataNasc = pessoaEstudante.getDataNascimento();
 		String dataFormatada = EstagieiUtils.dateParaString(dataNasc);
 
-		EstudanteDTOBuilder builder = EstudanteDTO.builder().codEstudante(estudante.getCodEstudante())
-				.avatar(estudante.getPessoa().getUsuario().getAvatar())
-				.email(estudante.getPessoa().getUsuario().getEmail()).cpf((estudante.getPessoa().getCpf()))
-				.rg(estudante.getPessoa().getRg()).nome(estudante.getPessoa().getNome()).dataNascimento(dataFormatada)
+		EstudanteDTOBuilder builder = EstudanteDTO.builder()
+				.codEstudante(estudante.getCodEstudante())
+				.avatar(usuarioPessoa.getAvatar())
+				.email(usuarioPessoa.getEmail())
+				.cpf((pessoaEstudante.getCpf()))
+				.rg(pessoaEstudante.getRg())
+				.nome(pessoaEstudante.getNome())
+				.contatos(contatoFactory.buildDTOs(pessoaEstudante.getContatos())) // TODO
+				.experienciaProfissional(null) // TODO
+				.historicoEscolar(null) // TODO
+				.dataNascimento(dataFormatada)
 				.auditoria(auditoriaFactory.buildDTO(estudante.getAuditoria()));
-//				.contato(estudante.getPessoa().getContato());
+		
 		if (estudante.hasCompetencias()) {
-			Set<Competencia> competencias = estudante.getCompetencias().stream().collect(Collectors.toSet());
-			builder.competencias(competenciaFactory.buildDTOs(competencias));
+			builder.competencias(competenciaFactory.buildDTOs(estudante.getCompetencias()));
 		}
 
 		return builder.build();

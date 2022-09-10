@@ -50,8 +50,8 @@ public class EstudanteDTO implements DTOUtils {
 	private EnderecoDTO endereco;
 	private List<ExperienciaProfissionalDTO> experienciaProfissional;
 	private List<CompetenciaDTO> competencias;
-//	private List<HistoricoEscolarDTO> historicoEscolar;
-//	private List<ContatoDTO> contatos;
+	private List<HistoricoEscolarDTO> historicoEscolar;
+	private List<ContatoDTO> contatos;
 	
 	private AuditoriaDTO auditoria;
 

@@ -59,17 +59,17 @@ public class EstudanteService {
 				.orElseThrow(() -> new ValidacaoException("Estudante não encontrado"));
 	}
 
-
-	public EstudanteDTO salvaEstudante(EstudanteDTO dto) {
+	public EstudanteDTO salvaEstudante(EstudanteDTO dto) { // TODO: Arrumar metodo para se adequar ao padrao e novos
+															// DTOS
 		Estudante estudanteBuscado = null;
-		try {			
+		try {
 			estudanteBuscado = estudanteRepositorio.findByCodEstudante(dto.getCodEstudante());
-		} catch(NoResultException ex) {
+		} catch (NoResultException ex) {
 			throw new ValidacaoException("Estudante não encontrado");
 		}
-
+		// TODO: Validacao se estudante ja existe e se o e-mail já está em uso
 		atualizaDadosEstudante(estudanteBuscado, dto);
-		
+
 		Estudante estudanteSalvo = estudanteRepositorio.save(estudanteBuscado);
 		return estudanteFactory.buildDTO(estudanteSalvo);
 	}
@@ -77,26 +77,26 @@ public class EstudanteService {
 	private void atualizaDadosEstudante(Estudante estudanteBuscado, EstudanteDTO dto) {
 		salvaPessoa(estudanteBuscado, dto);
 		List<CompetenciaDTO> competencias = Lists.newArrayList();
-		if(dto.hasCompetencias()) {			
+		if (dto.hasCompetencias()) {
 			competencias = dto.getCompetencias();
 		}
 		salvaCompetencias(estudanteBuscado, competencias);
 
 	}
-	
+
 	private void salvaPessoa(Estudante estudanteBuscado, EstudanteDTO dto) {
 		Pessoa pessoa = estudanteBuscado.getPessoa();
-		
-		String cpfNumeros = dto.hasCpf() ? dto.getCpf().replaceAll("\\D+","") : "";
-		
+
+		String cpfNumeros = dto.hasCpf() ? dto.getCpf().replaceAll("\\D+", "") : "";
+
 		pessoa.setCpf(cpfNumeros);
-		
-		if(dto.hasDataNascimento()) {			
+
+		if (dto.hasDataNascimento()) {
 			LocalDate localDate = LocalDate.parse(dto.getDataNascimento());
 			pessoa.setDataNascimento(localDate);
 		}
-		
-		if(dto.hasNome()) {			
+
+		if (dto.hasNome()) {
 			pessoa.setNome(dto.getNome().toUpperCase());
 		}
 		pessoa.setRg(dto.getRg());
@@ -110,7 +110,7 @@ public class EstudanteService {
 			Competencia novaCompetencia = estudanteBuscado.novaCompetencia(dto.getCodCompetencia());
 			novasCompetencias.add(novaCompetencia);
 		}
-		estudanteBuscado.getCompetencias().retainAll(novasCompetencias);
+		estudanteBuscado.retemCompetencias(novasCompetencias);
 	}
 
 	public List<EstudanteDTO> buscaTodos(EstudanteFiltroDTO filtro) {

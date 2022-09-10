@@ -2,6 +2,7 @@ package br.edu.ifsp.estagiei.entity;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -59,14 +60,27 @@ public class Pessoa {
 			CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private Estudante estudante;
-	
+
 	@ManyToMany
 	@JoinTable(name = "tb_cont_pessoa", joinColumns = @JoinColumn(name = "cod_pessoa"), inverseJoinColumns = @JoinColumn(name = "cod_contato"))
 	private Set<Contato> contatos = new HashSet<>();
-	
+
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_endereco")
 	private Endereco endereco;
+
+	public Contato novoContato(Long chavePrimaria) {
+		Contato novaEntidade = new Contato();
+		novaEntidade.setCodContato(chavePrimaria);
+
+		Contato entidade = contatos.stream().filter(v -> v.equals(novaEntidade)).findFirst().orElse(novaEntidade);
+		contatos.add(entidade);
+		return entidade;
+	}
+
+	public void retemContatos(List<Contato> lista) {
+		contatos.retainAll(lista);
+	}
 
 	@Override
 	public int hashCode() {

@@ -1,5 +1,6 @@
 package br.edu.ifsp.estagiei.dto.factory;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Component;
 import br.edu.ifsp.estagiei.dto.EmpresaDTO;
 import br.edu.ifsp.estagiei.dto.VagaDTO;
 import br.edu.ifsp.estagiei.dto.VagaDTO.VagaDTOBuilder;
-import br.edu.ifsp.estagiei.entity.Competencia;
 import br.edu.ifsp.estagiei.entity.Empresa;
 import br.edu.ifsp.estagiei.entity.Vaga;
 import lombok.NoArgsConstructor;
@@ -32,7 +32,7 @@ public class VagaDTOFactory {
 		this.empresaFactory = empresaFactory;
 	}
 
-	public Set<Vaga> buildEntities(List<VagaDTO> dto) {
+	public Set<Vaga> buildEntities(Collection<VagaDTO> dto) {
 		return dto.stream().map(this::buildEntity).collect(Collectors.toSet());
 	}
 
@@ -54,7 +54,7 @@ public class VagaDTOFactory {
 		return empresa;
 	}
 
-	public List<VagaDTO> buildDTOs(List<Vaga> vagas) {
+	public List<VagaDTO> buildDTOs(Collection<Vaga> vagas) {
 		return vagas.stream().map(this::buildDTO).collect(Collectors.toList());
 	}
 
@@ -70,8 +70,7 @@ public class VagaDTOFactory {
 		}
 
 		if (vaga.hasCompetencias()) {
-			Set<Competencia> competencias = vaga.getCompetencias().stream().collect(Collectors.toSet());
-			builder.competencias(competenciaFactory.buildDTOs(competencias));
+			builder.competencias(competenciaFactory.buildDTOs(vaga.getCompetencias()));
 		}
 
 		return builder.build();
