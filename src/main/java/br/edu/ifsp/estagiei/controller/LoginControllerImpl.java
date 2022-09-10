@@ -3,7 +3,6 @@ package br.edu.ifsp.estagiei.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -52,7 +51,7 @@ public class LoginControllerImpl implements LoginController {
 			return ResponseEntity.ok(response);
 
 		} catch (BadCredentialsException ex) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			throw new ValidacaoException("Usuário e/ou senha incorreto(s)");
 		}
 	}
 
