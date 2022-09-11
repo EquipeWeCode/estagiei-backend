@@ -55,7 +55,7 @@ public class Usuario implements UserDetails {
 	private String avatar;
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
-	@Column(name = "tipo_usuario")
+	@Column(name = "tip_usuario")
 	private TipoUsuarioEnum tipoUsuario;
 	@Embedded
 	private Auditoria auditoria;
