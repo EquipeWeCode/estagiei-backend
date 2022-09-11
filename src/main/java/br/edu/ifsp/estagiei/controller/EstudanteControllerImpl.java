@@ -46,7 +46,7 @@ public class EstudanteControllerImpl implements EstudanteController {
 	@Override
 	@PostMapping
 	public ResponseEntity<EstudanteDTO> postEstudante(@RequestBody @Valid EstudanteDTO dto) {
-		EstudanteDTO estudante = service.salvaEstudante(dto);
+		EstudanteDTO estudante = service.salvaEstudante(dto, false);
 		return ResponseEntity.ok(estudante);
 
 	}
@@ -56,7 +56,7 @@ public class EstudanteControllerImpl implements EstudanteController {
 	public ResponseEntity<EstudanteDTO> putEstudante(@PathVariable Long codEstudante,
 			@RequestBody @Valid EstudanteDTO dto) {
 		dto.setCodEstudante(codEstudante);
-		EstudanteDTO estudante = service.salvaEstudante(dto);
+		EstudanteDTO estudante = service.salvaEstudante(dto, true);
 		return ResponseEntity.ok(estudante);
 	}
 

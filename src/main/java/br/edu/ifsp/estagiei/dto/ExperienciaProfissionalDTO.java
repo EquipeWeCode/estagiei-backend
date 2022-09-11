@@ -22,6 +22,7 @@ import lombok.Setter;
 @Builder
 @JsonInclude(Include.NON_NULL)
 public class ExperienciaProfissionalDTO implements DTOUtils {
+	private Long codExpProfissional;
 	@NotBlank(message = MSG_NOT_NULL)
 	private String nomeEmpresa;
 	@NotBlank(message = MSG_NOT_NULL)

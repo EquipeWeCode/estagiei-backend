@@ -7,7 +7,6 @@ import javax.validation.constraints.Pattern;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import br.edu.ifsp.estagiei.entity.Auditoria;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,5 +29,5 @@ public class HistoricoEscolarDTO implements DTOUtils {
 	@Pattern(regexp = DATE_PATTERN, message = MSG_DATE_FORMAT)
 	private Timestamp dataFim;
 	private String status;
-	private Auditoria auditoria;
+	private AuditoriaDTO auditoria;
 }

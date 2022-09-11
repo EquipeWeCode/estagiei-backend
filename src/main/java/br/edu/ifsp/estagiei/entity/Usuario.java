@@ -28,6 +28,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.edu.ifsp.estagiei.constants.TipoUsuarioEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -54,6 +55,8 @@ public class Usuario implements UserDetails {
 	private String avatar;
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
+	@Column(name = "tipo_usuario")
+	private TipoUsuarioEnum tipoUsuario;
 	@Embedded
 	private Auditoria auditoria;
 

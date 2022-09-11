@@ -21,8 +21,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -53,12 +51,10 @@ public class Pessoa {
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE })
 	@JoinColumn(name = "cod_usuario")
-	@JsonIgnore
 	private Usuario usuario;
 
 	@OneToOne(mappedBy = "pessoa", cascade = { CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REMOVE }, fetch = FetchType.LAZY)
-	@JsonIgnore
 	private Estudante estudante;
 
 	@ManyToMany
@@ -97,5 +93,9 @@ public class Pessoa {
 			return false;
 		Pessoa other = (Pessoa) obj;
 		return Objects.equals(codPessoa, other.codPessoa);
+	}
+
+	public boolean hasEstudante() {
+		return this.estudante != null;
 	}
 }

@@ -10,6 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -17,9 +19,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Persistence;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Estudante {
 	@Id
+	@SequenceGenerator(name = "tb_estudante_cod_estudante_seq", sequenceName = "tb_estudante_cod_estudante_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_estudante_cod_estudante_seq")
 	@Column(name = "cod_estudante", updatable = false)
 	private Long codEstudante;
 	@Column(name = "cod_pessoa", updatable = false, insertable = false)
@@ -46,8 +49,7 @@ public class Estudante {
 	private Set<Competencia> competencias = new HashSet<>();
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@JoinColumn(name = "cod_pessoa")
-	@JsonIgnore
+	@JoinColumn(name = "cod_pessoa", referencedColumnName = "cod_pessoa")
 	private Pessoa pessoa;
 
 	@OneToMany(mappedBy = "estudante", fetch = FetchType.LAZY)

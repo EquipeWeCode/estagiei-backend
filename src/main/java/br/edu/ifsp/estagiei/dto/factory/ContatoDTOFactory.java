@@ -27,14 +27,14 @@ public class ContatoDTOFactory {
 		return contatos.stream().map(this::buildDTO).collect(Collectors.toList());
 	}
 
-	public ContatoDTO buildDTO(Contato dto) {
+	public ContatoDTO buildDTO(Contato entidade) {
 		ContatoDTOBuilder builder = ContatoDTO.builder();
 
-		return builder.codContato(dto.getCodContato())
-				.descContato(dto.getDescContato())
-				.tipContato(dto.getTipContato())
-				.valorContato(dto.getValorContato())
-				.auditoria(auditoriaFactory.buildDTO(dto.getAuditoria()))
+		return builder.codContato(entidade.getCodContato())
+				.descContato(entidade.getDescContato())
+				.tipContato(entidade.getTipContato())
+				.valorContato(entidade.getValorContato())
+				.auditoria(auditoriaFactory.buildDTO(entidade.getAuditoria()))
 				.build();
 	}
 
