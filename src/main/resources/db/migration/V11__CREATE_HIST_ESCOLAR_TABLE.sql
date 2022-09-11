@@ -14,6 +14,8 @@ CREATE TABLE TB_HIST_ESCOLAR(
     CONSTRAINT fk_hist_escolar_est FOREIGN KEY(COD_ESTUDANTE) REFERENCES TB_ESTUDANTE(COD_ESTUDANTE)
 );
 
+insert into tb_hist_escolar(cod_estudante, cod_hist_escolar, nvl_escolaridade) values (777666, 777666, 'MEDIO');
+
 -- CREATE OR REPLACE FUNCTION TRG_AUDITORIA() RETURNS TRIGGER AS $trg_audit$
 --     BEGIN
 --         IF (TG_OP = 'UPDATE') THEN

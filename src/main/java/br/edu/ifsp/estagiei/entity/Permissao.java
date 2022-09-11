@@ -1,5 +1,7 @@
 package br.edu.ifsp.estagiei.entity;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -38,6 +40,23 @@ public class Permissao {
 	@Override
 	public String toString() {
 		return this.descricao;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(codPermissao);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Permissao))
+			return false;
+		Permissao other = (Permissao) obj;
+		return Objects.equals(codPermissao, other.codPermissao);
 	}
 
 }

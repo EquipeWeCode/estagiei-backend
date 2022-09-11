@@ -2,7 +2,6 @@ package br.edu.ifsp.estagiei.dto.factory;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,17 +27,20 @@ public class EmpresaDTOFactory {
 	@Autowired
 	private EnderecoDTOFactory enderecoFactory;
 
+	@Autowired
+	private AuditoriaDTOFactory auditoriaFactory;
+
 	public EmpresaDTO buildDTO(Empresa empresa) {
 
 		Usuario usuarioEmpresa = empresa.getUsuario();
 
 		EmpresaDTOBuilder builder = EmpresaDTO.builder().codEmpresa(empresa.getCodEmpresa())
 				.nomeFantasia(empresa.getNomeFantasia()).razaoSocial(empresa.getRazaoSocial()).cnpj(empresa.getCnpj())
-				.indAtivo(empresa.getIndAtivo()).email(usuarioEmpresa.getEmail()).avatar(usuarioEmpresa.getAvatar());
+				.indAtivo(empresa.getIndAtivo()).email(usuarioEmpresa.getEmail()).avatar(usuarioEmpresa.getAvatar())
+				.auditoria(auditoriaFactory.buildDTO(empresa.getAuditoria()));
 
 		if (empresa.hasVagas()) {
-			List<Vaga> vagasEmpresa = empresa.getVagas().stream().collect(Collectors.toList());
-			builder.vagas(vagaFactory.buildDTOs(vagasEmpresa));
+			builder.vagas(vagaFactory.buildDTOs(empresa.getVagas()));
 		}
 
 		if (empresa.hasEndereco()) {

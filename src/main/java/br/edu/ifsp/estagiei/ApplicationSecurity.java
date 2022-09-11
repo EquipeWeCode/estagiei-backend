@@ -27,10 +27,10 @@ import br.edu.ifsp.estagiei.jwt.JwtTokenFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class ApplicationSecurity {
 
-	AuthenticationManager authenticationManager;
+	public AuthenticationManager authenticationManager;
 
 	@Autowired
-	UserDetailsService userDetailsService;
+	private UserDetailsService userDetailsService;
 
 	@Autowired
 	private JwtTokenFilter jwtTokenFilter;

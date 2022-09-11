@@ -1,5 +1,7 @@
 package br.edu.ifsp.estagiei.entity;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import br.edu.ifsp.estagiei.constants.TipoContatoEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,12 +29,32 @@ public class Contato {
     @Column(name = "cod_contato", updatable = false)
     private Long codContato;
     @Column(name = "tip_contato")
-    private String tipContato;
+    private TipoContatoEnum tipoContato;
     @Column(name = "desc_contato")
     private String descContato;
     @Column(name = "valor_contato")
     private String valorContato;
     @Embedded
 	private Auditoria auditoria;
+     
+	@Override
+	public int hashCode() {
+		return Objects.hash(codContato);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Contato))
+			return false;
+		Contato other = (Contato) obj;
+		if(other.codContato == null) {
+			return false;
+		}
+		return Objects.equals(codContato, other.codContato);
+	}
     
 }

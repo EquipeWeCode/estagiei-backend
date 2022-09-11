@@ -1,6 +1,6 @@
 package br.edu.ifsp.estagiei.entity;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -9,15 +9,19 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Persistence;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.Sets;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,8 +34,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Estudante {
 	@Id
+	@SequenceGenerator(name = "tb_estudante_cod_estudante_seq", sequenceName = "tb_estudante_cod_estudante_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_estudante_cod_estudante_seq")
 	@Column(name = "cod_estudante", updatable = false)
-	private Long codEstudante;	
+	private Long codEstudante;
 	@Column(name = "cod_pessoa", updatable = false, insertable = false)
 	private Long codPessoa;
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
@@ -41,21 +47,24 @@ public class Estudante {
 
 	@ManyToMany
 	@JoinTable(name = "tb_comp_estud", joinColumns = @JoinColumn(name = "cod_estudante"), inverseJoinColumns = @JoinColumn(name = "cod_competencia"))
-	private Set<Competencia> competencias = new HashSet<>();
+	private Set<Competencia> competencias = Sets.newHashSet();
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@JoinColumn(name = "cod_pessoa")
-	@JsonIgnore
+	@JoinColumn(name = "cod_pessoa", referencedColumnName = "cod_pessoa")
 	private Pessoa pessoa;
-	
-	@OneToOne(mappedBy = "estudante", fetch = FetchType.LAZY)
-	private ExperienciaProfissional experienciaProfissional;
-	
-	@OneToOne(mappedBy="estudante", fetch = FetchType.LAZY)
-	private HistoricoEscolar historicoEscolar;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	private Set<Vaga> vagas = new HashSet<>();
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
+			CascadeType.PERSIST }, orphanRemoval = true)
+	@JoinColumn(name="cod_estudante", referencedColumnName = "cod_estudante")
+	private Set<ExperienciaProfissional> experienciaProfissional = Sets.newHashSet();
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@JoinColumn(name="cod_estudante", referencedColumnName = "cod_estudante")
+	private Set<HistoricoEscolar> historicoEscolar = Sets.newHashSet();
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@JoinTable(name = "tb_estud_vaga", joinColumns = @JoinColumn(name = "cod_estudante"), inverseJoinColumns = @JoinColumn(name = "cod_vaga"))
+	private Set<Vaga> vagas = Sets.newHashSet();
 
 	public Boolean hasCompetencias() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "competencias");
@@ -73,6 +82,38 @@ public class Estudante {
 				.orElse(novaCompetencia);
 		competencias.add(competencia);
 		return competencia;
+	}
+
+	public void retemCompetencias(List<Competencia> lista) {
+		competencias.retainAll(lista);
+	}
+
+	public ExperienciaProfissional novaExperienciaProfissional(Long chavePrimaria) {
+		ExperienciaProfissional novaEntidade = new ExperienciaProfissional();
+		novaEntidade.setCodExpProfissional(chavePrimaria);
+
+		ExperienciaProfissional entidade = experienciaProfissional.stream().filter(v -> v.equals(novaEntidade))
+				.findFirst().orElse(novaEntidade);
+		experienciaProfissional.add(entidade);
+		return entidade;
+	}
+
+	public void retemExperiencias(List<ExperienciaProfissional> lista) {
+		experienciaProfissional.retainAll(lista);
+	}
+
+	public HistoricoEscolar novoHistoricoEscolar(Long chavePrimaria) {
+		HistoricoEscolar novaEntidade = new HistoricoEscolar();
+		novaEntidade.setCodHistEscolar(chavePrimaria);
+
+		HistoricoEscolar entidade = historicoEscolar.stream().filter(v -> v.equals(novaEntidade)).findFirst()
+				.orElse(novaEntidade);
+		historicoEscolar.add(entidade);
+		return entidade;
+	}
+
+	public void retemHistoricos(List<HistoricoEscolar> lista) {
+		historicoEscolar.retainAll(lista);
 	}
 
 	@Override

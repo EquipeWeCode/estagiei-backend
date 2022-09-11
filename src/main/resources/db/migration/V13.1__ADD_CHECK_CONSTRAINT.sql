@@ -1,0 +1,5 @@
+ALTER TABLE TB_CONTATO
+ADD CONSTRAINT ck_contato_tip_contato
+CHECK (
+	TIP_CONTATO IN ('FIXO', 'CEL', 'EMAIL')
+);

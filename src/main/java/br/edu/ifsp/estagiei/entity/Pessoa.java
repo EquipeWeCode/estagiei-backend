@@ -2,6 +2,7 @@ package br.edu.ifsp.estagiei.entity;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -19,8 +20,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,21 +51,32 @@ public class Pessoa {
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE })
 	@JoinColumn(name = "cod_usuario")
-	@JsonIgnore
 	private Usuario usuario;
 
 	@OneToOne(mappedBy = "pessoa", cascade = { CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REMOVE }, fetch = FetchType.LAZY)
-	@JsonIgnore
 	private Estudante estudante;
-	
-	@ManyToMany
+
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE })
 	@JoinTable(name = "tb_cont_pessoa", joinColumns = @JoinColumn(name = "cod_pessoa"), inverseJoinColumns = @JoinColumn(name = "cod_contato"))
 	private Set<Contato> contatos = new HashSet<>();
-	
+
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_endereco")
 	private Endereco endereco;
+
+	public Contato novoContato(Long chavePrimaria) {
+		Contato novaEntidade = new Contato();
+		novaEntidade.setCodContato(chavePrimaria);
+
+		Contato entidade = contatos.stream().filter(v -> v.equals(novaEntidade)).findFirst().orElse(novaEntidade);
+		contatos.add(entidade);
+		return entidade;
+	}
+
+	public void retemContatos(List<Contato> lista) {
+		contatos.retainAll(lista);
+	}
 
 	@Override
 	public int hashCode() {
@@ -83,5 +93,9 @@ public class Pessoa {
 			return false;
 		Pessoa other = (Pessoa) obj;
 		return Objects.equals(codPessoa, other.codPessoa);
+	}
+
+	public boolean hasEstudante() {
+		return this.estudante != null;
 	}
 }

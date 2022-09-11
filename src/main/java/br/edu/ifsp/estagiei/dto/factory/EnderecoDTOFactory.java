@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 public class EnderecoDTOFactory {
 
 	public Endereco buildEntity(EnderecoDTO dto) {
+		if(dto == null) {
+			return null;
+		}
 		Endereco entidade = new Endereco();
 		entidade.setCodEndereco(dto.getCodEndereco());
 		entidade.setBairro(dto.getBairro());

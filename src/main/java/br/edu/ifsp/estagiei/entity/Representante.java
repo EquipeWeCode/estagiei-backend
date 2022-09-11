@@ -1,5 +1,7 @@
 package br.edu.ifsp.estagiei.entity;
 
+import java.util.Objects;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -41,4 +43,21 @@ public class Representante {
     @JoinColumn(name = "cod_empresa")
     @JsonIgnore
     private Empresa empresa;
+    
+	@Override
+	public int hashCode() {
+		return Objects.hash(codRepresentante);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Representante))
+			return false;
+		Representante other = (Representante) obj;
+		return Objects.equals(codRepresentante, other.codRepresentante);
+	}
 }
