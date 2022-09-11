@@ -1,6 +1,5 @@
 package br.edu.ifsp.estagiei.entity;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -21,6 +20,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Persistence;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.google.common.collect.Sets;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,20 +47,24 @@ public class Estudante {
 
 	@ManyToMany
 	@JoinTable(name = "tb_comp_estud", joinColumns = @JoinColumn(name = "cod_estudante"), inverseJoinColumns = @JoinColumn(name = "cod_competencia"))
-	private Set<Competencia> competencias = new HashSet<>();
+	private Set<Competencia> competencias = Sets.newHashSet();
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinColumn(name = "cod_pessoa", referencedColumnName = "cod_pessoa")
 	private Pessoa pessoa;
 
-	@OneToMany(mappedBy = "estudante", fetch = FetchType.LAZY)
-	private Set<ExperienciaProfissional> experienciaProfissional = new HashSet<>();
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
+			CascadeType.PERSIST }, orphanRemoval = true)
+	@JoinColumn(name="cod_estudante", referencedColumnName = "cod_estudante")
+	private Set<ExperienciaProfissional> experienciaProfissional = Sets.newHashSet();
 
-	@OneToMany(mappedBy = "estudante", fetch = FetchType.LAZY)
-	private Set<HistoricoEscolar> historicoEscolar = new HashSet<>();
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@JoinColumn(name="cod_estudante", referencedColumnName = "cod_estudante")
+	private Set<HistoricoEscolar> historicoEscolar = Sets.newHashSet();
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	private Set<Vaga> vagas = new HashSet<>();
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@JoinTable(name = "tb_estud_vaga", joinColumns = @JoinColumn(name = "cod_estudante"), inverseJoinColumns = @JoinColumn(name = "cod_vaga"))
+	private Set<Vaga> vagas = Sets.newHashSet();
 
 	public Boolean hasCompetencias() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "competencias");

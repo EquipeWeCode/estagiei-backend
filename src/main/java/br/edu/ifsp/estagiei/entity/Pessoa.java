@@ -57,7 +57,7 @@ public class Pessoa {
 			CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	private Estudante estudante;
 
-	@ManyToMany
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE })
 	@JoinTable(name = "tb_cont_pessoa", joinColumns = @JoinColumn(name = "cod_pessoa"), inverseJoinColumns = @JoinColumn(name = "cod_contato"))
 	private Set<Contato> contatos = new HashSet<>();
 

@@ -1,6 +1,5 @@
 package br.edu.ifsp.estagiei.dto.factory;
 
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +12,6 @@ import br.edu.ifsp.estagiei.dto.EstudanteDTO.EstudanteDTOBuilder;
 import br.edu.ifsp.estagiei.entity.Estudante;
 import br.edu.ifsp.estagiei.entity.Pessoa;
 import br.edu.ifsp.estagiei.entity.Usuario;
-import br.edu.ifsp.estagiei.utils.EstagieiUtils;
 import lombok.NoArgsConstructor;
 
 @Component
@@ -39,9 +37,6 @@ public class EstudanteDTOFactory {
 
 		Pessoa pessoaEstudante = estudante.getPessoa();
 		Usuario usuarioPessoa = pessoaEstudante.getUsuario();
-		
-		LocalDate dataNasc = pessoaEstudante.getDataNascimento();
-		String dataFormatada = EstagieiUtils.dateParaString(dataNasc);
 
 		EstudanteDTOBuilder builder = EstudanteDTO.builder()
 				.codEstudante(estudante.getCodEstudante())
@@ -53,7 +48,7 @@ public class EstudanteDTOFactory {
 				.contatos(contatoFactory.buildDTOs(pessoaEstudante.getContatos()))
 				.experienciaProfissional(expProfissionalFactory.buildDTOs(estudante.getExperienciaProfissional())) // TODO
 				.historicoEscolar(histEscolarFactory.buildDTOs(estudante.getHistoricoEscolar()))
-				.dataNascimento(dataFormatada)
+				.dataNascimento(pessoaEstudante.getDataNascimento())
 				.auditoria(auditoriaFactory.buildDTO(estudante.getAuditoria()));
 		
 		if (estudante.hasCompetencias()) {
@@ -70,23 +65,19 @@ public class EstudanteDTOFactory {
 	public EstudanteDTO buildDTOUsuario(Usuario usuarioEstudante) {
 
 		Pessoa pessoaEstudante = usuarioEstudante.getPessoa();
-		Usuario usuarioPessoa = pessoaEstudante.getUsuario();
 		Estudante estudante = pessoaEstudante.getEstudante();
-		
-		LocalDate dataNasc = pessoaEstudante.getDataNascimento();
-		String dataFormatada = EstagieiUtils.dateParaString(dataNasc);
 
 		EstudanteDTOBuilder builder = EstudanteDTO.builder()
 				.codEstudante(estudante.getCodEstudante())
-				.avatar(usuarioPessoa.getAvatar())
-				.email(usuarioPessoa.getEmail())
+				.avatar(usuarioEstudante.getAvatar())
+				.email(usuarioEstudante.getEmail())
 				.cpf((pessoaEstudante.getCpf()))
 				.rg(pessoaEstudante.getRg())
 				.nome(pessoaEstudante.getNome())
 				.contatos(contatoFactory.buildDTOs(pessoaEstudante.getContatos()))
 				.experienciaProfissional(expProfissionalFactory.buildDTOs(estudante.getExperienciaProfissional())) // TODO
 				.historicoEscolar(histEscolarFactory.buildDTOs(estudante.getHistoricoEscolar()))
-				.dataNascimento(dataFormatada)
+				.dataNascimento(pessoaEstudante.getDataNascimento())
 				.auditoria(auditoriaFactory.buildDTO(usuarioEstudante.getAuditoria()));
 		
 		if (estudante.hasCompetencias()) {

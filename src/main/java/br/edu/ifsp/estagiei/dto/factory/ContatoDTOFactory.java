@@ -32,7 +32,7 @@ public class ContatoDTOFactory {
 
 		return builder.codContato(entidade.getCodContato())
 				.descContato(entidade.getDescContato())
-				.tipContato(entidade.getTipContato())
+				.tipoContato(entidade.getTipoContato())
 				.valorContato(entidade.getValorContato())
 				.auditoria(auditoriaFactory.buildDTO(entidade.getAuditoria()))
 				.build();
@@ -46,7 +46,7 @@ public class ContatoDTOFactory {
 		Contato entidade = new Contato();
 		entidade.setCodContato(dto.getCodContato());
 		entidade.setDescContato(dto.getDescContato());
-		entidade.setTipContato(dto.getTipContato());
+		entidade.setTipoContato(dto.getTipoContato());
 		entidade.setValorContato(dto.getValorContato());
 		return entidade;
 	}

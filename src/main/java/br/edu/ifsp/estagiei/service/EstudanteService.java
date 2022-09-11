@@ -1,6 +1,5 @@
 package br.edu.ifsp.estagiei.service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +20,7 @@ import br.edu.ifsp.estagiei.dto.EstudanteDTO;
 import br.edu.ifsp.estagiei.dto.ExperienciaProfissionalDTO;
 import br.edu.ifsp.estagiei.dto.HistoricoEscolarDTO;
 import br.edu.ifsp.estagiei.dto.VagaDTO;
+import br.edu.ifsp.estagiei.dto.factory.EnderecoDTOFactory;
 import br.edu.ifsp.estagiei.dto.factory.EstudanteDTOFactory;
 import br.edu.ifsp.estagiei.dto.factory.VagaDTOFactory;
 import br.edu.ifsp.estagiei.dto.filter.EstudanteFiltroDTO;
@@ -35,6 +35,7 @@ import br.edu.ifsp.estagiei.entity.Usuario;
 import br.edu.ifsp.estagiei.entity.Vaga;
 import br.edu.ifsp.estagiei.exception.ValidacaoException;
 import br.edu.ifsp.estagiei.repository.EstudanteRepository;
+import br.edu.ifsp.estagiei.repository.PessoaRepository;
 import br.edu.ifsp.estagiei.repository.UsuarioRepository;
 import br.edu.ifsp.estagiei.repository.VagaRepository;
 
@@ -49,9 +50,13 @@ public class EstudanteService {
 	@Autowired
 	private VagaRepository vagaRepositorio;
 	@Autowired
+	private PessoaRepository pessoaRepositorio;
+	@Autowired
 	private VagaDTOFactory vagaFactory;
 	@Autowired
 	private EstudanteDTOFactory estudanteFactory;
+	@Autowired
+	private EnderecoDTOFactory enderecoFactory;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -84,27 +89,30 @@ public class EstudanteService {
 		montaEstudante(usuario, dto, isEdicao);
 
 		Usuario usuarioEstudante = usuarioRepositorio.save(usuario);
-//		Pessoa pessoaEstudante = usuarioEstudante.getPessoa();
-//		Estudante estudanteSalvo = pessoaEstudante.getEstudante();
 		return estudanteFactory.buildDTOUsuario(usuarioEstudante);
 	}
 
 	private Usuario validaEstudante(EstudanteDTO dto, boolean isEdicao) {
 		String email = dto.getEmail();
-		
+		String cpfNumeros = Optional.ofNullable(dto.getCpf().replaceAll("\\D+", "")).orElse(null);
+
 		Optional<Usuario> usuarioBuscado = usuarioRepositorio.findByEmail(email);
+		Optional<Pessoa> pessoaCpf = pessoaRepositorio.findByCpf(cpfNumeros);
 
 		if (!isEdicao) {
 			if (usuarioBuscado.isPresent()) {
 				throw new ValidacaoException("Este e-mail já está sendo usado");
 			}
-			
-			// TODO: Validar unique do CPF da pessoa
+
+			if (pessoaCpf.isPresent()) {
+				throw new ValidacaoException("CPF já está sendo usado");
+			}
 		} else {
 			if (!usuarioBuscado.isPresent()) {
 				throw new ValidacaoException("Estudante não encontrado");
 			}
-			if (usuarioBuscado.isPresent() && !TipoUsuarioEnum.ESTUDANTE.equals(usuarioBuscado.get().getTipoUsuario())) {
+			if (usuarioBuscado.isPresent()
+					&& !TipoUsuarioEnum.ESTUDANTE.equals(usuarioBuscado.get().getTipoUsuario())) {
 				throw new ValidacaoException("Este e-mail já está sendo usado");
 			}
 		}
@@ -114,7 +122,7 @@ public class EstudanteService {
 
 	private void montaEstudante(Usuario usuario, EstudanteDTO dto, boolean isEdicao) {
 		usuario.setTipoUsuario(TipoUsuarioEnum.ESTUDANTE);
-		
+
 		if (!isEdicao) {
 			usuario.setEmail(dto.getEmail());
 			usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
@@ -122,10 +130,10 @@ public class EstudanteService {
 			permissao.setCodPermissao(RolesEnum.ESTUDANTE.getCodigo());
 			usuario.addPermissao(permissao);
 		}
-		
+
 		Pessoa pessoa = Optional.ofNullable(usuario.getPessoa()).orElse(new Pessoa());
 		Estudante estudanteBuscado = Optional.ofNullable(pessoa.getEstudante()).orElse(new Estudante());
-		
+
 		salvaPessoa(pessoa, dto, estudanteBuscado);
 
 		List<CompetenciaDTO> competencias = Optional.ofNullable(dto.getCompetencias()).orElse(Lists.newArrayList());
@@ -135,19 +143,14 @@ public class EstudanteService {
 		List<ExperienciaProfissionalDTO> expProfissional = Optional.ofNullable(dto.getExperienciaProfissional())
 				.orElse(Lists.newArrayList());
 
-//		if (dto.hasCompetencias()) {
-//			competencias = dto.getCompetencias();
-//		}
+		usuario.setPessoa(pessoa);
+		pessoa.setUsuario(usuario);
+		estudanteBuscado.setPessoa(pessoa);
 
 		salvaCompetencias(estudanteBuscado, competencias);
 		salvaContatos(pessoa, contatos);
 		salvaHistoricoEscolar(estudanteBuscado, historicoEscolar);
 		salvaExperienciaProfissional(estudanteBuscado, expProfissional);
-		
-		usuario.setPessoa(pessoa);
-		pessoa.setUsuario(usuario);
-		pessoa.setEstudante(estudanteBuscado);
-		estudanteBuscado.setPessoa(pessoa);
 	}
 
 	private void salvaHistoricoEscolar(Estudante estudanteBuscado, List<HistoricoEscolarDTO> historicoEscolar) {
@@ -155,6 +158,12 @@ public class EstudanteService {
 
 		for (HistoricoEscolarDTO dto : historicoEscolar) {
 			HistoricoEscolar novoHistorico = estudanteBuscado.novoHistoricoEscolar(dto.getCodHistEscolar());
+			novoHistorico.setCurso(dto.getCurso());
+			novoHistorico.setDataFim(dto.getDataFim());
+			novoHistorico.setDataInicio(dto.getDataInicio());
+			novoHistorico.setInstEnsino(dto.getNvlEscolaridade());
+			novoHistorico.setStatus(dto.getStatus());
+			novoHistorico.setEstudante(estudanteBuscado);
 			novosHistoricos.add(novoHistorico);
 		}
 		estudanteBuscado.retemHistoricos(novosHistoricos);
@@ -166,28 +175,32 @@ public class EstudanteService {
 
 		for (ExperienciaProfissionalDTO dto : expProfissional) {
 			ExperienciaProfissional novaExp = estudanteBuscado.novaExperienciaProfissional(dto.getCodExpProfissional());
+			novaExp.setCargo(dto.getCargo());
+			novaExp.setDataFim(dto.getDataFim());
+			novaExp.setDataInicio(dto.getDataInicio());
+			novaExp.setDescricao(dto.getDescricao());
+			novaExp.setEndereco(enderecoFactory.buildEntity(dto.getEndereco()));
+			novaExp.setNomeEmpresa(dto.getNomeEmpresa());
+			novaExp.setEstudante(estudanteBuscado);
 			novasExpProfissional.add(novaExp);
 		}
 		estudanteBuscado.retemExperiencias(novasExpProfissional);
 	}
 
 	private void salvaPessoa(Pessoa pessoa, EstudanteDTO dto, Estudante estudanteBuscado) {
-//		Pessoa pessoa = estudanteBuscado.getPessoa();
-
-		String cpfNumeros = dto.hasCpf() ? dto.getCpf().replaceAll("\\D+", "") : "";
+		String cpfNumeros = Optional.ofNullable(dto.getCpf().replaceAll("\\D+", "")).orElse(null);
+		String rgNumeros = Optional.ofNullable(dto.getRg().replaceAll("\\D+", "")).orElse(null);
 
 		pessoa.setCpf(cpfNumeros);
 
-		if (dto.hasDataNascimento()) {
-			LocalDate localDate = LocalDate.parse(dto.getDataNascimento());
-			pessoa.setDataNascimento(localDate);
-		}
+		pessoa.setDataNascimento(dto.getDataNascimento());
 
 		if (dto.hasNome()) {
 			pessoa.setNome(dto.getNome().toUpperCase());
 		}
-		pessoa.setRg(dto.getRg());
+		pessoa.setRg(rgNumeros);
 		pessoa.setEstudante(estudanteBuscado);
+		pessoa.setEndereco(enderecoFactory.buildEntity(dto.getEndereco()));
 	}
 
 	private void salvaCompetencias(Estudante estudanteBuscado, List<CompetenciaDTO> competencias) {
@@ -205,6 +218,9 @@ public class EstudanteService {
 
 		for (ContatoDTO dto : contatos) {
 			Contato novoContato = pessoa.novoContato(dto.getCodContato());
+			novoContato.setDescContato(dto.getDescContato());
+			novoContato.setTipoContato(dto.getTipoContato());
+			novoContato.setValorContato(dto.getValorContato());
 			novosContatos.add(novoContato);
 		}
 		pessoa.retemContatos(novosContatos);

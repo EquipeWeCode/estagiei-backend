@@ -1,6 +1,6 @@
 package br.edu.ifsp.estagiei.entity;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -32,8 +32,6 @@ public class HistoricoEscolar {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_hist_escolar_cod_hist_escolar_seq")
 	@Column(name = "cod_hist_escolar", updatable = false)
 	private Long codHistEscolar;
-    @Column(name = "cod_estudante", insertable = false, updatable = false)
-    private Long codEstudante;
 	@Column(name = "curso")
 	private String curso;
 	@Column(name = "nvl_escolaridade")
@@ -41,16 +39,16 @@ public class HistoricoEscolar {
 	@Column(name = "inst_ensino")
 	private String instEnsino;
 	@Column(name = "data_inicio")
-	private Timestamp dataInicio;
+	private LocalDate dataInicio;
 	@Column(name = "data_fim")
-	private Timestamp dataFim;
+	private LocalDate dataFim;
 	@Column(name = "status")
 	private String status;
 	@Embedded
 	private Auditoria auditoria;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@JoinColumn(name = "cod_estudante")
+	@JoinColumn(name = "cod_estudante", referencedColumnName = "cod_estudante")
 	private Estudante estudante;
 	
 	@Override
@@ -67,6 +65,9 @@ public class HistoricoEscolar {
 		if (!(obj instanceof HistoricoEscolar))
 			return false;
 		HistoricoEscolar other = (HistoricoEscolar) obj;
+		if(other.codHistEscolar == null) {
+			return false;
+		}
 		return Objects.equals(codHistEscolar, other.codHistEscolar);
 	}
 }
