@@ -31,4 +31,6 @@ public class VagaDTO implements DTOUtils {
 	private EmpresaDTO empresa;	
 	private List<CompetenciaDTO> competencias;
 	private Boolean indAtivo;
+	
+	private AuditoriaDTO auditoria;
 }

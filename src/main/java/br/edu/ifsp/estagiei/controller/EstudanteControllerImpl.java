@@ -2,13 +2,14 @@ package br.edu.ifsp.estagiei.controller;
 
 import java.util.List;
 
-import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,18 +43,26 @@ public class EstudanteControllerImpl implements EstudanteController {
 		return ResponseEntity.ok(estudantes);
 	}
 
+	@Override
+	@PostMapping
+	public ResponseEntity<EstudanteDTO> postEstudante(@RequestBody @Valid EstudanteDTO dto) {
+		EstudanteDTO estudante = service.salvaEstudante(dto, false);
+		return ResponseEntity.ok(estudante);
+
+	}
+
+	@PutMapping(PATH_ID)
+	@PreAuthorize("hasAnyAuthority('" + ROLE_ADMIN + "','" + ROLE_ESTUDANTE + "')")
+	public ResponseEntity<EstudanteDTO> putEstudante(@PathVariable Long codEstudante,
+			@RequestBody @Valid EstudanteDTO dto) {
+		dto.setCodEstudante(codEstudante);
+		EstudanteDTO estudante = service.salvaEstudante(dto, true);
+		return ResponseEntity.ok(estudante);
+	}
+
 	@GetMapping(PATH_ID + PATH_RECOMENDACAO)
 	public ResponseEntity<List<VagaDTO>> getVagasRecomendadas(@PathVariable(P_COD_ESTUDANTE) Long codEstudante) {
 		List<VagaDTO> vagas = service.buscaVagasRecomendadas(codEstudante);
 		return ResponseEntity.ok(vagas);
-	}
-
-	@PutMapping(PATH_ID)
-	@RolesAllowed({ ROLE_ADMIN, ROLE_ESTUDANTE })
-	public ResponseEntity<EstudanteDTO> putEstudante(@PathVariable Long codEstudante,
-			@RequestBody @Valid EstudanteDTO dto) {
-		dto.setCodEstudante(codEstudante);
-		EstudanteDTO estudante = service.salvaEstudante(dto);
-		return ResponseEntity.ok(estudante);
 	}
 }

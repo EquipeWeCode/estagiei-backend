@@ -3,12 +3,16 @@ package br.edu.ifsp.estagiei.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 
+import br.edu.ifsp.estagiei.constants.RolesEnum;
+import br.edu.ifsp.estagiei.constants.TipoUsuarioEnum;
 import br.edu.ifsp.estagiei.dto.EmpresaDTO;
 import br.edu.ifsp.estagiei.dto.factory.EmpresaDTOFactory;
 import br.edu.ifsp.estagiei.entity.Empresa;
@@ -19,6 +23,7 @@ import br.edu.ifsp.estagiei.repository.EmpresaRepository;
 import br.edu.ifsp.estagiei.repository.UsuarioRepository;
 
 @Service
+@Transactional
 public class EmpresaService {
 
 	@Autowired
@@ -58,18 +63,22 @@ public class EmpresaService {
 			if (!usuarioBuscado.isPresent()) {
 				throw new ValidacaoException("Empresa não encontrada");
 			}
+			if (usuarioBuscado.isPresent() && !TipoUsuarioEnum.EMPRESA.equals(usuarioBuscado.get().getTipoUsuario())) {
+				throw new ValidacaoException("Este e-mail já está sendo usado");
+			}
 		}
 
 		return usuarioBuscado.isPresent() ? usuarioBuscado.get() : new Usuario();
 	}
 
 	private void montaEmpresa(Usuario usuario, EmpresaDTO dto, boolean isEdicao) {
+		usuario.setTipoUsuario(TipoUsuarioEnum.EMPRESA);
 
 		if (!isEdicao) {
 			usuario.setEmail(dto.getEmail());
 			usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
 			Permissao permissao = new Permissao();
-			permissao.setCodPermissao(777668L);
+			permissao.setCodPermissao(RolesEnum.EMPRESA.getCodigo());
 			usuario.addPermissao(permissao);
 		}
 

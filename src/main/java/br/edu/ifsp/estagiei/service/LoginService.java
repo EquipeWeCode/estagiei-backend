@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import br.edu.ifsp.estagiei.entity.Usuario;
 import br.edu.ifsp.estagiei.jwt.JwtTokenUtil;
 
 @Service
+@Transactional
 public class LoginService {
 
 	@Autowired

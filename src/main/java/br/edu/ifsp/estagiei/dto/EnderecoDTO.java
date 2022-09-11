@@ -36,4 +36,6 @@ public class EnderecoDTO implements DTOUtils {
 	private String complemento;
 	private String pontoReferencia;
 	private Boolean indAtivo;
+	
+	private AuditoriaDTO auditoria;
 }

@@ -2,6 +2,7 @@ package br.edu.ifsp.estagiei.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import br.edu.ifsp.estagiei.entity.Vaga;
 import br.edu.ifsp.estagiei.repository.VagaRepository;
 
 @Service
+@Transactional
 public class VagaService {
 	@Autowired
 	private VagaRepository vagaRepositorio;

@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.github.cdimascio.dotenv.DotenvException;
 
-public abstract class EstagieiUtils {
+public class EstagieiUtils {
 
 	public static String dateParaString(LocalDate data) {
 		String text = "";

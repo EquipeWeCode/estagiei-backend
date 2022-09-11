@@ -1,13 +1,15 @@
 package br.edu.ifsp.estagiei.dto;
 
-import java.util.List;
+import java.time.LocalDate;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -23,33 +25,23 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @JsonInclude(Include.NON_NULL)
-public class EmpresaDTO implements DTOUtils {
-	private Long codEmpresa;
+public class ExperienciaProfissionalDTO implements DTOUtils {
+	private Long codExpProfissional;
 	@NotBlank(message = MSG_NOT_NULL)
-	private String email;
+	private String nomeEmpresa;
 	@NotBlank(message = MSG_NOT_NULL)
-	@Length(min = 8, max = 25, message = MSG_LENGTH_SENHA)
-	private String senha;
-	private String avatar;
+	private String cargo;
 	@NotBlank(message = MSG_NOT_NULL)
-	private String razaoSocial;
-	@NotBlank(message = MSG_NOT_NULL)
-	private String nomeFantasia;
-	@NotBlank(message = MSG_NOT_NULL)
-	private String cnpj;
+	private String descricao;
 	@NotNull(message = MSG_NOT_NULL)
+	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate dataInicio;
+	@NotNull(message = MSG_NOT_NULL)
+	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate dataFim;
 	@Valid
 	private EnderecoDTO endereco;
-	private List<VagaDTO> vagas;
-	private Boolean indAtivo;
-	
 	private AuditoriaDTO auditoria;
-	
-	public boolean hasVagas() {
-		return vagas != null && !vagas.isEmpty();
-	}
-	
-	public boolean hasEndereco() {
-		return endereco != null;
-	}
 }

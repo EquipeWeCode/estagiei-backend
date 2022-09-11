@@ -5,3 +5,5 @@ CREATE TABLE TB_CONT_PESSOA(
        CONSTRAINT fk_cont_pessoa_cont FOREIGN KEY(COD_CONTATO) REFERENCES TB_CONTATO(COD_CONTATO),
        CONSTRAINT fk_cont_pessoa_pessoa FOREIGN KEY(COD_PESSOA) REFERENCES TB_PESSOA(COD_PESSOA)
 );
+
+insert into tb_cont_pessoa(cod_contato, cod_pessoa) values (777666, 777666);
