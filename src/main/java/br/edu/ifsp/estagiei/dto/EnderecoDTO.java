@@ -36,6 +36,21 @@ public class EnderecoDTO implements DTOUtils {
 	private String complemento;
 	private String pontoReferencia;
 	private Boolean indAtivo;
-	
 	private AuditoriaDTO auditoria;
+	
+	public Boolean hasCep() {
+		return cep != null;
+	}
+	
+	public Boolean hasBairro() {
+		return bairro != null;
+	}
+	
+	public Boolean hasCidade() {
+		return cidade != null;
+	}
+	
+	public Boolean hasEstado() {
+		return estado != null;
+	}
 }

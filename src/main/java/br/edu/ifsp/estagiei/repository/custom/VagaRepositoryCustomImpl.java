@@ -16,11 +16,14 @@ import org.springframework.stereotype.Repository;
 
 import com.google.common.collect.Lists;
 
+import br.edu.ifsp.estagiei.dto.filter.EnderecoFiltroDTO;
 import br.edu.ifsp.estagiei.dto.filter.VagaFiltroDTO;
 import br.edu.ifsp.estagiei.entity.Competencia;
 import br.edu.ifsp.estagiei.entity.Competencia_;
 import br.edu.ifsp.estagiei.entity.Empresa;
 import br.edu.ifsp.estagiei.entity.Empresa_;
+import br.edu.ifsp.estagiei.entity.Endereco;
+import br.edu.ifsp.estagiei.entity.Endereco_;
 import br.edu.ifsp.estagiei.entity.Estudante;
 import br.edu.ifsp.estagiei.entity.Estudante_;
 import br.edu.ifsp.estagiei.entity.Vaga;
@@ -81,6 +84,7 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 		CriteriaQuery<Vaga> criteria = cb.createQuery(Vaga.class);
 		Root<Vaga> r = criteria.from(Vaga.class);
 
+		r.fetch(Vaga_.endereco, JoinType.LEFT);
 		r.fetch(Vaga_.competencias, JoinType.LEFT);
 		FetchParent<Vaga, Empresa> fetchEmpresa = r.fetch(Vaga_.empresa, JoinType.INNER);
 		fetchEmpresa.fetch(Empresa_.usuario);
@@ -111,7 +115,27 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 		if (filtro.hasIds()) {
 			predicates.add(root.get(Vaga_.codVaga).in(filtro.getIds()));
 		}
+		if (filtro.hasEndereco()) {
+			aplicaFiltrosEndereco(filtro, cb, predicates, root);
+		}
 
 		return predicates.stream().toArray(Predicate[]::new);
+	}
+
+	private void aplicaFiltrosEndereco(VagaFiltroDTO filtro, CriteriaBuilder cb, List<Predicate> predicates, Root<Vaga> root) {
+		Join<Vaga, Endereco> endereco = root.join(Vaga_.endereco);
+		EnderecoFiltroDTO dto = filtro.getEndereco();
+		if (dto.hasCep()) { 
+			predicates.add(cb.equal(endereco.get(Endereco_.cep), dto.getCep()));
+		}
+		if (dto.hasBairro()) {
+			predicates.add(cb.like(endereco.get(Endereco_.bairro), dto.getBairroFiltro()));
+		}
+		if (dto.hasCidade()) {
+			predicates.add(cb.like(endereco.get(Endereco_.cidade), dto.getCidadeFiltro()));
+		}
+		if (dto.hasEstado()) {
+			predicates.add(cb.like(endereco.get(Endereco_.estado), dto.getEstadoFiltro()));
+		}
 	}
 }

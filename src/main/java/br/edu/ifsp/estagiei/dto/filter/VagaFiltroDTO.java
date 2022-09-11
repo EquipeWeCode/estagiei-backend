@@ -14,6 +14,7 @@ public class VagaFiltroDTO extends FiltroDTO {
 	private String titulo;
 	private String descricao;
 	private List<Long> ids;
+	private EnderecoFiltroDTO endereco;
 	
 	public String getTituloFiltro() {
 		return getStringFiltro(getTitulo());
@@ -29,5 +30,8 @@ public class VagaFiltroDTO extends FiltroDTO {
 	}
 	public Boolean hasIds() {
 		return ids != null && ids.size()>0;
+	}
+	public Boolean hasEndereco() {
+		return endereco != null;
 	}
 }
