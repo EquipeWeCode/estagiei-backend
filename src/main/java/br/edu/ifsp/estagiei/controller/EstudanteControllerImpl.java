@@ -2,11 +2,11 @@ package br.edu.ifsp.estagiei.controller;
 
 import java.util.List;
 
-import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,7 +52,7 @@ public class EstudanteControllerImpl implements EstudanteController {
 	}
 
 	@PutMapping(PATH_ID)
-	@RolesAllowed({ ROLE_ADMIN, ROLE_ESTUDANTE })
+	@PreAuthorize("hasAnyAuthority('" + ROLE_ADMIN + "','" + ROLE_ESTUDANTE + "')")
 	public ResponseEntity<EstudanteDTO> putEstudante(@PathVariable Long codEstudante,
 			@RequestBody @Valid EstudanteDTO dto) {
 		dto.setCodEstudante(codEstudante);
