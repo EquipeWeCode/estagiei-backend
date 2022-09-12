@@ -40,6 +40,7 @@ public abstract class Vaga_ {
 	public static final String EMPRESA = "empresa";
 	public static final String COMPETENCIAS = "competencias";
 	public static final String DESCRICAO = "descricao";
+	public static final String DATA_INCLUSAO = "dataInclusao";
 
 }
 

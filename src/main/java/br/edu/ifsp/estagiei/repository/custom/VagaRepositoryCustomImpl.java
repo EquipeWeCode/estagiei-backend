@@ -93,9 +93,9 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 
 		if (filtro.hasOrdem()) {
 			if ("DESC".equals(filtro.getOrdemFiltro())) {
-				criteria.orderBy(cb.desc(r.get(Vaga_.dataInclusao)));
+				criteria.orderBy(cb.desc(r.get(Vaga_.titulo)));
 			} else {
-				criteria.orderBy(cb.asc(r.get(Vaga_.dataInclusao)));
+				criteria.orderBy(cb.asc(r.get(Vaga_.titulo)));
 			}
 		}
 
