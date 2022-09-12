@@ -82,6 +82,10 @@ public class Vaga {
 	public Boolean hasEmpresa() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "empresa");
 	}
+	
+	public boolean hasEndereco() {
+		return Persistence.getPersistenceUtil().isLoaded(this, "endereco");
+	}
 
 	@Override
 	public int hashCode() {
@@ -99,4 +103,5 @@ public class Vaga {
 		Vaga other = (Vaga) obj;
 		return Objects.equals(codVaga, other.codVaga);
 	}
+
 }

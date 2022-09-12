@@ -1,7 +1,5 @@
 package br.edu.ifsp.estagiei.dto;
 
-import java.util.List;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -40,14 +38,9 @@ public class EmpresaDTO implements DTOUtils {
 	@NotNull(message = MSG_NOT_NULL)
 	@Valid
 	private EnderecoDTO endereco;
-	private List<VagaDTO> vagas;
 	private Boolean indAtivo;
 	
 	private AuditoriaDTO auditoria;
-	
-	public boolean hasVagas() {
-		return vagas != null && !vagas.isEmpty();
-	}
 	
 	public boolean hasEndereco() {
 		return endereco != null;

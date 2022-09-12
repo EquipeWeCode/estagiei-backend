@@ -16,7 +16,6 @@ import org.springframework.stereotype.Repository;
 
 import com.google.common.collect.Lists;
 
-import br.edu.ifsp.estagiei.dto.filter.EnderecoFiltroDTO;
 import br.edu.ifsp.estagiei.dto.filter.VagaFiltroDTO;
 import br.edu.ifsp.estagiei.entity.Competencia;
 import br.edu.ifsp.estagiei.entity.Competencia_;
@@ -121,27 +120,29 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 		if (filtro.hasIds()) {
 			predicates.add(root.get(Vaga_.codVaga).in(filtro.getIds()));
 		}
-		if (filtro.hasEndereco()) {
-			aplicaFiltrosEndereco(filtro, cb, predicates, root);
+		if (filtro.hasCodEmpresa()) {
+			Join<Vaga, Empresa> empresa = root.join(Vaga_.empresa);
+			predicates.add(cb.equal(empresa.get(Empresa_.codEmpresa), filtro.getCodEmpresa()));
 		}
+		
+		aplicaFiltrosEndereco(filtro, cb, predicates, root);
 
 		return predicates.stream().toArray(Predicate[]::new);
 	}
 
 	private void aplicaFiltrosEndereco(VagaFiltroDTO filtro, CriteriaBuilder cb, List<Predicate> predicates, Root<Vaga> root) {
 		Join<Vaga, Endereco> endereco = root.join(Vaga_.endereco);
-		EnderecoFiltroDTO dto = filtro.getEndereco();
-		if (dto.hasCep()) { 
-			predicates.add(cb.equal(endereco.get(Endereco_.cep), dto.getCep()));
+		if (filtro.hasCep()) { 
+			predicates.add(cb.equal(endereco.get(Endereco_.cep), filtro.getCep()));
 		}
-		if (dto.hasBairro()) {
-			predicates.add(cb.like(endereco.get(Endereco_.bairro), dto.getBairroFiltro()));
+		if (filtro.hasBairro()) {
+			predicates.add(cb.like(endereco.get(Endereco_.bairro), filtro.getBairroFiltro()));
 		}
-		if (dto.hasCidade()) {
-			predicates.add(cb.like(endereco.get(Endereco_.cidade), dto.getCidadeFiltro()));
+		if (filtro.hasCidade()) {
+			predicates.add(cb.like(endereco.get(Endereco_.cidade), filtro.getCidadeFiltro()));
 		}
-		if (dto.hasEstado()) {
-			predicates.add(cb.like(endereco.get(Endereco_.estado), dto.getEstadoFiltro()));
+		if (filtro.hasEstado()) {
+			predicates.add(cb.like(endereco.get(Endereco_.estado), filtro.getEstadoFiltro()));
 		}
 	}
 }

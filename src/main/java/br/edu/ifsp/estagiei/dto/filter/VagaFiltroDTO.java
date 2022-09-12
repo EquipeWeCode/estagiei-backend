@@ -17,7 +17,11 @@ public class VagaFiltroDTO extends FiltroDTO {
 	private String curso;
 	private ModalidadeEnum modalidade;
 	private List<Long> ids;
-	private EnderecoFiltroDTO endereco;
+	private Integer cep;
+	private String bairro;
+	private String cidade;
+	private String estado;
+	private Long codEmpresa;
 
 	public String getTituloFiltro() {
 		return getStringFiltro(getTitulo());
@@ -29,6 +33,18 @@ public class VagaFiltroDTO extends FiltroDTO {
 	
 	public String getCursoFiltro() {
 		return getStringFiltro(getCurso());
+	}
+	
+	public String getBairroFiltro() {
+		return getStringFiltro(getBairro());
+	}
+	
+	public String getCidadeFiltro() {
+		return getStringFiltro(getCidade());
+	}
+	
+	public String getEstadoFiltro() {
+		return getStringFiltro(getEstado());
 	}
 
 	public Boolean hasDescricao() {
@@ -51,7 +67,23 @@ public class VagaFiltroDTO extends FiltroDTO {
 		return ids != null && ids.size() > 0;
 	}
 
-	public Boolean hasEndereco() {
-		return endereco != null;
+	public Boolean hasCep() {
+		return cep != null;
+	}
+
+	public Boolean hasBairro() {
+		return bairro != null;
+	}
+
+	public Boolean hasCidade() {
+		return cidade != null;
+	}
+
+	public Boolean hasEstado() {
+		return estado != null;
+	}
+	
+	public Boolean hasCodEmpresa() {
+		return codEmpresa != null;
 	}
 }
