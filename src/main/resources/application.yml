@@ -27,3 +27,8 @@ springdoc:
   use-fqn: true
   swagger-ui:
     path: /swagger-ui
+app:
+  cloudinary:
+    cloud-name: ${CLOUD_NAME}
+    api-key: ${CLOUDINARY_KEY}
+    api-secret: ${CLOUDINARY_SECRET}

@@ -1,5 +1,6 @@
 package br.edu.ifsp.estagiei.entity;
 
+import br.edu.ifsp.estagiei.constants.TipoUsuarioEnum;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
@@ -14,6 +15,7 @@ public abstract class Usuario_ {
 	public static volatile SingularAttribute<Usuario, Long> codUsuario;
 	public static volatile SingularAttribute<Usuario, Pessoa> pessoa;
 	public static volatile SingularAttribute<Usuario, Boolean> indAtivo;
+	public static volatile SingularAttribute<Usuario, TipoUsuarioEnum> tipoUsuario;
 	public static volatile SingularAttribute<Usuario, String> avatar;
 	public static volatile SingularAttribute<Usuario, Auditoria> auditoria;
 	public static volatile SingularAttribute<Usuario, Empresa> empresa;
@@ -24,6 +26,7 @@ public abstract class Usuario_ {
 	public static final String COD_USUARIO = "codUsuario";
 	public static final String PESSOA = "pessoa";
 	public static final String IND_ATIVO = "indAtivo";
+	public static final String TIPO_USUARIO = "tipoUsuario";
 	public static final String AVATAR = "avatar";
 	public static final String AUDITORIA = "auditoria";
 	public static final String EMPRESA = "empresa";
