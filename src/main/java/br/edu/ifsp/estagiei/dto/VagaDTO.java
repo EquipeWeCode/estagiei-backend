@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import br.edu.ifsp.estagiei.constants.ModalidadeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,7 +29,11 @@ public class VagaDTO implements DTOUtils {
 	private String descricao;
 	@NotNull(message = MSG_NOT_NULL)
 	private BigDecimal salario;
+	private String curso;
+	private Long cargaHoraria;
+	private ModalidadeEnum modalidade;
 	private EmpresaDTO empresa;	
+	private EnderecoDTO endereco;
 	private List<CompetenciaDTO> competencias;
 	private Boolean indAtivo;
 	

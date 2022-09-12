@@ -16,28 +16,13 @@ CREATE TABLE IF NOT EXISTS TB_VAGA (
 	CONSTRAINT fk_vaga_emprs FOREIGN KEY(COD_EMPRESA) REFERENCES TB_EMPRESA(COD_EMPRESA)
 );
 
--- CREATE OR REPLACE FUNCTION TRG_AUDITORIA() RETURNS TRIGGER AS $trg_audit$
---     BEGIN
---         IF (TG_OP = 'UPDATE') THEN
---             UPDATE TB_VAGA SET DATA_ALTERACAO = NOW() WHERE COD_VAGA = NEW.COD_VAGA;
---         ELSIF (TG_OP = 'INSERT') THEN
---             UPDATE TB_VAGA SET DATA_INCLUSAO = NOW() WHERE COD_VAGA = NEW.COD_VAGA;
---         END IF;
---         RETURN NULL; 
---     END;
--- $trg_audit$ LANGUAGE plpgsql;
-
--- CREATE TRIGGER trg_audit
--- AFTER INSERT OR UPDATE ON TB_VAGA
---     FOR EACH ROW EXECUTE FUNCTION TRG_AUDITORIA();
-
-INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO) VALUES (777666, 777666, 'Vaga disponível para atuar no desenvolvimento front-end do nosso sistema focado em vagas de estágio!', 3500.98, 'Desenvolvedor Front-End');
-INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO) VALUES (777667, 777666, 'Aqui você irá aprender: Java com Spring Boot e Oracle PLSQL, venha conosco nessa jornada!', 2567.42, 'Desenvolvedor Back-End Java');
-INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO) VALUES (777668, 777666, 'Se você é dedicado e gosta de aprender, essa vaga é para você!', 1200.56, 'Manutenção de computadores');
-INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO) VALUES (777669, 777666, 'Venha com a gente aprender a ser um desenvolvedor web!', 1780.56, 'Desenvolvedor Web');
-INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO) VALUES (777670, 777666, 'Estamos em busca de pessoas dedicadas e que queiram aprender sobre Gestão de Recursos Humanos, venha com a gente!', 1831.74, 'Recursos Humanos');
-INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO) VALUES (777671, 777666, 'Buscamos alguém interessado em engenharia de software e que queira seguir na área', 2501.23, 'Engenheiro de Software');
-INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO) VALUES (777672, 777666, '5 Vagas para pessoas que cursam Engenharia Civil', 1234.63, 'Engenheiro Civil');
-INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO) VALUES (777673, 777666, 'Se você busca ser contador e seguir carreira nisso, venha com a gente!', 1262.67, 'Contador');
-INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO) VALUES (777674, 777666, '3 vagas para área de logística', 1960.12, 'Logística');
-INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO) VALUES (777675, 777666, 'Buscamos pessoas que gostem de programação e querem aprender mais sobre Python', 2000.00, 'Desenvolvedor Python');
+INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO, DATA_INCLUSAO, DATA_ALTERACAO) VALUES (777666, 777666, 'Vaga disponível para atuar no desenvolvimento front-end do nosso sistema focado em vagas de estágio!', 3500.98, 'Desenvolvedor Front-End', NOW(), NOW());
+INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO, DATA_INCLUSAO, DATA_ALTERACAO) VALUES (777667, 777666, 'Aqui você irá aprender: Java com Spring Boot e Oracle PLSQL, venha conosco nessa jornada!', 2567.42, 'Desenvolvedor Back-End Java', NOW(), NOW());
+INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO, DATA_INCLUSAO, DATA_ALTERACAO) VALUES (777668, 777666, 'Se você é dedicado e gosta de aprender, essa vaga é para você!', 1200.56, 'Manutenção de computadores', NOW(), NOW());
+INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO, DATA_INCLUSAO, DATA_ALTERACAO) VALUES (777669, 777666, 'Venha com a gente aprender a ser um desenvolvedor web!', 1780.56, 'Desenvolvedor Web', NOW(), NOW());
+INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO, DATA_INCLUSAO, DATA_ALTERACAO) VALUES (777670, 777666, 'Estamos em busca de pessoas dedicadas e que queiram aprender sobre Gestão de Recursos Humanos, venha com a gente!', 1831.74, 'Recursos Humanos', NOW(), NOW());
+INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO, DATA_INCLUSAO, DATA_ALTERACAO) VALUES (777671, 777666, 'Buscamos alguém interessado em engenharia de software e que queira seguir na área', 2501.23, 'Engenheiro de Software', NOW(), NOW());
+INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO, DATA_INCLUSAO, DATA_ALTERACAO) VALUES (777672, 777666, '5 Vagas para pessoas que cursam Engenharia Civil', 1234.63, 'Engenheiro Civil', NOW(), NOW());
+INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO, DATA_INCLUSAO, DATA_ALTERACAO) VALUES (777673, 777666, 'Se você busca ser contador e seguir carreira nisso, venha com a gente!', 1262.67, 'Contador', NOW(), NOW());
+INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, DESCRICAO, SALARIO, TITULO, DATA_INCLUSAO, DATA_ALTERACAO) VALUES (777674, 777666, '3 vagas para área de logística', 1960.12, 'Logística', NOW(), NOW());
+INSERT INTO TB_VAGA(COD_VAGA, COD_EMPRESA, COD_ENDERECO, DESCRICAO, SALARIO, TITULO, DATA_INCLUSAO, DATA_ALTERACAO) VALUES (777675, 777666, 777666, 'Buscamos pessoas que gostem de programação e querem aprender mais sobre Python', 2000.00, 'Desenvolvedor Python', NOW(), NOW());

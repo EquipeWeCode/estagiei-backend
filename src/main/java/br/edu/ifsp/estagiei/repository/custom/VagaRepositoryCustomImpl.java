@@ -93,9 +93,9 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 
 		if (filtro.hasOrdem()) {
 			if ("DESC".equals(filtro.getOrdemFiltro())) {
-				criteria.orderBy(cb.desc(r.get(Vaga_.titulo)));
+				criteria.orderBy(cb.desc(r.get(Vaga_.dataInclusao)));
 			} else {
-				criteria.orderBy(cb.asc(r.get(Vaga_.titulo)));
+				criteria.orderBy(cb.asc(r.get(Vaga_.dataInclusao)));
 			}
 		}
 
@@ -111,6 +111,12 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 		}
 		if (filtro.hasTitulo()) {
 			predicates.add(cb.like(cb.upper(root.get(Vaga_.titulo)), filtro.getTituloFiltro()));
+		}
+		if (filtro.hasCurso()) {
+			predicates.add(cb.like(cb.upper(root.get(Vaga_.curso)), filtro.getCursoFiltro()));
+		}
+		if (filtro.hasModalidade()) {
+			predicates.add(cb.equal(root.get(Vaga_.modalidade), filtro.getModalidade()));
 		}
 		if (filtro.hasIds()) {
 			predicates.add(root.get(Vaga_.codVaga).in(filtro.getIds()));

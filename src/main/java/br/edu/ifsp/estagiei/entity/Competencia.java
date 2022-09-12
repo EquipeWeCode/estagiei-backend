@@ -8,8 +8,11 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -23,6 +26,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Competencia {
 	@Id
+	@SequenceGenerator(name = "tb_competencia_cod_contato_seq", sequenceName = "tb_competencia_cod_contato_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_competencia_cod_contato_seq")
 	@Column(name = "cod_competencia")
 	private Long codCompetencia;
 	@Column(name = "descricao")

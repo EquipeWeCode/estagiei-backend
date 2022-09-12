@@ -24,6 +24,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.edu.ifsp.estagiei.constants.ModalidadeEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -47,6 +48,12 @@ public class Vaga {
 	private BigDecimal salario;
 	@Column(name = "titulo")
 	private String titulo;
+	@Column(name = "curso")
+	private String curso;
+	@Column(name = "carga_horaria")
+	private Long cargaHoraria;
+	@Column(name = "modalidade")
+	private ModalidadeEnum modalidade;
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
 	@Embedded

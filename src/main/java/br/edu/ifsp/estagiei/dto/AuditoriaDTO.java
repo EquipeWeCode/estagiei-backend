@@ -2,6 +2,10 @@ package br.edu.ifsp.estagiei.dto;
 
 import java.sql.Timestamp;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -18,6 +22,12 @@ import lombok.Setter;
 @Builder
 @JsonInclude(Include.NON_NULL)
 public class AuditoriaDTO {
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Timestamp dataInclusao;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Timestamp dataAlteracao;
 }
