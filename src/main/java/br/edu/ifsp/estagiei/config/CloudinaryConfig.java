@@ -23,7 +23,8 @@ public class CloudinaryConfig {
     @Value("${app.cloudinary.api-secret}")
     private String api_secret;
 
-    public Cloudinary getCloudinary() {
+    @SuppressWarnings("unchecked")
+	public Cloudinary getCloudinary() {
         Map<Object, Object> config = new HashMap<Object, Object>(ObjectUtils.asMap(
             "cloud_name", cloud_name,
             "api_key", api_key,
