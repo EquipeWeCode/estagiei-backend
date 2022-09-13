@@ -29,6 +29,7 @@ dependencies {
 	implementation 'io.github.cdimascio:dotenv-java:2.2.4'
 	implementation 'br.com.caelum.stella:caelum-stella-core:2.1.5'
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	implementation 'com.cloudinary:cloudinary-core:1.32.2'
 	testImplementation 'org.springdoc:springdoc-openapi-webmvc-core:1.6.9'
 	compileOnly 'org.projectlombok:lombok'
     runtimeOnly  'io.jsonwebtoken:jjwt-impl:0.11.5'
