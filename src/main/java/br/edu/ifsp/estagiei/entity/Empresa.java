@@ -49,34 +49,17 @@ public class Empresa {
 	@JoinColumn(name = "cod_endereco")
 	private Endereco endereco;
 
-//	@OneToMany(mappedBy = "empresa", cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-//			CascadeType.REMOVE }, fetch = FetchType.LAZY)
-//	private Set<Vaga> vagas = new HashSet<>();
-
 	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE })
 	@JoinColumn(name = "cod_usuario", referencedColumnName = "cod_usuario")
 	private Usuario usuario;
 
-//	public boolean hasVagas() {
-//		return Persistence.getPersistenceUtil().isLoaded(this, "vagas");
-//	}
+	public boolean hasVagas() {
+		return Persistence.getPersistenceUtil().isLoaded(this, "vagas");
+	}
 
 	public boolean hasEndereco() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "endereco");
 	}
-	
-//	public Vaga novaVaga(Long codVaga) {
-//		Vaga novaVaga = new Vaga();
-//		novaVaga.setCodVaga(codVaga);
-//		
-//		Vaga vaga = vagas.stream().filter(v -> v.equals(novaVaga)).findFirst().orElse(novaVaga);
-//		vagas.add(vaga);
-//		return vaga;
-//	}
-//	
-//	public void retemVagas(List<Vaga> novasVagas) {
-//		vagas.retainAll(novasVagas);
-//	}
 
 	@Override
 	public int hashCode() {

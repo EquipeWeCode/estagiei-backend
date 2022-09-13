@@ -5,15 +5,11 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,22 +46,6 @@ public class Endereco {
 	private Boolean indAtivo = true;
 	@Embedded
 	private Auditoria auditoria;
-
-	@JsonIgnore
-	@OneToOne(mappedBy = "endereco", fetch = FetchType.LAZY)
-	private Empresa empresa;
-	
-	@JsonIgnore
-	@OneToOne(mappedBy = "endereco", fetch = FetchType.LAZY)
-	private Pessoa pessoa;
-	
-	@JsonIgnore
-	@OneToOne(mappedBy = "endereco", fetch = FetchType.LAZY)
-	private ExperienciaProfissional experienciaProfissional;
-	
-	@JsonIgnore
-	@OneToOne(mappedBy = "endereco", fetch = FetchType.LAZY)
-	private Vaga vaga;
 
 	@Override
 	public int hashCode() {

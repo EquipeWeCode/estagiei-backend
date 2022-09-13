@@ -23,6 +23,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.Sets;
 
 import br.edu.ifsp.estagiei.constants.ModalidadeEnum;
 import lombok.Getter;
@@ -61,7 +62,7 @@ public class Vaga {
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "tb_comp_vaga", joinColumns = @JoinColumn(name = "cod_vaga"), inverseJoinColumns = @JoinColumn(name = "cod_competencia"))
-	private Set<Competencia> competencias = new HashSet<>();
+	private Set<Competencia> competencias = Sets.newHashSet();
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)

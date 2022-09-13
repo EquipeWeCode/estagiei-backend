@@ -1,6 +1,5 @@
 package br.edu.ifsp.estagiei.entity;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.google.common.collect.Sets;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,9 +39,9 @@ public class Competencia {
 	private Auditoria auditoria;
 
 	@ManyToMany(mappedBy = "competencias", fetch = FetchType.LAZY)
-	private Set<Vaga> vagas = new HashSet<>();
+	private Set<Vaga> vagas = Sets.newHashSet();
 	@ManyToMany(mappedBy = "competencias", fetch = FetchType.LAZY)
-	private Set<Estudante> estudantes = new HashSet<>();
+	private Set<Estudante> estudantes = Sets.newHashSet();
 	
 	@Override
 	public int hashCode() {
