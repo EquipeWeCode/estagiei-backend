@@ -14,3 +14,8 @@ spring:
     generate-ddl: false
   flyway:
     enabled: false
+app:
+  cloudinary:
+    cloud-name: ${CLOUD_NAME:dlkvupjc7}
+    api-key: ${CLOUDINARY_KEY:691874842259599}
+    api-secret: ${CLOUDINARY_SECRET:VTcJjJG6Bb8fopdMxeASqLOxRtA}

@@ -1,7 +1,6 @@
 package br.edu.ifsp.estagiei.entity;
 
 import javax.annotation.Generated;
-import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -9,7 +8,6 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Empresa.class)
 public abstract class Empresa_ {
 
-	public static volatile SetAttribute<Empresa, Vaga> vagas;
 	public static volatile SingularAttribute<Empresa, Long> codUsuario;
 	public static volatile SingularAttribute<Empresa, String> nomeFantasia;
 	public static volatile SingularAttribute<Empresa, Endereco> endereco;
@@ -20,7 +18,6 @@ public abstract class Empresa_ {
 	public static volatile SingularAttribute<Empresa, Auditoria> auditoria;
 	public static volatile SingularAttribute<Empresa, String> razaoSocial;
 
-	public static final String VAGAS = "vagas";
 	public static final String COD_USUARIO = "codUsuario";
 	public static final String NOME_FANTASIA = "nomeFantasia";
 	public static final String ENDERECO = "endereco";
