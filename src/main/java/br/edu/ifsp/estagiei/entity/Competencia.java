@@ -27,8 +27,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Competencia {
 	@Id
-	@SequenceGenerator(name = "tb_competencia_cod_contato_seq", sequenceName = "tb_competencia_cod_contato_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_competencia_cod_contato_seq")
+	@SequenceGenerator(name = "tb_competencia_cod_competencia_seq", sequenceName = "tb_competencia_cod_competencia_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_competencia_cod_competencia_seq")
 	@Column(name = "cod_competencia")
 	private Long codCompetencia;
 	@Column(name = "descricao")
