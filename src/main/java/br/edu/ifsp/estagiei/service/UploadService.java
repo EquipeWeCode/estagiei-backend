@@ -14,7 +14,8 @@ import java.util.Map;
 public class UploadService {
     private final CloudinaryConfig cloudinaryConfig;
 
-    public String uploadFile(MultipartFile file, String fileName) throws FileUploadException {
+    @SuppressWarnings("rawtypes")
+	public String uploadFile(MultipartFile file, String fileName) throws FileUploadException {
         try {
             Map uploadResult = cloudinaryConfig
                 .getCloudinary()
