@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +17,8 @@ import javax.persistence.Persistence;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import br.edu.ifsp.estagiei.entity.listener.Auditavel;
+import br.edu.ifsp.estagiei.entity.listener.AuditoriaListener;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,7 +28,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_empresa")
-public class Empresa {
+@EntityListeners(AuditoriaListener.class)
+public class Empresa implements Auditavel {
 
 	@Id
 	@SequenceGenerator(name = "tb_empresa_cod_empresa_seq", sequenceName = "tb_empresa_cod_empresa_seq", allocationSize = 1)

@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +24,8 @@ import javax.persistence.Table;
 
 import com.google.common.collect.Sets;
 
+import br.edu.ifsp.estagiei.entity.listener.Auditavel;
+import br.edu.ifsp.estagiei.entity.listener.AuditoriaListener;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,7 +35,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Estudante {
+@EntityListeners(AuditoriaListener.class)
+public class Estudante implements Auditavel {
 	@Id
 	@SequenceGenerator(name = "tb_estudante_cod_estudante_seq", sequenceName = "tb_estudante_cod_estudante_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_estudante_cod_estudante_seq")
@@ -65,7 +69,7 @@ public class Estudante {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinTable(name = "tb_estud_vaga", joinColumns = @JoinColumn(name = "cod_estudante"), inverseJoinColumns = @JoinColumn(name = "cod_vaga"))
 	private Set<Vaga> vagas = Sets.newHashSet();
-
+	
 	public Boolean hasCompetencias() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "competencias");
 	}

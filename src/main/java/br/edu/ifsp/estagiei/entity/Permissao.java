@@ -5,12 +5,15 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import br.edu.ifsp.estagiei.entity.listener.Auditavel;
+import br.edu.ifsp.estagiei.entity.listener.AuditoriaListener;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +25,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Permissao {
+@EntityListeners(AuditoriaListener.class)
+public class Permissao implements Auditavel {
 	@Id
 	@SequenceGenerator(name = "tb_permissao_cod_permissao_seq", sequenceName = "tb_permissao_cod_permissao_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_permissao_cod_permissao_seq")

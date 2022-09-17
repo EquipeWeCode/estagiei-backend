@@ -11,6 +11,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +30,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.edu.ifsp.estagiei.constants.TipoUsuarioEnum;
+import br.edu.ifsp.estagiei.entity.listener.Auditavel;
+import br.edu.ifsp.estagiei.entity.listener.AuditoriaListener;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,8 +40,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
+@EntityListeners(AuditoriaListener.class)
 @Table(name = "tb_usuario")
-public class Usuario implements UserDetails {
+public class Usuario implements UserDetails, Auditavel {
 
 	private static final long serialVersionUID = 8024417533446604625L;
 

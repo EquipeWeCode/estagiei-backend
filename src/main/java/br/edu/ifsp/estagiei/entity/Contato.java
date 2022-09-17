@@ -35,7 +35,7 @@ public class Contato {
     @Column(name = "valor_contato")
     private String valorContato;
     @Embedded
-	private Auditoria auditoria;
+    private Auditoria auditoria;
      
 	@Override
 	public int hashCode() {
