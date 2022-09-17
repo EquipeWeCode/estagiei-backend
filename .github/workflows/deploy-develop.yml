@@ -3,6 +3,9 @@ name: Deploy to development environment
 on:
   push:
     branches: [ develop ]
+  pull_request:
+    types:
+      - opened
 
 jobs:
   check:
