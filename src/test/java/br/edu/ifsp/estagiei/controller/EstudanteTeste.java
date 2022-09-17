@@ -35,7 +35,6 @@ public class EstudanteTeste extends AbstractTeste {
 		
 		String bodyEstudante = "{\r\n"
 				+ "    \"email\": \"leonardoteste10@gmail.com\",\r\n"
-				+ "    \"senha\": \"12345678\",\r\n"
 				+ "    \"nome\": \"We code 2\",\r\n"
 				+ "    \"cpf\": \"161.595.510-00\",\r\n"
 				+ "    \"dataNascimento\": \"2003-11-06\",\r\n"
@@ -89,9 +88,8 @@ public class EstudanteTeste extends AbstractTeste {
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON_VALUE))
 				.andReturn();
-		String response = mvcResult.getResponse().getContentAsString();
-		System.out.println("RESPOSTA" + response);
+		
 		int status = mvcResult.getResponse().getStatus();
-		assertEquals(200, status);
+		assertEquals(400, status);
 	}
 }
