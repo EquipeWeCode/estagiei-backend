@@ -1,6 +1,6 @@
 package br.edu.ifsp.estagiei.dto;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -24,10 +24,10 @@ import lombok.Setter;
 public class AuditoriaDTO {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Timestamp dataInclusao;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime dataInclusao;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Timestamp dataAlteracao;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime dataAlteracao;
 }

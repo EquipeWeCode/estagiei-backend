@@ -1,6 +1,6 @@
 package br.edu.ifsp.estagiei.entity;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -17,8 +17,8 @@ import lombok.Setter;
 @Setter
 public class Auditoria {
 
-	@Column(name = "DATA_INCLUSAO", insertable = false, updatable = false)
-	private Timestamp dataInclusao;
-	@Column(name = "DATA_ALTERACAO", insertable = false, updatable = false)
-	private Timestamp dataAlteracao;
+	@Column(name = "DATA_INCLUSAO")
+	private LocalDateTime dataInclusao;
+	@Column(name = "DATA_ALTERACAO")
+	private LocalDateTime dataAlteracao;
 }
