@@ -42,10 +42,6 @@ import lombok.Setter;
 @EntityListeners(AuditoriaListener.class)
 public class Vaga implements Auditavel {
 
-	public Vaga(Empresa empresa) {
-		this.empresa = empresa;
-	}
-
 	@Id
 	@SequenceGenerator(name = "tb_vaga_cod_vaga_seq", sequenceName = "tb_vaga_cod_vaga_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_vaga_cod_vaga_seq")
@@ -85,6 +81,10 @@ public class Vaga implements Auditavel {
 
 	@ManyToMany(mappedBy = "vagas", fetch = FetchType.LAZY)
 	private Set<Estudante> estudantes = new HashSet<>();
+	
+	public Vaga(Empresa empresa) {
+		this.empresa = empresa;
+	}
 
 	public Competencia novaCompetencia(Long codCompetencia) {
 		Competencia novaCompetencia = new Competencia();
