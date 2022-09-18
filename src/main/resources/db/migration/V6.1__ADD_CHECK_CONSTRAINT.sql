@@ -1,0 +1,5 @@
+ALTER TABLE TB_VAGA
+ADD CONSTRAINT ck_vaga_horario
+CHECK (
+	CARGA_HORARIA <= 6
+);

@@ -1,0 +1,5 @@
+ALTER TABLE TB_USUARIO
+ADD CONSTRAINT ck_usuario_tip_usuario
+CHECK (
+	TIP_USUARIO IN ('ADM', 'EST', 'EMP', 'REP')
+);
