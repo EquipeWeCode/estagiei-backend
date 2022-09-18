@@ -2,6 +2,7 @@ package br.edu.ifsp.estagiei.entity;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -40,6 +41,7 @@ import lombok.Setter;
 @Table(name = "tb_vaga")
 @EntityListeners(AuditoriaListener.class)
 public class Vaga implements Auditavel {
+
 	@Id
 	@SequenceGenerator(name = "tb_vaga_cod_vaga_seq", sequenceName = "tb_vaga_cod_vaga_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_vaga_cod_vaga_seq")
@@ -56,7 +58,7 @@ public class Vaga implements Auditavel {
 	@Column(name = "curso")
 	private String curso;
 	@Column(name = "carga_horaria")
-	private Long cargaHoraria;
+	private Integer cargaHoraria;
 	@Column(name = "modalidade")
 	private ModalidadeEnum modalidade;
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
@@ -79,6 +81,24 @@ public class Vaga implements Auditavel {
 
 	@ManyToMany(mappedBy = "vagas", fetch = FetchType.LAZY)
 	private Set<Estudante> estudantes = new HashSet<>();
+	
+	public Vaga(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+	public Competencia novaCompetencia(Long codCompetencia) {
+		Competencia novaCompetencia = new Competencia();
+		novaCompetencia.setCodCompetencia(codCompetencia);
+
+		Competencia competencia = competencias.stream().filter(c -> c.equals(novaCompetencia)).findFirst()
+				.orElse(novaCompetencia);
+		competencias.add(competencia);
+		return competencia;
+	}
+
+	public void retemCompetencias(List<Competencia> lista) {
+		competencias.retainAll(lista);
+	}
 
 	public Boolean hasCompetencias() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "competencias");
@@ -87,7 +107,7 @@ public class Vaga implements Auditavel {
 	public Boolean hasEmpresa() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "empresa");
 	}
-	
+
 	public boolean hasEndereco() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "endereco");
 	}

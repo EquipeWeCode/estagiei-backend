@@ -25,6 +25,7 @@ import br.edu.ifsp.estagiei.entity.Endereco;
 import br.edu.ifsp.estagiei.entity.Endereco_;
 import br.edu.ifsp.estagiei.entity.Estudante;
 import br.edu.ifsp.estagiei.entity.Estudante_;
+import br.edu.ifsp.estagiei.entity.Usuario_;
 import br.edu.ifsp.estagiei.entity.Vaga;
 import br.edu.ifsp.estagiei.entity.Vaga_;
 
@@ -33,7 +34,7 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	public Vaga buscaVagaPorId(Long codVaga) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Vaga> criteria = cb.createQuery(Vaga.class);
@@ -71,8 +72,8 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 		}
 
 		filtroVaga.setIds(ids);
-		
-		if(filtroVaga.hasIds()) {			
+
+		if (filtroVaga.hasIds()) {
 			return buscaTodosPorFiltro(filtroVaga);
 		}
 		return vagasRecomendadas;
@@ -86,7 +87,8 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 		r.fetch(Vaga_.endereco, JoinType.LEFT);
 		r.fetch(Vaga_.competencias, JoinType.LEFT);
 		FetchParent<Vaga, Empresa> fetchEmpresa = r.fetch(Vaga_.empresa, JoinType.INNER);
-		fetchEmpresa.fetch(Empresa_.usuario);
+		fetchEmpresa.fetch(Empresa_.usuario).fetch(Usuario_.permissoes);
+		fetchEmpresa.fetch(Empresa_.endereco, JoinType.LEFT);
 
 		criteria.distinct(true).select(r).where(aplicaFiltros(r, filtro));
 
@@ -124,15 +126,16 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 			Join<Vaga, Empresa> empresa = root.join(Vaga_.empresa);
 			predicates.add(cb.equal(empresa.get(Empresa_.codEmpresa), filtro.getCodEmpresa()));
 		}
-		
+
 		aplicaFiltrosEndereco(filtro, cb, predicates, root);
 
 		return predicates.stream().toArray(Predicate[]::new);
 	}
 
-	private void aplicaFiltrosEndereco(VagaFiltroDTO filtro, CriteriaBuilder cb, List<Predicate> predicates, Root<Vaga> root) {
-		Join<Vaga, Endereco> endereco = root.join(Vaga_.endereco);
-		if (filtro.hasCep()) { 
+	private void aplicaFiltrosEndereco(VagaFiltroDTO filtro, CriteriaBuilder cb, List<Predicate> predicates,
+			Root<Vaga> root) {
+		Join<Vaga, Endereco> endereco = root.join(Vaga_.endereco, JoinType.LEFT);
+		if (filtro.hasCep()) {
 			predicates.add(cb.equal(endereco.get(Endereco_.cep), filtro.getCep()));
 		}
 		if (filtro.hasBairro()) {

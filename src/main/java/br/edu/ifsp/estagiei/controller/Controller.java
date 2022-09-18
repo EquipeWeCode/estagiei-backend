@@ -17,4 +17,5 @@ public interface Controller {
 
 	public static final String P_COD_EMPRESA = "codEmpresa";
 	public static final String P_COD_ESTUDANTE = "codEstudante";
+	public static final String P_COD_VAGA = "codVaga";
 }
