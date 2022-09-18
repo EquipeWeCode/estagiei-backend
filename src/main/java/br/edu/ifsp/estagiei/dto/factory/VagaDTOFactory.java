@@ -56,6 +56,23 @@ public class VagaDTOFactory {
 		return vaga;
 	}
 	
+	public Vaga buildEntitySave(Vaga entidade, VagaDTO dto) {
+		entidade.setCodVaga(dto.getCodVaga());
+		entidade.setDescricao(dto.getDescricao());
+		entidade.setTitulo(dto.getTitulo());
+		entidade.setSalario(dto.getSalario());
+		entidade.setCurso(dto.getCurso());
+		entidade.setCargaHoraria(dto.getCargaHoraria());
+		entidade.setModalidade(dto.getModalidade());
+		
+		if(entidade.hasEndereco()) {
+			entidade.setEndereco(enderecoFactory.buildEntity(dto.getEndereco()));
+		}
+		
+		entidade.setIndAtivo(dto.getIndAtivo());
+		return entidade;
+	}
+	
 	private Endereco buildEndereco(EnderecoDTO dto) {
 		Endereco endereco = new Endereco();
 		endereco.setCodEndereco(dto.getCodEndereco());

@@ -29,6 +29,9 @@ public class EnderecoDTOFactory {
 	}
 
 	public EnderecoDTO buildDTO(Endereco endereco) {
+		if(endereco == null) {
+			return null;
+		}
 		EnderecoDTOBuilder builder = EnderecoDTO.builder().codEndereco(endereco.getCodEndereco())
 				.bairro(endereco.getBairro()).cep(endereco.getCep()).cidade(endereco.getCidade())
 				.complemento(endereco.getComplemento()).logradouro(endereco.getLogradouro())

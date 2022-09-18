@@ -3,6 +3,7 @@ package br.edu.ifsp.estagiei.dto;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -30,7 +31,9 @@ public class VagaDTO implements DTOUtils {
 	@NotNull(message = MSG_NOT_NULL)
 	private BigDecimal salario;
 	private String curso;
-	private Long cargaHoraria;
+	@NotNull(message = MSG_NOT_NULL)
+	@Max(value = 6)
+	private Integer cargaHoraria;
 	private ModalidadeEnum modalidade;
 	private EmpresaDTO empresa;	
 	private EnderecoDTO endereco;
