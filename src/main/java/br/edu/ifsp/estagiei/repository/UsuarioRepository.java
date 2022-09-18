@@ -3,10 +3,11 @@ package br.edu.ifsp.estagiei.repository;
 import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import br.edu.ifsp.estagiei.entity.Usuario;
 
 public interface UsuarioRepository extends CrudRepository<Usuario, String> {
-	public Optional<Usuario> findByEmail(String email);
-	public Optional<Usuario> findByEmpresaCnpj(String cnpj);
+	public Optional<Usuario> findByEmail(@Param("email") String email);
+	public Optional<Usuario> findByEmpresaCnpj(@Param("cnpj") String cnpj);
 }
