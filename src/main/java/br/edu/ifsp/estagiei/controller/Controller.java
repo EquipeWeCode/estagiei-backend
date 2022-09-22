@@ -11,6 +11,8 @@ public interface Controller {
 	public static final String ESTUDANTE = "Estudante";
 	public static final String EMPRESA = "Empresa";
 	public static final String COMPETENCIA = "Competência";
+	public static final String USUARIO = "Usuário";
+	
 	public static final String ROLE_ESTUDANTE = "ESTUDANTE";
 	public static final String ROLE_EMPRESA = "EMPRESA";
 	public static final String ROLE_ADMIN = "ADMIN";
@@ -18,4 +20,5 @@ public interface Controller {
 	public static final String P_COD_EMPRESA = "codEmpresa";
 	public static final String P_COD_ESTUDANTE = "codEstudante";
 	public static final String P_COD_VAGA = "codVaga";
+	public static final String P_COD_USUARIO = "codUsuario";
 }
