@@ -16,4 +16,7 @@ public interface UsuarioRepository extends CrudRepository<Usuario, String> {
 			+ "LEFT JOIN FETCH p.estudante e "
 			+ "LEFT JOIN FETCH u.empresa WHERE u.codUsuario = :codUsuario")
 	public Optional<Usuario> findByCodUsuario(@Param("codUsuario") Long codUsuario);
+	
+	public Optional<Usuario> findByPessoaEstudanteCodEstudante(Long codEstudante);
+	public Optional<Usuario> findByEmpresaCodEmpresa(Long codEmpresa);
 }

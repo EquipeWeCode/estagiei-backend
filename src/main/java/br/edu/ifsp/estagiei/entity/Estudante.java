@@ -50,7 +50,7 @@ public class Estudante implements Auditavel {
 	@Embedded
 	private Auditoria auditoria;
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "tb_comp_estud", joinColumns = @JoinColumn(name = "cod_estudante"), inverseJoinColumns = @JoinColumn(name = "cod_competencia"))
 	private Set<Competencia> competencias = Sets.newHashSet();
 
@@ -79,9 +79,7 @@ public class Estudante implements Auditavel {
 		return Persistence.getPersistenceUtil().isLoaded(this, "pessoa") && pessoa != null;
 	}
 
-	public Competencia novaCompetencia(Long codCompetencia) {
-		Competencia novaCompetencia = new Competencia();
-		novaCompetencia.setCodCompetencia(codCompetencia);
+	public Competencia novaCompetencia(Competencia novaCompetencia) {
 
 		Competencia competencia = competencias.stream().filter(c -> c.equals(novaCompetencia)).findFirst()
 				.orElse(novaCompetencia);

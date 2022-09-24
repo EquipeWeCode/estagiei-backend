@@ -42,7 +42,6 @@ public class Competencia {
 	private Set<Vaga> vagas = Sets.newHashSet();
 	@ManyToMany(mappedBy = "competencias", fetch = FetchType.LAZY)
 	private Set<Estudante> estudantes = Sets.newHashSet();
-
 	
 	@Override
 	public int hashCode() {

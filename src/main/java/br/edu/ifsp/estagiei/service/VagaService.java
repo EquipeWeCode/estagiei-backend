@@ -21,6 +21,7 @@ import br.edu.ifsp.estagiei.entity.Usuario;
 import br.edu.ifsp.estagiei.entity.Vaga;
 import br.edu.ifsp.estagiei.exception.ValidacaoException;
 import br.edu.ifsp.estagiei.facade.IAuthenticationFacade;
+import br.edu.ifsp.estagiei.repository.CompetenciaRepository;
 import br.edu.ifsp.estagiei.repository.EmpresaRepository;
 import br.edu.ifsp.estagiei.repository.VagaRepository;
 
@@ -31,6 +32,8 @@ public class VagaService {
 	private VagaRepository vagaRepositorio;
 	@Autowired
 	private EmpresaRepository empresaRepositorio;
+	@Autowired
+	private CompetenciaRepository competenciaRepositorio;
 	@Autowired
 	private VagaDTOFactory factory;
 	@Autowired
@@ -60,10 +63,20 @@ public class VagaService {
 		List<Competencia> novasCompetencias = Lists.newArrayList();
 
 		for (CompetenciaDTO dto : competencias) {
-			Competencia novaCompetencia = vagaMontada.novaCompetencia(dto.getCodCompetencia());
+			Competencia competenciaValidada = validaCompetencia(dto);
+			Competencia novaCompetencia = vagaMontada.novaCompetencia(competenciaValidada);
 			novasCompetencias.add(novaCompetencia);
 		}
 		vagaMontada.retemCompetencias(novasCompetencias);
+	}
+
+	private Competencia validaCompetencia(CompetenciaDTO dto) {
+		Competencia competenciaBuscada = competenciaRepositorio.findById(dto.getCodCompetencia()).orElse(null);
+		if (competenciaBuscada == null) {
+			throw new ValidacaoException(String.format("A competência %d não existe", dto.getCodCompetencia()));
+		}
+
+		return competenciaBuscada;
 	}
 
 	private Vaga validaPermissaoEmpresa(Long codVaga, boolean isEdicao) {

@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import br.edu.ifsp.estagiei.entity.Empresa;
 import br.edu.ifsp.estagiei.entity.Permissao;
 import br.edu.ifsp.estagiei.entity.Usuario;
 import br.edu.ifsp.estagiei.exception.ValidacaoException;
+import br.edu.ifsp.estagiei.facade.IAuthenticationFacade;
 import br.edu.ifsp.estagiei.repository.EmpresaRepository;
 import br.edu.ifsp.estagiei.repository.UsuarioRepository;
 
@@ -32,6 +34,8 @@ public class EmpresaService {
 	private UsuarioRepository usuarioRepositorio;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private IAuthenticationFacade authentication;
 
 	@Autowired
 	private EmpresaDTOFactory factory;
@@ -47,12 +51,14 @@ public class EmpresaService {
 	private Usuario validaEmpresa(EmpresaDTO dto, boolean isEdicao) {
 		String email = dto.getEmail();
 		String cnpj = dto.getCnpj();
+		Long codEmpresa = dto.getCodEmpresa();
 
-		Optional<Usuario> usuarioBuscado = usuarioRepositorio.findByEmail(email);
+		Optional<Usuario> usuarioEmail = usuarioRepositorio.findByEmail(email);
+		Optional<Usuario> usuarioBuscado = usuarioRepositorio.findByEmpresaCodEmpresa(codEmpresa);
 		Optional<Usuario> usuarioPorCnpj = usuarioRepositorio.findByEmpresaCnpj(cnpj);
 
 		if (!isEdicao) {
-			if (usuarioBuscado.isPresent()) {
+			if (usuarioEmail.isPresent()) {
 				throw new ValidacaoException("Este e-mail já está sendo usado");
 			}
 			if (usuarioPorCnpj.isPresent()) {
@@ -62,12 +68,28 @@ public class EmpresaService {
 			if (!usuarioBuscado.isPresent()) {
 				throw new ValidacaoException("Empresa não encontrada");
 			}
-			if (usuarioBuscado.isPresent() && !TipoUsuarioEnum.EMPRESA.equals(usuarioBuscado.get().getTipoUsuario())) {
-				throw new ValidacaoException("Este e-mail já está sendo usado");
-			}
+
+			validaPermissaoEmpresa(dto.getCodEmpresa());
 		}
 
 		return usuarioBuscado.isPresent() ? usuarioBuscado.get() : new Usuario();
+	}
+
+	private void validaPermissaoEmpresa(Long codEmpresa) {
+		Authentication autenticacao = authentication.getAuthentication();
+		Usuario usuarioEmpresa = (Usuario) autenticacao.getPrincipal();
+
+		Long codUsuario = usuarioEmpresa.getCodUsuario();
+
+		Empresa empresaDoCodUsuario = empresaRepositorio.findByUsuarioCodUsuario(codUsuario).orElse(null);
+
+		if (empresaDoCodUsuario == null) {
+			throw new ValidacaoException("Estudante não encontrado");
+		}
+
+		if (!empresaDoCodUsuario.getCodEmpresa().equals(codEmpresa)) {
+			throw new ValidacaoException("Você está tentando alterar um usuário diferente do seu");
+		}
 	}
 
 	private void montaEmpresa(Usuario usuario, EmpresaDTO dto, boolean isEdicao) {

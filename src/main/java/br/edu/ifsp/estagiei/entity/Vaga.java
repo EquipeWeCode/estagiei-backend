@@ -86,10 +86,7 @@ public class Vaga implements Auditavel {
 		this.empresa = empresa;
 	}
 
-	public Competencia novaCompetencia(Long codCompetencia) {
-		Competencia novaCompetencia = new Competencia();
-		novaCompetencia.setCodCompetencia(codCompetencia);
-
+	public Competencia novaCompetencia(Competencia novaCompetencia) {
 		Competencia competencia = competencias.stream().filter(c -> c.equals(novaCompetencia)).findFirst()
 				.orElse(novaCompetencia);
 		competencias.add(competencia);

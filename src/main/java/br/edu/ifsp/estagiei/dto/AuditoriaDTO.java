@@ -26,10 +26,11 @@ public class AuditoriaDTO {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@Schema(example = "2022-12-02")
+	@Schema(example = "2022-12-02 15:12:03")
 	private LocalDateTime dataInclusao;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@Schema(example = "2022-12-02 15:12:03")
 	private LocalDateTime dataAlteracao;
 }

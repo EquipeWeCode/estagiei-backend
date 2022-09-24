@@ -101,6 +101,7 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 	private Predicate[] aplicaFiltros(Root<Vaga> root, VagaFiltroDTO filtro) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		List<Predicate> predicates = Lists.newArrayList();
+		Join<Vaga, Empresa> empresa = root.join(Vaga_.empresa);
 
 		if (filtro.hasDescricao()) {
 			predicates.add(cb.like(cb.upper(root.get(Vaga_.descricao)), filtro.getDescricaoFiltro()));
@@ -118,8 +119,10 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 			predicates.add(root.get(Vaga_.codVaga).in(filtro.getIds()));
 		}
 		if (filtro.hasCodEmpresa()) {
-			Join<Vaga, Empresa> empresa = root.join(Vaga_.empresa);
 			predicates.add(cb.equal(empresa.get(Empresa_.codEmpresa), filtro.getCodEmpresa()));
+		}
+		if (filtro.hasNomeEmpresa()) {
+			predicates.add(cb.equal(cb.upper(empresa.get(Empresa_.nomeFantasia)), filtro.getNomeEmpresaFiltro()));
 		}
 
 		aplicaFiltrosEndereco(filtro, cb, predicates, root);

@@ -3,6 +3,7 @@ package br.edu.ifsp.estagiei.utils;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.Optional;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import io.github.cdimascio.dotenv.DotenvException;
@@ -35,6 +36,16 @@ public abstract class EstagieiUtils {
 			return System.getenv(variavel);
 		}
 	}
+	
+	public static String retiraNaoNumericos(String valor) {
+		String valorApenasNumeros = Optional.ofNullable(valor).orElse(null);
+		
+		if(valorApenasNumeros != null) {
+			return valorApenasNumeros.replaceAll("\\D+", "");
+		}
+		
+		return null;
+	}
 
 	public static boolean isListEmptyOrNull(Collection<?> lista) {
 		return lista == null || lista.isEmpty();
@@ -42,5 +53,13 @@ public abstract class EstagieiUtils {
 
 	public static boolean isListNotEmptyOrNull(Collection<?> lista) {
 		return !isListEmptyOrNull(lista);
+	}
+	
+	public static boolean isEmptyOrNull(String campo) {
+		return campo == null || campo.isEmpty();
+	}
+
+	public static boolean isNotEmptyOrNull(String campo) {
+		return !isEmptyOrNull(campo);
 	}
 }
