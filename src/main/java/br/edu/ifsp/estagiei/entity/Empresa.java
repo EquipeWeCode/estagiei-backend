@@ -57,12 +57,8 @@ public class Empresa implements Auditavel {
 	@JoinColumn(name = "cod_usuario", referencedColumnName = "cod_usuario")
 	private Usuario usuario;
 
-	public boolean hasVagas() {
-		return Persistence.getPersistenceUtil().isLoaded(this, "vagas");
-	}
-
 	public boolean hasEndereco() {
-		return Persistence.getPersistenceUtil().isLoaded(this, "endereco");
+		return Persistence.getPersistenceUtil().isLoaded(this, "endereco") && endereco != null;
 	}
 
 	@Override

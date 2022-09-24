@@ -26,6 +26,7 @@ import com.google.common.collect.Sets;
 
 import br.edu.ifsp.estagiei.entity.listener.Auditavel;
 import br.edu.ifsp.estagiei.entity.listener.AuditoriaListener;
+import br.edu.ifsp.estagiei.utils.EstagieiUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -57,25 +58,25 @@ public class Estudante implements Auditavel {
 	@JoinColumn(name = "cod_pessoa", referencedColumnName = "cod_pessoa")
 	private Pessoa pessoa;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
-			CascadeType.PERSIST }, orphanRemoval = true)
-	@JoinColumn(name="cod_estudante", referencedColumnName = "cod_estudante")
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REMOVE }, orphanRemoval = true, mappedBy = "estudante")
 	private Set<ExperienciaProfissional> experienciaProfissional = Sets.newHashSet();
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@JoinColumn(name="cod_estudante", referencedColumnName = "cod_estudante")
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REMOVE }, orphanRemoval = true, mappedBy = "estudante")
 	private Set<HistoricoEscolar> historicoEscolar = Sets.newHashSet();
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinTable(name = "tb_estud_vaga", joinColumns = @JoinColumn(name = "cod_estudante"), inverseJoinColumns = @JoinColumn(name = "cod_vaga"))
 	private Set<Vaga> vagas = Sets.newHashSet();
-	
+
 	public Boolean hasCompetencias() {
-		return Persistence.getPersistenceUtil().isLoaded(this, "competencias");
+		return Persistence.getPersistenceUtil().isLoaded(this, "competencias")
+				&& EstagieiUtils.isListNotEmptyOrNull(competencias);
 	}
 
 	public Boolean hasPessoa() {
-		return Persistence.getPersistenceUtil().isLoaded(this, "pessoa");
+		return Persistence.getPersistenceUtil().isLoaded(this, "pessoa") && pessoa != null;
 	}
 
 	public Competencia novaCompetencia(Long codCompetencia) {

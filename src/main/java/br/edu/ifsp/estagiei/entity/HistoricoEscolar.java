@@ -3,7 +3,6 @@ package br.edu.ifsp.estagiei.entity;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -51,10 +50,10 @@ public class HistoricoEscolar implements Auditavel {
 	@Embedded
 	private Auditoria auditoria;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_estudante", referencedColumnName = "cod_estudante")
 	private Estudante estudante;
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(codHistEscolar);
@@ -69,7 +68,7 @@ public class HistoricoEscolar implements Auditavel {
 		if (!(obj instanceof HistoricoEscolar))
 			return false;
 		HistoricoEscolar other = (HistoricoEscolar) obj;
-		if(other.codHistEscolar == null) {
+		if (other.codHistEscolar == null) {
 			return false;
 		}
 		return Objects.equals(codHistEscolar, other.codHistEscolar);
