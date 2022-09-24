@@ -2,8 +2,6 @@ package br.edu.ifsp.estagiei.dto;
 
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Length;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -22,7 +20,7 @@ import lombok.Setter;
 public class EnderecoDTO implements DTOUtils {
 	private Long codEndereco;
 	@NotNull(message = MSG_NOT_NULL)
-	private Integer cep;
+	private String cep;
 	@NotNull(message = MSG_NOT_NULL)
 	private String logradouro;
 	private Integer numero;
@@ -31,7 +29,6 @@ public class EnderecoDTO implements DTOUtils {
 	@NotNull(message = MSG_NOT_NULL)
 	private String cidade;
 	@NotNull(message = MSG_NOT_NULL)
-	@Length(min = 2, max = 2, message = "Deve ter 2 caracteres")
 	private String estado;
 	private String complemento;
 	private String pontoReferencia;

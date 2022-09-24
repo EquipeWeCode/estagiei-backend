@@ -17,7 +17,7 @@ public abstract class Endereco_ {
 	public static volatile SingularAttribute<Endereco, Boolean> indAtivo;
 	public static volatile SingularAttribute<Endereco, ExperienciaProfissional> experienciaProfissional;
 	public static volatile SingularAttribute<Endereco, Long> codEndereco;
-	public static volatile SingularAttribute<Endereco, Integer> cep;
+	public static volatile SingularAttribute<Endereco, String> cep;
 	public static volatile SingularAttribute<Endereco, Vaga> vaga;
 	public static volatile SingularAttribute<Endereco, String> complemento;
 	public static volatile SingularAttribute<Endereco, String> logradouro;

@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.info.License;
 @OpenAPIDefinition(
 		info = @Info(
 				title = "Estagiei API", 
-				version = "0.7", 
+				version = "0.8.1", 
 				description = "Documentação do sistema de vagas de estágio - Estagiei",
 				license = @License(
 							name = "MIT License",

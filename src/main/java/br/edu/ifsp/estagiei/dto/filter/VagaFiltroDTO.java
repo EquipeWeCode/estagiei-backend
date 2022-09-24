@@ -2,6 +2,8 @@ package br.edu.ifsp.estagiei.dto.filter;
 
 import java.util.List;
 
+import org.springdoc.api.annotations.ParameterObject;
+
 import br.edu.ifsp.estagiei.constants.ModalidadeEnum;
 import br.edu.ifsp.estagiei.dto.FiltroDTO;
 import lombok.Getter;
@@ -11,6 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@ParameterObject
 public class VagaFiltroDTO extends FiltroDTO {
 	private String titulo;
 	private String descricao;

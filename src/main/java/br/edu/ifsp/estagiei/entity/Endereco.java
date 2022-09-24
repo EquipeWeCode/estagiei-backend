@@ -41,7 +41,7 @@ public class Endereco implements Auditavel {
 	@Column(name = "estado")
 	private String estado;
 	@Column(name = "cep")
-	private Integer cep;
+	private String cep;
 	@Column(name = "complemento")
 	private String complemento;
 	@Column(name = "ponto_referencia")

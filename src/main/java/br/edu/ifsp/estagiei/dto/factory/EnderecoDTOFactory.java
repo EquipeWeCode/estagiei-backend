@@ -1,5 +1,7 @@
 package br.edu.ifsp.estagiei.dto.factory;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 
 import br.edu.ifsp.estagiei.dto.EnderecoDTO;
@@ -15,10 +17,13 @@ public class EnderecoDTOFactory {
 		if(dto == null) {
 			return null;
 		}
+
+		String cepNumeros = Optional.ofNullable(dto.getCep().replaceAll("\\D+", "")).orElse(null);
+		
 		Endereco entidade = new Endereco();
 		entidade.setCodEndereco(dto.getCodEndereco());
 		entidade.setBairro(dto.getBairro());
-		entidade.setCep(dto.getCep());
+		entidade.setCep(cepNumeros);
 		entidade.setCidade(dto.getCidade());
 		entidade.setComplemento(dto.getComplemento());
 		entidade.setEstado(dto.getEstado());
