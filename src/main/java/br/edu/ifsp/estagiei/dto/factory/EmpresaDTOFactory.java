@@ -10,6 +10,7 @@ import br.edu.ifsp.estagiei.dto.EmpresaDTO.EmpresaDTOBuilder;
 import br.edu.ifsp.estagiei.entity.Empresa;
 import br.edu.ifsp.estagiei.entity.Endereco;
 import br.edu.ifsp.estagiei.entity.Usuario;
+import br.edu.ifsp.estagiei.utils.EstagieiUtils;
 import lombok.NoArgsConstructor;
 
 @Component
@@ -43,7 +44,7 @@ public class EmpresaDTOFactory {
 		entidade.setCodEmpresa(dto.getCodEmpresa());
 		entidade.setNomeFantasia(dto.getNomeFantasia());
 		entidade.setRazaoSocial(dto.getRazaoSocial());
-		entidade.setCnpj(dto.getCnpj());
+		entidade.setCnpj(EstagieiUtils.retiraNaoNumericos(dto.getCnpj()));
 
 		if (dto.hasEndereco()) {
 			entidade.setEndereco(enderecoFactory.buildEntity(dto.getEndereco()));

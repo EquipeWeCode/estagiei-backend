@@ -1,6 +1,7 @@
 package br.edu.ifsp.estagiei.repository.custom;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -80,6 +81,8 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 	}
 
 	public List<Vaga> buscaTodosPorFiltro(VagaFiltroDTO filtro) {
+		VagaFiltroDTO novoFiltro = Optional.ofNullable(filtro).orElse(new VagaFiltroDTO());
+
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Vaga> criteria = cb.createQuery(Vaga.class);
 		Root<Vaga> r = criteria.from(Vaga.class);
@@ -90,15 +93,7 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 		fetchEmpresa.fetch(Empresa_.usuario).fetch(Usuario_.permissoes);
 		fetchEmpresa.fetch(Empresa_.endereco, JoinType.LEFT);
 
-		criteria.distinct(true).select(r).where(aplicaFiltros(r, filtro));
-
-		if (filtro.hasOrdem()) {
-			if ("DESC".equals(filtro.getOrdemFiltro())) {
-				criteria.orderBy(cb.desc(r.get(Vaga_.titulo)));
-			} else {
-				criteria.orderBy(cb.asc(r.get(Vaga_.titulo)));
-			}
-		}
+		criteria.distinct(true).select(r).where(aplicaFiltros(r, novoFiltro));
 
 		return em.createQuery(criteria).getResultList();
 	}
@@ -106,6 +101,7 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 	private Predicate[] aplicaFiltros(Root<Vaga> root, VagaFiltroDTO filtro) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		List<Predicate> predicates = Lists.newArrayList();
+		Join<Vaga, Empresa> empresa = root.join(Vaga_.empresa);
 
 		if (filtro.hasDescricao()) {
 			predicates.add(cb.like(cb.upper(root.get(Vaga_.descricao)), filtro.getDescricaoFiltro()));
@@ -123,8 +119,10 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 			predicates.add(root.get(Vaga_.codVaga).in(filtro.getIds()));
 		}
 		if (filtro.hasCodEmpresa()) {
-			Join<Vaga, Empresa> empresa = root.join(Vaga_.empresa);
 			predicates.add(cb.equal(empresa.get(Empresa_.codEmpresa), filtro.getCodEmpresa()));
+		}
+		if (filtro.hasNomeEmpresa()) {
+			predicates.add(cb.equal(cb.upper(empresa.get(Empresa_.nomeFantasia)), filtro.getNomeEmpresaFiltro()));
 		}
 
 		aplicaFiltrosEndereco(filtro, cb, predicates, root);
@@ -139,13 +137,13 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 			predicates.add(cb.equal(endereco.get(Endereco_.cep), filtro.getCep()));
 		}
 		if (filtro.hasBairro()) {
-			predicates.add(cb.like(endereco.get(Endereco_.bairro), filtro.getBairroFiltro()));
+			predicates.add(cb.like(cb.upper(endereco.get(Endereco_.bairro)), filtro.getBairroFiltro()));
 		}
 		if (filtro.hasCidade()) {
-			predicates.add(cb.like(endereco.get(Endereco_.cidade), filtro.getCidadeFiltro()));
+			predicates.add(cb.like(cb.upper(endereco.get(Endereco_.cidade)), filtro.getCidadeFiltro()));
 		}
 		if (filtro.hasEstado()) {
-			predicates.add(cb.like(endereco.get(Endereco_.estado), filtro.getEstadoFiltro()));
+			predicates.add(cb.like(cb.upper(endereco.get(Endereco_.estado)), filtro.getEstadoFiltro()));
 		}
 	}
 }

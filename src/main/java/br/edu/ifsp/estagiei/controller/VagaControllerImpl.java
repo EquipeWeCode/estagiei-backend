@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import br.edu.ifsp.estagiei.dto.VagaDTO;
 import br.edu.ifsp.estagiei.dto.filter.VagaFiltroDTO;
 import br.edu.ifsp.estagiei.service.VagaService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 
 @RestController
 @RequestMapping(VagaControllerImpl.PATH)
@@ -30,7 +32,8 @@ public class VagaControllerImpl implements VagaController {
 	private VagaService service;
 
 	@GetMapping
-	public ResponseEntity<List<VagaDTO>> getVagas(VagaFiltroDTO filtro) {
+	public ResponseEntity<List<VagaDTO>> getVagas(
+			@Parameter(in = ParameterIn.QUERY, required = false, allowEmptyValue = true) VagaFiltroDTO filtro) {
 		List<VagaDTO> vagas = service.buscaTodos(filtro);
 		return ResponseEntity.ok(vagas);
 	}

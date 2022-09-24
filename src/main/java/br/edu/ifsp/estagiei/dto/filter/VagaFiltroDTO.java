@@ -2,8 +2,11 @@ package br.edu.ifsp.estagiei.dto.filter;
 
 import java.util.List;
 
+import org.springdoc.api.annotations.ParameterObject;
+
 import br.edu.ifsp.estagiei.constants.ModalidadeEnum;
 import br.edu.ifsp.estagiei.dto.FiltroDTO;
+import br.edu.ifsp.estagiei.utils.EstagieiUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,16 +14,18 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@ParameterObject
 public class VagaFiltroDTO extends FiltroDTO {
 	private String titulo;
 	private String descricao;
 	private String curso;
 	private ModalidadeEnum modalidade;
 	private List<Long> ids;
-	private Integer cep;
+	private String cep;
 	private String bairro;
 	private String cidade;
 	private String estado;
+	private String nomeEmpresa;
 	private Long codEmpresa;
 
 	public String getTituloFiltro() {
@@ -46,21 +51,29 @@ public class VagaFiltroDTO extends FiltroDTO {
 	public String getEstadoFiltro() {
 		return getStringFiltro(getEstado());
 	}
+	
+	public String getNomeEmpresaFiltro() {
+		return getStringFiltro(getNomeEmpresa());
+	}
 
 	public Boolean hasDescricao() {
-		return descricao != null && !descricao.isEmpty();
+		return EstagieiUtils.isNotEmptyOrNull(descricao);
 	}
 
 	public Boolean hasTitulo() {
-		return titulo != null && !titulo.isEmpty();
+		return EstagieiUtils.isNotEmptyOrNull(titulo);
 	}
 
 	public Boolean hasCurso() {
-		return curso != null && !curso.isEmpty();
+		return EstagieiUtils.isNotEmptyOrNull(curso);
 	}
 
 	public Boolean hasModalidade() {
 		return modalidade != null;
+	}
+	
+	public Boolean hasNomeEmpresa() {
+		return EstagieiUtils.isNotEmptyOrNull(nomeEmpresa);
 	}
 
 	public Boolean hasIds() {
@@ -68,19 +81,19 @@ public class VagaFiltroDTO extends FiltroDTO {
 	}
 
 	public Boolean hasCep() {
-		return cep != null;
+		return EstagieiUtils.isNotEmptyOrNull(cep);
 	}
 
 	public Boolean hasBairro() {
-		return bairro != null;
+		return EstagieiUtils.isNotEmptyOrNull(bairro);
 	}
 
 	public Boolean hasCidade() {
-		return cidade != null;
+		return EstagieiUtils.isNotEmptyOrNull(cidade);
 	}
 
 	public Boolean hasEstado() {
-		return estado != null;
+		return EstagieiUtils.isNotEmptyOrNull(estado);
 	}
 	
 	public Boolean hasCodEmpresa() {
