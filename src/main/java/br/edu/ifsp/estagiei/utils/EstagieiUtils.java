@@ -2,11 +2,12 @@ package br.edu.ifsp.estagiei.utils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import io.github.cdimascio.dotenv.DotenvException;
 
-public class EstagieiUtils {
+public abstract class EstagieiUtils {
 
 	public static String dateParaString(LocalDate data) {
 		String text = "";
@@ -16,7 +17,7 @@ public class EstagieiUtils {
 		}
 		return text;
 	}
-	
+
 	public static String formataCpf(String cpf) {
 		if (cpf != null && !cpf.isEmpty() && cpf.length() <= 11) {
 			return (cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-"
@@ -33,5 +34,13 @@ public class EstagieiUtils {
 		} catch (DotenvException ex) {
 			return System.getenv(variavel);
 		}
+	}
+
+	public static boolean isListEmptyOrNull(Collection<?> lista) {
+		return lista == null || lista.isEmpty();
+	}
+
+	public static boolean isListNotEmptyOrNull(Collection<?> lista) {
+		return !isListEmptyOrNull(lista);
 	}
 }

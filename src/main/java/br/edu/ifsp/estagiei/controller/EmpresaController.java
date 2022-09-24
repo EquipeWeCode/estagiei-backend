@@ -16,7 +16,7 @@ public interface EmpresaController extends Controller {
 
 	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Retorna uma empresa de acordo com o código", tags = { EMPRESA })
-	public ResponseEntity<EmpresaDTO> getEmpresa(String codEmpresa);
+	public ResponseEntity<EmpresaDTO> getEmpresa(Long codEmpresa);
 
 	@ApiResponse(responseCode = "201")
 	@Operation(summary = "Cadastra uma nova empresa", tags = { EMPRESA })

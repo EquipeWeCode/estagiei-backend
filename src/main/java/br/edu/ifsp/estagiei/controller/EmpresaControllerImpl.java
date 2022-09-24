@@ -33,8 +33,8 @@ public class EmpresaControllerImpl implements EmpresaController {
 	}
 	
 	@GetMapping(PATH_ID)
-	public ResponseEntity<EmpresaDTO> getEmpresa(@PathVariable(P_COD_EMPRESA) String codEmpresa) {
-		EmpresaDTO empresa = service.buscaEmpresa(Long.valueOf(codEmpresa));
+	public ResponseEntity<EmpresaDTO> getEmpresa(@PathVariable(P_COD_EMPRESA) Long codEmpresa) {
+		EmpresaDTO empresa = service.buscaEmpresa(codEmpresa);
 		return ResponseEntity.ok(empresa);
 	}
 	

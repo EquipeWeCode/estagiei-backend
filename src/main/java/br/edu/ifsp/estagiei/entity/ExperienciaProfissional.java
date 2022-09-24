@@ -50,7 +50,7 @@ public class ExperienciaProfissional implements Auditavel {
     @Embedded
     private Auditoria auditoria;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_estudante", referencedColumnName = "cod_estudante")
 	private Estudante estudante;
     

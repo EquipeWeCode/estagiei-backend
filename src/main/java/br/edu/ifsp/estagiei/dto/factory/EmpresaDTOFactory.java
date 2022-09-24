@@ -1,5 +1,7 @@
 package br.edu.ifsp.estagiei.dto.factory;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +24,7 @@ public class EmpresaDTOFactory {
 
 	public EmpresaDTO buildDTO(Empresa empresa) {
 
-		Usuario usuarioEmpresa = empresa.getUsuario();
+		Usuario usuarioEmpresa = Optional.ofNullable(empresa.getUsuario()).orElse(new Usuario());
 
 		EmpresaDTOBuilder builder = EmpresaDTO.builder().codEmpresa(empresa.getCodEmpresa())
 				.nomeFantasia(empresa.getNomeFantasia()).razaoSocial(empresa.getRazaoSocial()).cnpj(empresa.getCnpj())
@@ -30,7 +32,7 @@ public class EmpresaDTOFactory {
 				.auditoria(auditoriaFactory.buildDTO(empresa.getAuditoria()));
 
 		if (empresa.hasEndereco()) {
-			Endereco enderecoEmpresa = empresa.getEndereco() != null ? empresa.getEndereco() : new Endereco();
+			Endereco enderecoEmpresa = Optional.ofNullable(empresa.getEndereco()).orElse(new Endereco());
 			builder.endereco(enderecoFactory.buildDTO(enderecoEmpresa));
 		}
 

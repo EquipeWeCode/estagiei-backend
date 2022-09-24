@@ -11,7 +11,7 @@ import br.edu.ifsp.estagiei.entity.Empresa;
 
 public interface EmpresaRepository extends CrudRepository<Empresa, Long> {
 	
-	@Query("SELECT emp FROM Empresa emp LEFT JOIN FETCH emp.usuario WHERE emp.codEmpresa = :codEmpresa")
+	@Query("SELECT emp FROM Empresa emp LEFT JOIN FETCH emp.usuario LEFT JOIN FETCH emp.endereco WHERE emp.codEmpresa = :codEmpresa")
 	public Optional<Empresa> findById(@Param("codEmpresa") Long codEmpresa);
 	
 	@Query("SELECT DISTINCT emp FROM Empresa emp LEFT JOIN FETCH emp.endereco endereco LEFT JOIN FETCH emp.usuario")

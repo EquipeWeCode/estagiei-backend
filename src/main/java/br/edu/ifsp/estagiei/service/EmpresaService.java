@@ -55,9 +55,8 @@ public class EmpresaService {
 			if (usuarioBuscado.isPresent()) {
 				throw new ValidacaoException("Este e-mail já está sendo usado");
 			}
-
 			if (usuarioPorCnpj.isPresent()) {
-				throw new ValidacaoException("Uma empresa com esse cnpj já existe");
+				throw new ValidacaoException("Este CNPJ já está sendo usado");
 			}
 		} else {
 			if (!usuarioBuscado.isPresent()) {
