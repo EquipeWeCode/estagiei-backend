@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import br.edu.ifsp.estagiei.constants.NvlEscolaridadeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,6 +38,7 @@ public class EstudanteDTO implements DTOUtils {
 	@NotBlank(message = MSG_NOT_NULL)
 	@Schema(example = "alunoSwagger@aluno.com")
 	private String email;
+	private NvlEscolaridadeEnum nvlEscolaridade;
 	@NotBlank(message = MSG_NOT_NULL)
 	@Length(min = 8, max = 25, message = MSG_LENGTH_SENHA)
 	@Schema(example = "senha1234")

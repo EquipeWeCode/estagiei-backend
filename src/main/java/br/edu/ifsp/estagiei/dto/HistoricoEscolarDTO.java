@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import br.edu.ifsp.estagiei.constants.NvlEscolaridadeEnum;
+import br.edu.ifsp.estagiei.constants.NvlEscolaridadeHistoricoEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +28,7 @@ public class HistoricoEscolarDTO implements DTOUtils {
 	private Long codHistEscolar;
 	@Schema(example = "Análise e Desenvolvimento de Sistemas")
 	private String curso;
-	private NvlEscolaridadeEnum nvlEscolaridade;
+	private NvlEscolaridadeHistoricoEnum nvlEscolaridade;
 	@Schema(example = "Instituto Federal de São Paulo")
 	private String instEnsino;
 	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)

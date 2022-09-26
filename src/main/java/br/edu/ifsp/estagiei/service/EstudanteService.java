@@ -157,7 +157,8 @@ public class EstudanteService {
 
 		Pessoa pessoa = Optional.ofNullable(usuario.getPessoa()).orElse(new Pessoa());
 		Estudante estudanteBuscado = Optional.ofNullable(pessoa.getEstudante()).orElse(new Estudante());
-
+		estudanteBuscado.setNvlEscolaridade(dto.getNvlEscolaridade());
+		
 		salvaPessoa(pessoa, dto, estudanteBuscado, isEdicao);
 
 		List<CompetenciaDTO> competencias = Optional.ofNullable(dto.getCompetencias()).orElse(Lists.newArrayList());

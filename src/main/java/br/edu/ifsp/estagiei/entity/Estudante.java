@@ -24,6 +24,7 @@ import javax.persistence.Table;
 
 import com.google.common.collect.Sets;
 
+import br.edu.ifsp.estagiei.constants.NvlEscolaridadeEnum;
 import br.edu.ifsp.estagiei.entity.listener.Auditavel;
 import br.edu.ifsp.estagiei.entity.listener.AuditoriaListener;
 import br.edu.ifsp.estagiei.utils.EstagieiUtils;
@@ -45,6 +46,8 @@ public class Estudante implements Auditavel {
 	private Long codEstudante;
 	@Column(name = "cod_pessoa", updatable = false, insertable = false)
 	private Long codPessoa;
+	@Column(name = "nvl_escolaridade")
+	private NvlEscolaridadeEnum nvlEscolaridade;
 	@Column(name = "ind_ativo", columnDefinition = "BOOLEAN DEFAULT 'TRUE'", nullable = false)
 	private Boolean indAtivo = true;
 	@Embedded
