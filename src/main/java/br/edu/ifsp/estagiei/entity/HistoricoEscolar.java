@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import br.edu.ifsp.estagiei.constants.NvlEscolaridadeEnum;
+import br.edu.ifsp.estagiei.constants.NvlEscolaridadeHistoricoEnum;
 import br.edu.ifsp.estagiei.entity.listener.Auditavel;
 import br.edu.ifsp.estagiei.entity.listener.AuditoriaListener;
 import lombok.Getter;
@@ -39,7 +39,7 @@ public class HistoricoEscolar implements Auditavel {
 	@Column(name = "curso")
 	private String curso;
 	@Column(name = "nvl_escolaridade")
-	private NvlEscolaridadeEnum nvlEscolaridade;
+	private NvlEscolaridadeHistoricoEnum nvlEscolaridade;
 	@Column(name = "inst_ensino")
 	private String instEnsino;
 	@Column(name = "data_inicio")

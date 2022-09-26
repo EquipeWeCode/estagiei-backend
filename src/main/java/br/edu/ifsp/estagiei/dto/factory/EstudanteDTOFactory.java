@@ -40,6 +40,7 @@ public class EstudanteDTOFactory {
 
 		EstudanteDTOBuilder builder = EstudanteDTO.builder()
 				.codEstudante(estudante.getCodEstudante())
+				.nvlEscolaridade(estudante.getNvlEscolaridade())
 				.avatar(usuarioPessoa.getAvatar())
 				.email(usuarioPessoa.getEmail())
 				.cpf((pessoaEstudante.getCpf()))
@@ -69,6 +70,7 @@ public class EstudanteDTOFactory {
 
 		EstudanteDTOBuilder builder = EstudanteDTO.builder()
 				.codEstudante(estudante.getCodEstudante())
+				.nvlEscolaridade(estudante.getNvlEscolaridade())
 				.avatar(usuarioEstudante.getAvatar())
 				.email(usuarioEstudante.getEmail())
 				.cpf((pessoaEstudante.getCpf()))
