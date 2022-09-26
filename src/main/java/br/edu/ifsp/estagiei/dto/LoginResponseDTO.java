@@ -17,6 +17,7 @@ import lombok.Setter;
 public class LoginResponseDTO {
 	@Schema(example = "token")
 	private String accessToken;
+	@Schema(example = "bearer")
 	private final String tokenType = "bearer";
 	@Schema(example = "[ESTUDANTE]")
 	private List<String> roles;

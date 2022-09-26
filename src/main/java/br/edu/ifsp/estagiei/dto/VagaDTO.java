@@ -42,6 +42,7 @@ public class VagaDTO implements DTOUtils {
 	@Schema(example = "6")
 	private Integer cargaHoraria;
 	private ModalidadeEnum modalidade;
+	@Schema(hidden = true)
 	private EmpresaDTO empresa;	
 	private EnderecoDTO endereco;
 	private List<CompetenciaDTO> competencias;
