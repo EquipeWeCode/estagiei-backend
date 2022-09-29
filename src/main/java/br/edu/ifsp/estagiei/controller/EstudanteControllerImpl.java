@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,8 +62,8 @@ public class EstudanteControllerImpl implements EstudanteController {
 	}
 
 	@GetMapping(PATH_ID + PATH_RECOMENDACAO)
-	public ResponseEntity<List<VagaDTO>> getVagasRecomendadas(@PathVariable(P_COD_ESTUDANTE) Long codEstudante) {
-		List<VagaDTO> vagas = service.buscaVagasRecomendadas(codEstudante);
+	public ResponseEntity<List<VagaDTO>> getVagasRecomendadas(@PathVariable(P_COD_ESTUDANTE) Long codEstudante, Pageable paginacao) {
+		List<VagaDTO> vagas = service.buscaVagasRecomendadas(codEstudante, paginacao);
 		return ResponseEntity.ok(vagas);
 	}
 }

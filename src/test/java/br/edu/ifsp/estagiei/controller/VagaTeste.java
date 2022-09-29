@@ -10,11 +10,20 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import br.edu.ifsp.estagiei.AbstractTeste;
 
 public class VagaTeste extends AbstractTeste {
-	private static final String uri = "/vaga";
+	private static final String URI = "/vaga";
 	
 	@Test
-	public void getListaVafas() throws Exception {
-		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.APPLICATION_JSON_VALUE))
+	public void getListaVagas() throws Exception {
+		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(URI).accept(MediaType.APPLICATION_JSON_VALUE))
+				.andReturn();
+
+		int status = mvcResult.getResponse().getStatus();
+		assertEquals(200, status);
+	}
+	
+	@Test
+	public void getVagasFiltradas() throws Exception {
+		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(URI + "?page=1&size=10").accept(MediaType.APPLICATION_JSON_VALUE))
 				.andReturn();
 
 		int status = mvcResult.getResponse().getStatus();
@@ -40,7 +49,7 @@ public class VagaTeste extends AbstractTeste {
 				+ "}";
 		
 		MvcResult mvcResult = mvc
-				.perform(MockMvcRequestBuilders.post(uri)
+				.perform(MockMvcRequestBuilders.post(URI)
 				.content(body)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON_VALUE))

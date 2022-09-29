@@ -6,6 +6,8 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -39,9 +41,9 @@ public class VagaService {
 	@Autowired
 	private IAuthenticationFacade authentication;
 
-	public List<VagaDTO> buscaTodos(VagaFiltroDTO filtro) {
-		List<Vaga> vagas = vagaRepositorio.buscaTodosPorFiltro(filtro);
-		return factory.buildDTOs(vagas);
+	public List<VagaDTO> buscaTodos(VagaFiltroDTO filtro, Pageable paginacao) {
+		Page<Vaga> vagas = vagaRepositorio.buscaTodosPorFiltro(filtro, paginacao);
+		return factory.buildDTOs(vagas.getContent());
 	}
 
 	public VagaDTO salvaVaga(VagaDTO dto, boolean isEdicao) {

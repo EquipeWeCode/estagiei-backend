@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -77,12 +79,12 @@ public class EstudanteService {
 		}
 	}
 
-	public List<VagaDTO> buscaVagasRecomendadas(Long codEstudante) {
+	public List<VagaDTO> buscaVagasRecomendadas(Long codEstudante, Pageable paginacao) {
 
 		validaEstudanteVaga(codEstudante);
 
-		List<Vaga> vagas = vagaRepositorio.buscaVagasRecomendadas(codEstudante);
-		return vagaFactory.buildDTOs(vagas);
+		Page<Vaga> vagas = vagaRepositorio.buscaVagasRecomendadas(codEstudante, paginacao);
+		return vagaFactory.buildDTOs(vagas.getContent());
 	}
 
 	private void validaEstudanteVaga(Long codEstudante) {

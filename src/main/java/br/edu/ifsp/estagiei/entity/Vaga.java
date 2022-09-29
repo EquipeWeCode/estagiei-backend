@@ -1,7 +1,6 @@
 package br.edu.ifsp.estagiei.entity;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -19,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Persistence;
 import javax.persistence.SequenceGenerator;
@@ -78,9 +78,9 @@ public class Vaga implements Auditavel {
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_endereco")
 	private Endereco endereco;
-
-	@ManyToMany(mappedBy = "vagas", fetch = FetchType.LAZY)
-	private Set<Estudante> estudantes = new HashSet<>();
+	
+	@OneToMany(mappedBy = "vaga", fetch = FetchType.LAZY)
+    private Set<Candidatura> candidaturas;
 	
 	public Vaga(Empresa empresa) {
 		this.empresa = empresa;

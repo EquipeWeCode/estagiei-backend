@@ -68,10 +68,9 @@ public class Estudante implements Auditavel {
 	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REMOVE }, orphanRemoval = true, mappedBy = "estudante")
 	private Set<HistoricoEscolar> historicoEscolar = Sets.newHashSet();
-
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@JoinTable(name = "tb_estud_vaga", joinColumns = @JoinColumn(name = "cod_estudante"), inverseJoinColumns = @JoinColumn(name = "cod_vaga"))
-	private Set<Vaga> vagas = Sets.newHashSet();
+	
+	@OneToMany(mappedBy = "estudante", fetch = FetchType.LAZY)
+    private Set<Candidatura> candidaturas;
 
 	public Boolean hasCompetencias() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "competencias")

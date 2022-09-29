@@ -2,6 +2,7 @@ package br.edu.ifsp.estagiei.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import br.edu.ifsp.estagiei.dto.VagaDTO;
@@ -12,7 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 public interface VagaController extends Controller {
 	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Retorna a lista de todas as vagas cadastradas por filtro", tags = { VAGA })
-	public ResponseEntity<List<VagaDTO>> getVagas(VagaFiltroDTO filtro);
+	public ResponseEntity<List<VagaDTO>> getVagas(VagaFiltroDTO filtro, Pageable paginacao);
 
 	@ApiResponse(responseCode = "201")
 	@Operation(summary = "Cria uma nova vaga", tags = { VAGA })

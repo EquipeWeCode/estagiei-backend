@@ -13,6 +13,9 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.google.common.collect.Lists;
@@ -50,7 +53,7 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 		return em.createQuery(criteria).getSingleResult();
 	}
 
-	public List<Vaga> buscaVagasRecomendadas(Long codEstudante) {
+	public Page<Vaga> buscaVagasRecomendadas(Long codEstudante, Pageable paginacao) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Vaga> criteria = cb.createQuery(Vaga.class);
 		Root<Vaga> r = criteria.from(Vaga.class);
@@ -75,12 +78,12 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 		filtroVaga.setIds(ids);
 
 		if (filtroVaga.hasIds()) {
-			return buscaTodosPorFiltro(filtroVaga);
+			return buscaTodosPorFiltro(filtroVaga, paginacao);
 		}
-		return vagasRecomendadas;
+		return geraPaginacao(paginacao, vagasRecomendadas);
 	}
 
-	public List<Vaga> buscaTodosPorFiltro(VagaFiltroDTO filtro) {
+	public Page<Vaga> buscaTodosPorFiltro(VagaFiltroDTO filtro, Pageable paginacao) {
 		VagaFiltroDTO novoFiltro = Optional.ofNullable(filtro).orElse(new VagaFiltroDTO());
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -95,7 +98,15 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 
 		criteria.distinct(true).select(r).where(aplicaFiltros(r, novoFiltro));
 
-		return em.createQuery(criteria).getResultList();
+		return geraPaginacao(paginacao, em.createQuery(criteria).getResultList());
+	}
+
+	private Page<Vaga> geraPaginacao(Pageable paginacao, List<Vaga> vagas) {
+		int inicio = (int) paginacao.getOffset();
+		int fim = (int) ((inicio + paginacao.getPageSize()) > vagas.size() ? vagas.size()
+				: (inicio + paginacao.getPageSize()));
+		Page<Vaga> pagina = new PageImpl<Vaga>(vagas.subList(inicio, fim), paginacao, vagas.size());
+		return pagina;
 	}
 
 	private Predicate[] aplicaFiltros(Root<Vaga> root, VagaFiltroDTO filtro) {
