@@ -31,7 +31,7 @@ public class CandidaturaDTO implements DTOUtils {
 	@Schema(example = "Desenvolvedor de software")
 	private String titulo;
 
-	@Schema(example = "Ciência da Computação")
+	@Schema(example = "CiÃªncia da ComputaÃ§Ã£o")
 	private String curso;
 
 	@Schema(example = "CANDIDATADO")

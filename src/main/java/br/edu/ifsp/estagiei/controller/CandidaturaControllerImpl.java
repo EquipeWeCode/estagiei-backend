@@ -2,6 +2,7 @@ package br.edu.ifsp.estagiei.controller;
 
 import java.util.List;
 
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class CandidaturaControllerImpl implements CandidaturaController {
 
 	@GetMapping(PATH_ID_ESTUDANTE)
 	public ResponseEntity<List<CandidaturaDTO>> getCandidaturasEstudante(@PathVariable Long codEstudante,
-			Pageable paginacao) {
+			@ParameterObject Pageable paginacao) {
 		List<CandidaturaDTO> candidaturas = service.findCandidaturasByCodEstudante(codEstudante, paginacao);
 		return ResponseEntity.ok(candidaturas);
 	}

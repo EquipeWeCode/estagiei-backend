@@ -2,6 +2,7 @@ package br.edu.ifsp.estagiei.controller;
 
 import java.util.List;
 
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
@@ -26,7 +27,7 @@ public interface EstudanteController extends Controller {
 
 	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Retorna a lista de vagas recomendadas de acordo com o estudante", tags = { VAGA, ESTUDANTE })
-	public ResponseEntity<List<VagaDTO>> getVagasRecomendadas(Long codEstudante, Pageable paginacao);
+	public ResponseEntity<List<VagaDTO>> getVagasRecomendadas(Long codEstudante, @ParameterObject Pageable paginacao);
 
 	@ApiResponse(responseCode = "201")
 	@Operation(summary = "Atualiza um estudante", tags = { ESTUDANTE })

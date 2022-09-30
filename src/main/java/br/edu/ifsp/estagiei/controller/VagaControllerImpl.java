@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,8 @@ public class VagaControllerImpl implements VagaController {
 
 	@GetMapping
 	public ResponseEntity<List<VagaDTO>> getVagas(
-			@Parameter(in = ParameterIn.QUERY, required = false, allowEmptyValue = true) VagaFiltroDTO filtro, Pageable paginacao) {
+			@Parameter(in = ParameterIn.QUERY, required = false, allowEmptyValue = true) VagaFiltroDTO filtro, 
+			@ParameterObject Pageable paginacao) {
 		List<VagaDTO> vagas = service.buscaTodos(filtro, paginacao);
 		return ResponseEntity.ok(vagas);
 	}

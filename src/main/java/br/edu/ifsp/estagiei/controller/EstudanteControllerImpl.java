@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +40,7 @@ public class EstudanteControllerImpl implements EstudanteController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<EstudanteDTO>> getEstudantes(EstudanteFiltroDTO filtro) {
+	public ResponseEntity<List<EstudanteDTO>> getEstudantes(@ParameterObject EstudanteFiltroDTO filtro) {
 		List<EstudanteDTO> estudantes = service.buscaTodos(filtro);
 		return ResponseEntity.ok(estudantes);
 	}
@@ -62,7 +63,7 @@ public class EstudanteControllerImpl implements EstudanteController {
 	}
 
 	@GetMapping(PATH_ID + PATH_RECOMENDACAO)
-	public ResponseEntity<List<VagaDTO>> getVagasRecomendadas(@PathVariable(P_COD_ESTUDANTE) Long codEstudante, Pageable paginacao) {
+	public ResponseEntity<List<VagaDTO>> getVagasRecomendadas(@PathVariable(P_COD_ESTUDANTE) Long codEstudante, @ParameterObject Pageable paginacao) {
 		List<VagaDTO> vagas = service.buscaVagasRecomendadas(codEstudante, paginacao);
 		return ResponseEntity.ok(vagas);
 	}

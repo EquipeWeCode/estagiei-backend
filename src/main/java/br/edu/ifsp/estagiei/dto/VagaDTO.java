@@ -1,4 +1,4 @@
-package br.edu.ifsp.estagiei.dto;
+ package br.edu.ifsp.estagiei.dto;
 
 import java.math.BigDecimal;
 import java.util.List;
