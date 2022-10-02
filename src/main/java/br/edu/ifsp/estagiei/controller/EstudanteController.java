@@ -11,6 +11,7 @@ import br.edu.ifsp.estagiei.dto.VagaDTO;
 import br.edu.ifsp.estagiei.dto.filter.EstudanteFiltroDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 public interface EstudanteController extends Controller {
 	@ApiResponse(responseCode = "200")
@@ -31,5 +32,6 @@ public interface EstudanteController extends Controller {
 
 	@ApiResponse(responseCode = "201")
 	@Operation(summary = "Atualiza um estudante", tags = { ESTUDANTE })
+	@SecurityRequirement(name = "Authorization")
 	public ResponseEntity<EstudanteDTO> putEstudante(Long codEstudante, EstudanteDTO body);
 }
