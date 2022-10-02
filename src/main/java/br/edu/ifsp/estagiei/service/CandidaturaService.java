@@ -39,7 +39,7 @@ public class CandidaturaService {
 			Page<Candidatura> candidaturas = candidaturaRepositorio.findCandidaturasByCodEstudante(id, paginacao);
 			return candidaturaFactory.buildDTOs(candidaturas.getContent());
 		} catch (EmptyResultDataAccessException e) {
-			throw new ValidacaoException("Estudante n„o encontrado");
+			throw new ValidacaoException("Estudante n√£o encontrado");
 		}
 	}
 
@@ -70,7 +70,7 @@ public class CandidaturaService {
 			estudanteRepository.findById(dto.getCodEstudante());
 			vagaRepository.findById(dto.getCodVaga());
 		} catch (EmptyResultDataAccessException e) {
-			throw new ValidacaoException("Id informado inv·lido");
+			throw new ValidacaoException("Id informado inv√°lido");
 		}
 
 		return candidatura.isPresent() ? candidatura.get() : new Candidatura();

@@ -21,6 +21,7 @@ import org.springframework.stereotype.Repository;
 import com.google.common.collect.Lists;
 
 import br.edu.ifsp.estagiei.dto.filter.VagaFiltroDTO;
+import br.edu.ifsp.estagiei.entity.Candidatura_;
 import br.edu.ifsp.estagiei.entity.Competencia;
 import br.edu.ifsp.estagiei.entity.Competencia_;
 import br.edu.ifsp.estagiei.entity.Empresa;
@@ -45,8 +46,11 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 		Root<Vaga> r = criteria.from(Vaga.class);
 
 		r.fetch(Vaga_.competencias, JoinType.LEFT);
+		r.fetch(Vaga_.candidaturas, JoinType.LEFT).fetch(Candidatura_.estudante, JoinType.LEFT);
+		r.fetch(Vaga_.endereco, JoinType.LEFT);
 		FetchParent<Vaga, Empresa> fetchEmpresa = r.fetch(Vaga_.empresa, JoinType.INNER);
 		fetchEmpresa.fetch(Empresa_.usuario);
+		fetchEmpresa.fetch(Empresa_.endereco, JoinType.LEFT);
 
 		criteria.distinct(true).select(r).where(cb.equal(r.get(Vaga_.codVaga), codVaga));
 

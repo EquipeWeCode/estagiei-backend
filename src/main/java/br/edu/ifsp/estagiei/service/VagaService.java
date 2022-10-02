@@ -3,6 +3,7 @@ package br.edu.ifsp.estagiei.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,15 @@ public class VagaService {
 	public List<VagaDTO> buscaTodos(VagaFiltroDTO filtro, Pageable paginacao) {
 		Page<Vaga> vagas = vagaRepositorio.buscaTodosPorFiltro(filtro, paginacao);
 		return factory.buildDTOs(vagas.getContent());
+	}
+
+	public VagaDTO buscaVaga(Long codVaga) {
+		try {			
+			Vaga vaga = vagaRepositorio.buscaVagaPorId(codVaga);
+			return factory.buildDTO(vaga);
+		} catch (NoResultException e) {
+			throw new ValidacaoException("Vaga não encontrada");
+		}
 	}
 
 	public VagaDTO salvaVaga(VagaDTO dto, boolean isEdicao) {
@@ -99,4 +109,5 @@ public class VagaService {
 
 		return vaga.isPresent() ? vaga.get() : new Vaga();
 	}
+
 }

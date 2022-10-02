@@ -52,7 +52,7 @@ public class ApplicationSecurity {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		http.authorizeRequests().antMatchers("/login", "/v3/**", "/swagger-ui/**", "/estudante/**", "/vaga/**",
-				"/empresa/**", "/competencia/**", "/usuario/**").permitAll().anyRequest().authenticated();
+				"/empresa/**", "/competencia/**", "/usuario/**", "/candidatura/**").permitAll().anyRequest().authenticated();
 
 		http.exceptionHandling().authenticationEntryPoint((request, response, ex) -> {
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());

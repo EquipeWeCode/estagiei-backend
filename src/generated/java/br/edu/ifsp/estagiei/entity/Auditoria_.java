@@ -1,6 +1,6 @@
 package br.edu.ifsp.estagiei.entity;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
@@ -9,8 +9,8 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Auditoria.class)
 public abstract class Auditoria_ {
 
-	public static volatile SingularAttribute<Auditoria, Timestamp> dataInclusao;
-	public static volatile SingularAttribute<Auditoria, Timestamp> dataAlteracao;
+	public static volatile SingularAttribute<Auditoria, LocalDateTime> dataInclusao;
+	public static volatile SingularAttribute<Auditoria, LocalDateTime> dataAlteracao;
 
 	public static final String DATA_INCLUSAO = "dataInclusao";
 	public static final String DATA_ALTERACAO = "dataAlteracao";

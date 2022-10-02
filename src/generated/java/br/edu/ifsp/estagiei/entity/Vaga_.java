@@ -16,22 +16,21 @@ public abstract class Vaga_ {
 	public static volatile SingularAttribute<Vaga, Long> codEmpresa;
 	public static volatile SingularAttribute<Vaga, BigDecimal> salario;
 	public static volatile SingularAttribute<Vaga, Boolean> indAtivo;
-	public static volatile SetAttribute<Vaga, Estudante> estudantes;
 	public static volatile SingularAttribute<Vaga, String> titulo;
-	public static volatile SingularAttribute<Vaga, Long> cargaHoraria;
+	public static volatile SingularAttribute<Vaga, Integer> cargaHoraria;
 	public static volatile SetAttribute<Vaga, Competencia> competencias;
 	public static volatile SingularAttribute<Vaga, String> descricao;
 	public static volatile SingularAttribute<Vaga, String> curso;
 	public static volatile SingularAttribute<Vaga, Auditoria> auditoria;
 	public static volatile SingularAttribute<Vaga, Empresa> empresa;
 	public static volatile SingularAttribute<Vaga, ModalidadeEnum> modalidade;
+	public static volatile SetAttribute<Vaga, Candidatura> candidaturas;
 
 	public static final String COD_VAGA = "codVaga";
 	public static final String ENDERECO = "endereco";
 	public static final String COD_EMPRESA = "codEmpresa";
 	public static final String SALARIO = "salario";
 	public static final String IND_ATIVO = "indAtivo";
-	public static final String ESTUDANTES = "estudantes";
 	public static final String TITULO = "titulo";
 	public static final String CARGA_HORARIA = "cargaHoraria";
 	public static final String COMPETENCIAS = "competencias";
@@ -40,6 +39,7 @@ public abstract class Vaga_ {
 	public static final String AUDITORIA = "auditoria";
 	public static final String EMPRESA = "empresa";
 	public static final String MODALIDADE = "modalidade";
+	public static final String CANDIDATURAS = "candidaturas";
 
 }
 

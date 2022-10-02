@@ -2,6 +2,7 @@ package br.edu.ifsp.estagiei.dto.factory;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
@@ -22,8 +23,8 @@ public class CandidaturaDTOFactory {
 	}
 
 	public CandidaturaDTO buildDTO(Candidatura candidatura) {
-		Vaga vaga = candidatura.getVaga();
-		Estudante estudante = candidatura.getEstudante();
+		Vaga vaga = Optional.ofNullable(candidatura.getVaga()).orElse(new Vaga());
+		Estudante estudante = Optional.ofNullable(candidatura.getEstudante()).orElse(new Estudante());
 
 		CandidaturaDTOBuilder builder = CandidaturaDTO.builder()
 				.codEstudante(candidatura.getCodEstudante())
