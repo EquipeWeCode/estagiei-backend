@@ -12,14 +12,14 @@ import br.edu.ifsp.estagiei.AbstractTeste;
 public class VagaTeste extends AbstractTeste {
 	private static final String URI = "/vaga";
 	
-	@Test
-	public void getListaVagas() throws Exception {
-		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(URI).accept(MediaType.APPLICATION_JSON_VALUE))
-				.andReturn();
-
-		int status = mvcResult.getResponse().getStatus();
-		assertEquals(200, status);
-	}
+//	@Test
+//	public void getListaVagas() throws Exception {
+//		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(URI).accept(MediaType.APPLICATION_JSON_VALUE))
+//				.andReturn();
+//
+//		int status = mvcResult.getResponse().getStatus();
+//		assertEquals(200, status);
+//	}
 	
 	@Test
 	public void getVagasFiltradas() throws Exception {
