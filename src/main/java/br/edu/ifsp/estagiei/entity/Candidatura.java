@@ -2,6 +2,7 @@ package br.edu.ifsp.estagiei.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -39,7 +40,7 @@ public class Candidatura {
     @JoinColumn(name = "cod_estudante")
     private Estudante estudante;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("cod_vaga")
     @JoinColumn(name = "cod_vaga")
     private Vaga vaga;

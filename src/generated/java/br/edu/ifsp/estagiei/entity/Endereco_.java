@@ -11,34 +11,26 @@ public abstract class Endereco_ {
 	public static volatile SingularAttribute<Endereco, String> pontoReferencia;
 	public static volatile SingularAttribute<Endereco, String> cidade;
 	public static volatile SingularAttribute<Endereco, String> estado;
-	public static volatile SingularAttribute<Endereco, Pessoa> pessoa;
+	public static volatile SingularAttribute<Endereco, String> complemento;
 	public static volatile SingularAttribute<Endereco, Integer> numero;
+	public static volatile SingularAttribute<Endereco, String> logradouro;
 	public static volatile SingularAttribute<Endereco, String> bairro;
 	public static volatile SingularAttribute<Endereco, Boolean> indAtivo;
-	public static volatile SingularAttribute<Endereco, ExperienciaProfissional> experienciaProfissional;
+	public static volatile SingularAttribute<Endereco, Auditoria> auditoria;
 	public static volatile SingularAttribute<Endereco, Long> codEndereco;
 	public static volatile SingularAttribute<Endereco, String> cep;
-	public static volatile SingularAttribute<Endereco, Vaga> vaga;
-	public static volatile SingularAttribute<Endereco, String> complemento;
-	public static volatile SingularAttribute<Endereco, String> logradouro;
-	public static volatile SingularAttribute<Endereco, Auditoria> auditoria;
-	public static volatile SingularAttribute<Endereco, Empresa> empresa;
 
 	public static final String PONTO_REFERENCIA = "pontoReferencia";
 	public static final String CIDADE = "cidade";
 	public static final String ESTADO = "estado";
-	public static final String PESSOA = "pessoa";
+	public static final String COMPLEMENTO = "complemento";
 	public static final String NUMERO = "numero";
+	public static final String LOGRADOURO = "logradouro";
 	public static final String BAIRRO = "bairro";
 	public static final String IND_ATIVO = "indAtivo";
-	public static final String EXPERIENCIA_PROFISSIONAL = "experienciaProfissional";
+	public static final String AUDITORIA = "auditoria";
 	public static final String COD_ENDERECO = "codEndereco";
 	public static final String CEP = "cep";
-	public static final String VAGA = "vaga";
-	public static final String COMPLEMENTO = "complemento";
-	public static final String LOGRADOURO = "logradouro";
-	public static final String AUDITORIA = "auditoria";
-	public static final String EMPRESA = "empresa";
 
 }
 

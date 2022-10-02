@@ -35,10 +35,16 @@ public class VagaControllerImpl implements VagaController {
 
 	@GetMapping
 	public ResponseEntity<List<VagaDTO>> getVagas(
-			@Parameter(in = ParameterIn.QUERY, required = false, allowEmptyValue = true) VagaFiltroDTO filtro, 
+			@Parameter(in = ParameterIn.QUERY, required = false, allowEmptyValue = true) VagaFiltroDTO filtro,
 			@ParameterObject Pageable paginacao) {
 		List<VagaDTO> vagas = service.buscaTodos(filtro, paginacao);
 		return ResponseEntity.ok(vagas);
+	}
+
+	@GetMapping(PATH_ID)
+	public ResponseEntity<VagaDTO> getVaga(@PathVariable(P_COD_VAGA) Long codVaga) {
+		VagaDTO vaga = service.buscaVaga(codVaga);
+		return ResponseEntity.ok(vaga);
 	}
 
 	@PostMapping

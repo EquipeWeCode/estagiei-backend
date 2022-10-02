@@ -98,17 +98,21 @@ public class Vaga implements Auditavel {
 	}
 
 	public Boolean hasCompetencias() {
-		return Persistence.getPersistenceUtil().isLoaded(this, "competencias");
+		return Persistence.getPersistenceUtil().isLoaded(this, "competencias")  && competencias != null;
 	}
 
 	public Boolean hasEmpresa() {
-		return Persistence.getPersistenceUtil().isLoaded(this, "empresa");
+		return Persistence.getPersistenceUtil().isLoaded(this, "empresa")  && empresa != null;
 	}
 
 	public boolean hasEndereco() {
-		return Persistence.getPersistenceUtil().isLoaded(this, "endereco");
+		return Persistence.getPersistenceUtil().isLoaded(this, "endereco")  && endereco != null;
 	}
 
+	public boolean hasCandidaturas() {
+		return Persistence.getPersistenceUtil().isLoaded(this, "candidaturas") && candidaturas != null;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(codVaga);
@@ -125,5 +129,6 @@ public class Vaga implements Auditavel {
 		Vaga other = (Vaga) obj;
 		return Objects.equals(codVaga, other.codVaga);
 	}
+
 
 }

@@ -30,6 +30,8 @@ public class VagaDTOFactory {
 	private EmpresaDTOFactory empresaFactory;
 	@Autowired
 	private EnderecoDTOFactory enderecoFactory;
+	@Autowired
+	private CandidaturaDTOFactory candidaturaFactory;
 
 	@Autowired
 	public VagaDTOFactory(@Lazy EmpresaDTOFactory empresaFactory) {
@@ -112,6 +114,10 @@ public class VagaDTOFactory {
 		
 		if (vaga.hasEndereco()) {
 			builder.endereco(enderecoFactory.buildDTO(vaga.getEndereco()));
+		}
+		
+		if (vaga.hasCandidaturas()) {
+			builder.candidaturas(candidaturaFactory.buildDTOs(vaga.getCandidaturas()));
 		}
 
 		return builder.build();

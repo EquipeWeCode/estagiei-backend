@@ -37,7 +37,7 @@ public class CandidaturaService {
 			Page<Candidatura> candidaturas = candidaturaRepositorio.findCandidaturasByCodEstudante(id, paginacao);
 			return candidaturaFactory.buildDTOs(candidaturas.getContent());
 		} catch (EmptyResultDataAccessException e) {
-			throw new ValidacaoException("Estudante n„o encontrado");
+			throw new ValidacaoException("Estudante n√£o encontrado");
 		}
 	}
 
@@ -59,20 +59,20 @@ public class CandidaturaService {
 		try {
 			estudanteRepository.findByCodEstudante(dto.getCodEstudante());
 		} catch (EmptyResultDataAccessException e) {
-			throw new ValidacaoException("Estudante informado n„o existente", e);
+			throw new ValidacaoException("Estudante informado n√£o existente", e);
 		}
 
 		try {
 			vagaRepository.buscaVagaPorId(dto.getCodVaga());
 		} catch (EmptyResultDataAccessException e) {
-			throw new ValidacaoException("Vaga informada n„o existente", e);
+			throw new ValidacaoException("Vaga informada n√£o existente", e);
 		}
 
 		Optional<Candidatura> candidatura = Optional
 				.of(candidaturaRepositorio.findByIds(dto.getCodEstudante(), dto.getCodVaga()));
 
 		if (candidatura.isPresent() && !isEdicao) {
-			throw new ValidacaoException("N„o È possÌvel se cadastrar em um processo de candidatura j· existente");
+			throw new ValidacaoException("N√£o √© poss√≠vel se cadastrar em um processo de candidatura j√° existente");
 		}
 
 		return candidatura.isPresent() ? candidatura.get() : new Candidatura();

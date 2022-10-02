@@ -46,6 +46,7 @@ public class VagaDTO implements DTOUtils {
 	private EmpresaDTO empresa;	
 	private EnderecoDTO endereco;
 	private List<CompetenciaDTO> competencias;
+	private List<CandidaturaDTO> candidaturas;
 	@Schema(hidden = true)
 	private Boolean indAtivo;
 	@Schema(hidden = true)

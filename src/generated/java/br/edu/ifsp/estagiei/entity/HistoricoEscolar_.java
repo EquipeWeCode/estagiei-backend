@@ -1,5 +1,6 @@
 package br.edu.ifsp.estagiei.entity;
 
+import br.edu.ifsp.estagiei.constants.NvlEscolaridadeHistoricoEnum;
 import java.time.LocalDate;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
@@ -14,7 +15,7 @@ public abstract class HistoricoEscolar_ {
 	public static volatile SingularAttribute<HistoricoEscolar, String> curso;
 	public static volatile SingularAttribute<HistoricoEscolar, Long> codHistEscolar;
 	public static volatile SingularAttribute<HistoricoEscolar, LocalDate> dataInicio;
-	public static volatile SingularAttribute<HistoricoEscolar, String> nvlEscolaridade;
+	public static volatile SingularAttribute<HistoricoEscolar, NvlEscolaridadeHistoricoEnum> nvlEscolaridade;
 	public static volatile SingularAttribute<HistoricoEscolar, Auditoria> auditoria;
 	public static volatile SingularAttribute<HistoricoEscolar, Estudante> estudante;
 	public static volatile SingularAttribute<HistoricoEscolar, String> status;

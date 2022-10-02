@@ -6,6 +6,7 @@ import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,7 @@ public class CandidaturaControllerImpl implements CandidaturaController {
 	private static final String PATH_ID_ESTUDANTE = "/{codEstudante}";
 
 	@GetMapping(PATH_ID_ESTUDANTE)
+	@PreAuthorize("hasAnyAuthority('" + ROLE_EMPRESA + "','" + ROLE_ESTUDANTE + "','" + ROLE_ADMIN + "')")
 	public ResponseEntity<List<CandidaturaDTO>> getCandidaturasEstudante(@PathVariable Long codEstudante,
 			@ParameterObject Pageable paginacao) {
 		List<CandidaturaDTO> candidaturas = service.findCandidaturasByCodEstudante(codEstudante, paginacao);
@@ -37,6 +39,7 @@ public class CandidaturaControllerImpl implements CandidaturaController {
 	}
 
 	@Override
+	@PreAuthorize("hasAnyAuthority('" + ROLE_EMPRESA + "','" + ROLE_ESTUDANTE + "')")
 	@PostMapping(PATH_ID)
 	public ResponseEntity<CandidaturaDTO> postCandidatura(@PathVariable Long codEstudante, @PathVariable Long codVaga) {
 		CandidaturaDTO dto = new CandidaturaDTO();
