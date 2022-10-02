@@ -1,5 +1,6 @@
 package br.edu.ifsp.estagiei.repository.custom;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,17 +11,18 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.FetchParent;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.google.common.collect.Lists;
 
 import br.edu.ifsp.estagiei.dto.filter.VagaFiltroDTO;
+import br.edu.ifsp.estagiei.entity.Auditoria_;
 import br.edu.ifsp.estagiei.entity.Candidatura_;
 import br.edu.ifsp.estagiei.entity.Competencia;
 import br.edu.ifsp.estagiei.entity.Competencia_;
@@ -33,9 +35,11 @@ import br.edu.ifsp.estagiei.entity.Estudante_;
 import br.edu.ifsp.estagiei.entity.Usuario_;
 import br.edu.ifsp.estagiei.entity.Vaga;
 import br.edu.ifsp.estagiei.entity.Vaga_;
+import br.edu.ifsp.estagiei.repository.RepositoryImpl;
 
 @Repository
-public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
+@SuppressWarnings("unchecked")
+public class VagaRepositoryCustomImpl extends RepositoryImpl implements VagaRepositoryCustom {
 
 	@PersistenceContext
 	private EntityManager em;
@@ -84,12 +88,11 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 		if (filtroVaga.hasIds()) {
 			return buscaTodosPorFiltro(filtroVaga, paginacao);
 		}
-		return geraPaginacao(paginacao, vagasRecomendadas);
+		return (Page<Vaga>) geraPaginacao(paginacao, vagasRecomendadas);
 	}
 
 	public Page<Vaga> buscaTodosPorFiltro(VagaFiltroDTO filtro, Pageable paginacao) {
 		VagaFiltroDTO novoFiltro = Optional.ofNullable(filtro).orElse(new VagaFiltroDTO());
-
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Vaga> criteria = cb.createQuery(Vaga.class);
 		Root<Vaga> r = criteria.from(Vaga.class);
@@ -100,17 +103,11 @@ public class VagaRepositoryCustomImpl implements VagaRepositoryCustom {
 		fetchEmpresa.fetch(Empresa_.usuario).fetch(Usuario_.permissoes);
 		fetchEmpresa.fetch(Empresa_.endereco, JoinType.LEFT);
 
-		criteria.distinct(true).select(r).where(aplicaFiltros(r, novoFiltro));
+		Path<LocalDateTime> dataInclusao = r.get(Vaga_.auditoria).get(Auditoria_.dataInclusao);
 
-		return geraPaginacao(paginacao, em.createQuery(criteria).getResultList());
-	}
+		criteria.distinct(true).select(r).where(aplicaFiltros(r, novoFiltro)).orderBy(cb.desc(dataInclusao));
 
-	private Page<Vaga> geraPaginacao(Pageable paginacao, List<Vaga> vagas) {
-		int inicio = (int) paginacao.getOffset();
-		int fim = (int) ((inicio + paginacao.getPageSize()) > vagas.size() ? vagas.size()
-				: (inicio + paginacao.getPageSize()));
-		Page<Vaga> pagina = new PageImpl<Vaga>(vagas.subList(inicio, fim), paginacao, vagas.size());
-		return pagina;
+		return (Page<Vaga>) geraPaginacao(paginacao, em.createQuery(criteria).getResultList());
 	}
 
 	private Predicate[] aplicaFiltros(Root<Vaga> root, VagaFiltroDTO filtro) {
