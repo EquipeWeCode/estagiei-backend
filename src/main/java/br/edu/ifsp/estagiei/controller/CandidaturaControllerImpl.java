@@ -53,6 +53,7 @@ public class CandidaturaControllerImpl implements CandidaturaController {
 
 	@Override
 	@PutMapping
+	@PreAuthorize("hasAnyAuthority('" + ROLE_EMPRESA + "','" + ROLE_ESTUDANTE + "')")
 	public ResponseEntity<CandidaturaDTO> putCandidatura(@RequestBody CandidaturaDTO dto) {
 		CandidaturaDTO candidatura = service.salvaCandidatura(dto, true);
 		return ResponseEntity.ok(candidatura);
