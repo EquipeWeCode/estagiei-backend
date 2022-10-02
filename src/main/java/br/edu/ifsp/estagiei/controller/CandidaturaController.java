@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import br.edu.ifsp.estagiei.dto.CandidaturaDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 public interface CandidaturaController extends Controller {
 
@@ -17,10 +18,12 @@ public interface CandidaturaController extends Controller {
 
 	@ApiResponse(responseCode = "201")
 	@Operation(summary = "Inicia um novo processo de candidatura de um estudante", tags = { CANDIDATURA })
+	@SecurityRequirement(name = "Authorization")
 	public ResponseEntity<CandidaturaDTO> postCandidatura(Long codEstudante, Long codVaga);
 	
 	@ApiResponse(responseCode = "201")
 	@Operation(summary = "Atualiza o status da candidatura", tags = { CANDIDATURA })
+	@SecurityRequirement(name = "Authorization")
 	public ResponseEntity<CandidaturaDTO> putCandidatura(CandidaturaDTO dto);
 
 }

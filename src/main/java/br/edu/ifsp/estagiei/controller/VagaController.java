@@ -10,6 +10,7 @@ import br.edu.ifsp.estagiei.dto.VagaDTO;
 import br.edu.ifsp.estagiei.dto.filter.VagaFiltroDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 public interface VagaController extends Controller {
 	@ApiResponse(responseCode = "200")
@@ -22,9 +23,11 @@ public interface VagaController extends Controller {
 
 	@ApiResponse(responseCode = "201")
 	@Operation(summary = "Cria uma nova vaga", tags = { VAGA })
+	@SecurityRequirement(name = "Authorization")
 	public ResponseEntity<VagaDTO> postVaga(VagaDTO dto);
 
 	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Atualiza uma vaga", tags = { VAGA })
+	@SecurityRequirement(name = "Authorization")
 	public ResponseEntity<VagaDTO> putvaga(Long codVaga, VagaDTO dto);
 }

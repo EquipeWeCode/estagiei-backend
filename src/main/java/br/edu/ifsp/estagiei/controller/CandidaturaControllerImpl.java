@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.edu.ifsp.estagiei.constants.CandidaturaEnum;
 import br.edu.ifsp.estagiei.dto.CandidaturaDTO;
 import br.edu.ifsp.estagiei.service.CandidaturaService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping(CandidaturaControllerImpl.PATH)
@@ -39,8 +40,8 @@ public class CandidaturaControllerImpl implements CandidaturaController {
 	}
 
 	@Override
-	@PreAuthorize("hasAnyAuthority('" + ROLE_EMPRESA + "','" + ROLE_ESTUDANTE + "')")
 	@PostMapping(PATH_ID)
+	@PreAuthorize("hasAnyAuthority('" + ROLE_EMPRESA + "','" + ROLE_ESTUDANTE + "')")
 	public ResponseEntity<CandidaturaDTO> postCandidatura(@PathVariable Long codEstudante, @PathVariable Long codVaga) {
 		CandidaturaDTO dto = new CandidaturaDTO();
 		dto.setCodEstudante(codEstudante);
@@ -54,6 +55,7 @@ public class CandidaturaControllerImpl implements CandidaturaController {
 	@Override
 	@PutMapping
 	@PreAuthorize("hasAnyAuthority('" + ROLE_EMPRESA + "','" + ROLE_ESTUDANTE + "')")
+	@SecurityRequirement(name = "Authorization")
 	public ResponseEntity<CandidaturaDTO> putCandidatura(@RequestBody CandidaturaDTO dto) {
 		CandidaturaDTO candidatura = service.salvaCandidatura(dto, true);
 		return ResponseEntity.ok(candidatura);

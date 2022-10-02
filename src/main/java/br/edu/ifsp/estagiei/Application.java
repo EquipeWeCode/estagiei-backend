@@ -10,23 +10,17 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 
 @EnableWebMvc
 @SpringBootApplication
 @ServletComponentScan
-@OpenAPIDefinition(
-		info = @Info(
-				title = "Estagiei API", 
-				version = "0.8.1", 
-				description = "Documentação do sistema de vagas de estágio - Estagiei",
-				license = @License(
-							name = "MIT License",
-							url = "https://github.com/EquipeWeCode/estagiei-backend/blob/develop/LICENSE"
-						)
-				)
-		)
+@SecurityScheme(type = SecuritySchemeType.APIKEY, name = "Authorization", in = SecuritySchemeIn.HEADER, bearerFormat = "Bearer {token}")
+@OpenAPIDefinition(info = @Info(title = "Estagiei API", version = "0.8.1", description = "Documentação do sistema de vagas de estágio - Estagiei", license = @License(name = "MIT License", url = "https://github.com/EquipeWeCode/estagiei-backend/blob/develop/LICENSE")))
 public class Application extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
@@ -38,15 +32,10 @@ public class Application extends SpringBootServletInitializer {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-				.allowedOrigins(
-						"http://localhost:3000", 
-						"https://estagiei.netlify.app",
-						"https://estagiei.vercel.app")
-				.allowedHeaders("*")
-				.allowedMethods("*");
+				registry.addMapping("/**").allowedOrigins("http://localhost:3000", "https://estagiei.netlify.app",
+						"https://estagiei.vercel.app").allowedHeaders("*").allowedMethods("*");
 			}
 		};
 	}
-	
+
 }
