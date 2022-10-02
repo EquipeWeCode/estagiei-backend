@@ -17,6 +17,10 @@ public interface CandidaturaController extends Controller {
 
 	@ApiResponse(responseCode = "201")
 	@Operation(summary = "Inicia um novo processo de candidatura de um estudante", tags = { CANDIDATURA })
-	public ResponseEntity<CandidaturaDTO> postCandidatura(CandidaturaDTO dto);
+	public ResponseEntity<CandidaturaDTO> postCandidatura(Long codEstudante, Long codVaga);
+	
+	@ApiResponse(responseCode = "201")
+	@Operation(summary = "Atualiza o status da candidatura", tags = { CANDIDATURA })
+	public ResponseEntity<CandidaturaDTO> putCandidatura(CandidaturaDTO dto);
 
 }

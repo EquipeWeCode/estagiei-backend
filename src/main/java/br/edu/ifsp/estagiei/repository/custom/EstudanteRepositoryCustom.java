@@ -6,6 +6,6 @@ import br.edu.ifsp.estagiei.dto.filter.EstudanteFiltroDTO;
 import br.edu.ifsp.estagiei.entity.Estudante;
 
 public interface EstudanteRepositoryCustom {
-	public Estudante findByCodEstudante(Long codUsuario);
+	public Estudante findByCodEstudante(Long codEstudante);
 	public List<Estudante> buscaTodosPorFiltro(EstudanteFiltroDTO filtro);
 }

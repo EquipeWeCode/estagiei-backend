@@ -11,8 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.google.common.collect.Lists;
-
 import br.edu.ifsp.estagiei.dto.CandidaturaDTO;
 import br.edu.ifsp.estagiei.dto.factory.CandidaturaDTOFactory;
 import br.edu.ifsp.estagiei.entity.Candidatura;
@@ -58,19 +56,23 @@ public class CandidaturaService {
 	}
 
 	private Candidatura validaCandidatura(CandidaturaDTO dto, boolean isEdicao) {
-		List<Long> ids = Lists.newArrayList();
-		if (isEdicao) {
-			ids.add(dto.getCodEstudante());
-			ids.add(dto.getCodVaga());
+		try {
+			estudanteRepository.findByCodEstudante(dto.getCodEstudante());
+		} catch (EmptyResultDataAccessException e) {
+			throw new ValidacaoException("Estudante informado não existente", e);
+		}
+
+		try {
+			vagaRepository.buscaVagaPorId(dto.getCodVaga());
+		} catch (EmptyResultDataAccessException e) {
+			throw new ValidacaoException("Vaga informada não existente", e);
 		}
 
 		Optional<Candidatura> candidatura = Optional
 				.of(candidaturaRepositorio.findByIds(dto.getCodEstudante(), dto.getCodVaga()));
-		try {
-			estudanteRepository.findById(dto.getCodEstudante());
-			vagaRepository.findById(dto.getCodVaga());
-		} catch (EmptyResultDataAccessException e) {
-			throw new ValidacaoException("Id informado inválido");
+
+		if (candidatura.isPresent() && !isEdicao) {
+			throw new ValidacaoException("Não é possível se cadastrar em um processo de candidatura já existente");
 		}
 
 		return candidatura.isPresent() ? candidatura.get() : new Candidatura();
