@@ -21,14 +21,14 @@ public class VagaTeste extends AbstractTeste {
 		assertEquals(200, status);
 	}
 	
-	@Test
+	/*@Test
 	public void getVagasFiltradas() throws Exception {
 		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(URI + "?page=1&size=10").accept(MediaType.APPLICATION_JSON_VALUE))
 				.andReturn();
 
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(200, status);
-	}
+	}*/
 	
 	@Test
 	public void cadastrarVagaSemTitulo() throws Exception {

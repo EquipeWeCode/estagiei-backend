@@ -1,7 +1,7 @@
 package br.edu.ifsp.estagiei.constants;
 
 public enum CandidaturaEnum {
-	CANDIDATADO("C");
+	CANDIDATADO("CA"), CANCELADO("CN");
 
 	private final String codigo;
 

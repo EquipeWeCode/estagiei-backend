@@ -10,10 +10,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.ifsp.estagiei.constants.CandidaturaEnum;
 import br.edu.ifsp.estagiei.dto.CandidaturaDTO;
 import br.edu.ifsp.estagiei.service.CandidaturaService;
 
@@ -25,6 +27,7 @@ public class CandidaturaControllerImpl implements CandidaturaController {
 	private CandidaturaService service;
 
 	public static final String PATH = "/candidatura";
+	public static final String PATH_ID = "/{codEstudante}/{codVaga}";
 	private static final String PATH_ID_ESTUDANTE = "/{codEstudante}";
 
 	@GetMapping(PATH_ID_ESTUDANTE)
@@ -36,12 +39,23 @@ public class CandidaturaControllerImpl implements CandidaturaController {
 	}
 
 	@Override
-	@PostMapping
 	@PreAuthorize("hasAnyAuthority('" + ROLE_EMPRESA + "','" + ROLE_ESTUDANTE + "')")
-	public ResponseEntity<CandidaturaDTO> postCandidatura(@RequestBody CandidaturaDTO dto) {
+	@PostMapping(PATH_ID)
+	public ResponseEntity<CandidaturaDTO> postCandidatura(@PathVariable Long codEstudante, @PathVariable Long codVaga) {
+		CandidaturaDTO dto = new CandidaturaDTO();
+		dto.setCodEstudante(codEstudante);
+		dto.setCodVaga(codVaga);
+		dto.setStatus(CandidaturaEnum.CANDIDATADO);
+		
 		CandidaturaDTO candidatura = service.salvaCandidatura(dto, false);
 		return ResponseEntity.ok(candidatura);
+	}
 
+	@Override
+	@PutMapping
+	public ResponseEntity<CandidaturaDTO> putCandidatura(@RequestBody CandidaturaDTO dto) {
+		CandidaturaDTO candidatura = service.salvaCandidatura(dto, true);
+		return ResponseEntity.ok(candidatura);
 	}
 
 }
