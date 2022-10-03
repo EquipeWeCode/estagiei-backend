@@ -1,6 +1,9 @@
 package br.edu.ifsp.estagiei.dto.factory;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,6 +25,10 @@ public class EmpresaDTOFactory {
 
 	@Autowired
 	private AuditoriaDTOFactory auditoriaFactory;
+
+	public List<EmpresaDTO> buildDTOs(Collection<Empresa> empresas) {
+		return empresas.stream().map(this::buildDTO).collect(Collectors.toList());
+	}
 
 	public EmpresaDTO buildDTO(Empresa empresa) {
 

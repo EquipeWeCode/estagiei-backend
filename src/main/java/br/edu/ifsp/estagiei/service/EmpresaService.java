@@ -6,16 +6,17 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import com.google.common.collect.Lists;
 
 import br.edu.ifsp.estagiei.constants.RolesEnum;
 import br.edu.ifsp.estagiei.constants.TipoUsuarioEnum;
 import br.edu.ifsp.estagiei.dto.EmpresaDTO;
 import br.edu.ifsp.estagiei.dto.factory.EmpresaDTOFactory;
+import br.edu.ifsp.estagiei.dto.filter.EmpresaFiltroDTO;
 import br.edu.ifsp.estagiei.entity.Empresa;
 import br.edu.ifsp.estagiei.entity.Permissao;
 import br.edu.ifsp.estagiei.entity.Usuario;
@@ -117,12 +118,9 @@ public class EmpresaService {
 		return factory.buildDTO(empresaBuscada);
 	}
 
-	public List<EmpresaDTO> buscaEmpresas() {
-		List<Empresa> todasEmpresas = empresaRepositorio.findAll();
-		List<EmpresaDTO> empresasDTO = Lists.newArrayList();
-
-		todasEmpresas.forEach(e -> empresasDTO.add(factory.buildDTO(e)));
-		return empresasDTO;
+	public List<EmpresaDTO> buscaEmpresas(EmpresaFiltroDTO filtro, Pageable paginacao) {
+		Page<Empresa> empresas = empresaRepositorio.buscaTodosPorFiltro(filtro, paginacao);
+		return factory.buildDTOs(empresas.getContent());
 	}
 
 }

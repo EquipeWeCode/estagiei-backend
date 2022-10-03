@@ -2,9 +2,11 @@ package br.edu.ifsp.estagiei.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import br.edu.ifsp.estagiei.dto.EmpresaDTO;
+import br.edu.ifsp.estagiei.dto.filter.EmpresaFiltroDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
@@ -12,7 +14,7 @@ public interface EmpresaController extends Controller {
 
 	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Retorna todas as empresas", tags = { EMPRESA })
-	public ResponseEntity<List<EmpresaDTO>> getEmpresas();
+	public ResponseEntity<List<EmpresaDTO>> getEmpresas(EmpresaFiltroDTO filtro, Pageable paginacao);
 
 	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Retorna uma empresa de acordo com o código", tags = { EMPRESA })

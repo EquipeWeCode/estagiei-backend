@@ -5,11 +5,14 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import br.edu.ifsp.estagiei.entity.Empresa;
+import br.edu.ifsp.estagiei.repository.custom.EmpresaRepositoryCustom;
 
-public interface EmpresaRepository extends CrudRepository<Empresa, Long> {
+public interface EmpresaRepository
+		extends CrudRepository<Empresa, Long>, PagingAndSortingRepository<Empresa, Long>, EmpresaRepositoryCustom {
 
 	@Query("SELECT emp FROM Empresa emp LEFT JOIN FETCH emp.usuario LEFT JOIN FETCH emp.endereco WHERE emp.codEmpresa = :codEmpresa")
 	public Optional<Empresa> findById(@Param("codEmpresa") Long codEmpresa);
