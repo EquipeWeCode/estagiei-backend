@@ -103,6 +103,16 @@ public class EstudanteService {
 	}
 
 	private Usuario validaEstudante(EstudanteDTO dto, boolean isEdicao) {
+		
+		if(!isEdicao) {
+			if(!dto.hasSenha()) {
+				throw new ValidacaoException("A senha não pode ser nula");
+			}
+			if(!dto.hasEmail()) {
+				throw new ValidacaoException("O e-mail não pode ser nula");
+			}
+		}
+		
 		String email = dto.getEmail();
 		String cpfNumeros = EstagieiUtils.retiraNaoNumericos(dto.getCpf());
 		Optional<Usuario> usuarioEmail = usuarioRepositorio.findByEmail(email);

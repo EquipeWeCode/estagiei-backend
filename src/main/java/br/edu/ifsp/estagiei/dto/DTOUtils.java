@@ -1,7 +1,7 @@
 package br.edu.ifsp.estagiei.dto;
 
 public interface DTOUtils {
-	public static final String MSG_NOT_NULL = "Não pode ser nulo";
+	public static final String MSG_NOT_NULL = "Não pode ser nulo(a)";
 
 	public static final String DATE_PATTERN = ("^((2000|2400|2800|(19|2[0-9])(0[48]|[2468][048]|[13579][26]))-02-29)$"
 					+ "|^(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))$"

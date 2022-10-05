@@ -35,7 +35,6 @@ public class ExperienciaProfissionalDTO implements DTOUtils {
 	@NotBlank(message = MSG_NOT_NULL)
 	@Schema(example = "Estagiário de engenharia de software")
 	private String cargo;
-	@NotBlank(message = MSG_NOT_NULL)
 	@Schema(example = "Desenvolvi diversos projetos pequenos durante o período")
 	private String descricao;
 	@NotNull(message = MSG_NOT_NULL)
@@ -43,7 +42,6 @@ public class ExperienciaProfissionalDTO implements DTOUtils {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Schema(example = "2020-02-02")
 	private LocalDate dataInicio;
-	@NotNull(message = MSG_NOT_NULL)
 	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Schema(example = "2021-02-02")

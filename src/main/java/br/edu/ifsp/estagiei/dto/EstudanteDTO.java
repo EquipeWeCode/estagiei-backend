@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import br.edu.ifsp.estagiei.constants.NvlEscolaridadeEnum;
+import br.edu.ifsp.estagiei.utils.EstagieiUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,11 +36,9 @@ public class EstudanteDTO implements DTOUtils {
 	private Long codEstudante;
 	@Schema(hidden = true)
 	private Long codUsuario;
-	@NotBlank(message = MSG_NOT_NULL)
 	@Schema(example = "alunoSwagger@aluno.com")
 	private String email;
 	private NvlEscolaridadeEnum nvlEscolaridade;
-	@NotBlank(message = MSG_NOT_NULL)
 	@Length(min = 8, max = 25, message = MSG_LENGTH_SENHA)
 	@Schema(example = "senha1234")
 	private String senha;
@@ -82,5 +81,13 @@ public class EstudanteDTO implements DTOUtils {
 	
 	public boolean hasCompetencias() {
 		return getCompetencias() != null && getCompetencias().size()>0;
+	}
+
+	public boolean hasEmail() {
+		return EstagieiUtils.isNotEmptyOrNull(email);
+	}
+	
+	public boolean hasSenha() {
+		return EstagieiUtils.isNotEmptyOrNull(senha);
 	}
 }
