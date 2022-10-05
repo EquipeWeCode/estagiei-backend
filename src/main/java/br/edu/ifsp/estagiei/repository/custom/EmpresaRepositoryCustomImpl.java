@@ -30,6 +30,7 @@ public class EmpresaRepositoryCustomImpl extends RepositoryImpl implements Empre
 	@PersistenceContext
 	private EntityManager em;
 
+	@SuppressWarnings("unchecked")
 	public Page<Empresa> buscaTodosPorFiltro(EmpresaFiltroDTO filtro, Pageable paginacao) {
 		EmpresaFiltroDTO novoFiltro = Optional.ofNullable(filtro).orElse(new EmpresaFiltroDTO());
 		CriteriaBuilder cb = em.getCriteriaBuilder();
