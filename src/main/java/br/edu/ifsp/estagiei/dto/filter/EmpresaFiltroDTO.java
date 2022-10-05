@@ -1,6 +1,9 @@
 package br.edu.ifsp.estagiei.dto.filter;
 
+import org.springdoc.api.annotations.ParameterObject;
+
 import br.edu.ifsp.estagiei.dto.FiltroDTO;
+import br.edu.ifsp.estagiei.utils.EstagieiUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,13 +11,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@ParameterObject
 public class EmpresaFiltroDTO extends FiltroDTO {
 
 	private Long codEmpresa;
 	private String nomeFantasia;
 	private String cnpj;
 	private Boolean indAtivo;
-	private Integer cep;
+	private String cep;
 	private String bairro;
 	private String cidade;
 	private String estado;
@@ -40,7 +44,7 @@ public class EmpresaFiltroDTO extends FiltroDTO {
 	}
 
 	public Boolean hasNomeFantasia() {
-		return nomeFantasia != null;
+		return EstagieiUtils.isNotEmptyOrNull(cep);
 	}
 	
 	public Boolean hasIndAtivo() {
@@ -52,19 +56,19 @@ public class EmpresaFiltroDTO extends FiltroDTO {
 	}
 
 	public Boolean hasCep() {
-		return cep != null;
+		return EstagieiUtils.isNotEmptyOrNull(cep);
 	}
 
 	public Boolean hasBairro() {
-		return bairro != null;
+		return EstagieiUtils.isNotEmptyOrNull(cep);
 	}
 
 	public Boolean hasCidade() {
-		return cidade != null;
+		return EstagieiUtils.isNotEmptyOrNull(cep);
 	}
 
 	public Boolean hasEstado() {
-		return estado != null;
+		return EstagieiUtils.isNotEmptyOrNull(cep);
 	}
 	
 	public Boolean hasFiltroEndereco() {
