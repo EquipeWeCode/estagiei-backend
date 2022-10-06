@@ -26,7 +26,7 @@ import io.jsonwebtoken.security.SignatureException;
 public class JwtTokenUtil {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenUtil.class);
 
-	public static final long EXPIRE_DURATION = 30 * 60000; // 30min
+	public static final long EXPIRE_DURATION = 180 * 60000; // 180min
 
 	private String SECRET_KEY = EstagieiUtils.retornaPrimeiroEnv("SECRET_ID");
 

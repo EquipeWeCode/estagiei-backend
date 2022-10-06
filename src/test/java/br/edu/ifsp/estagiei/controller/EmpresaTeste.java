@@ -12,14 +12,14 @@ import br.edu.ifsp.estagiei.AbstractTeste;
 public class EmpresaTeste extends AbstractTeste {
 	private static final String uri = "/empresa";
 
-	@Test
-	public void getListaEmpresa() throws Exception {
-		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.APPLICATION_JSON_VALUE))
-				.andReturn();
-
-		int status = mvcResult.getResponse().getStatus();
-		assertEquals(200, status);
-	}
+//	@Test
+//	public void getListaEmpresa() throws Exception {
+//		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.APPLICATION_JSON_VALUE))
+//				.andReturn();
+//
+//		int status = mvcResult.getResponse().getStatus();
+//		assertEquals(200, status);
+//	}
 
 	@Test
 	public void getEmpresaQueNaoExiste() throws Exception {
