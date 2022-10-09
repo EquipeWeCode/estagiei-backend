@@ -8,12 +8,16 @@ import org.springframework.data.domain.Pageable;
 
 import com.google.common.collect.Lists;
 
+import br.edu.ifsp.estagiei.dto.FiltroDTO;
+
 public class RepositoryImpl {
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	protected Page<?> geraPaginacao(Pageable paginacao, List<?> lista) {
+	protected Page<?> geraPaginacao(Pageable paginacao, List<?> lista, FiltroDTO filtro) {
 		int numPagina = paginacao.getPageNumber();
 		int tamanhoLista = lista.size();
 		int tamanhoPagina = paginacao.getPageSize();
+		
+		filtro.setQuantidadeTotal(Long.valueOf(tamanhoLista));
 		
 		if(tamanhoPagina == 777 && numPagina == 0) {
 			return new PageImpl(lista.subList(0, tamanhoLista), paginacao, tamanhoLista);
