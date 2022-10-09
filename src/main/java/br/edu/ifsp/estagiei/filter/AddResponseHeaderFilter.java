@@ -28,6 +28,7 @@ public class AddResponseHeaderFilter implements Filter {
         httpServletResponse.setHeader("X-Content-Type-Options", "nosniff");
         httpServletResponse.setHeader("Referrer-Policy", "same-origin");
         httpServletResponse.setHeader("Permissions-Policy", "microphone=none; geolocation=none;camera=none");
+        httpServletResponse.setHeader("Access-Control-Expose-Headers", "quantidadeTotal");
         chain.doFilter(request, response);
     }
 
