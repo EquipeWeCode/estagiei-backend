@@ -42,7 +42,7 @@ public class EmpresaRepositoryCustomImpl extends RepositoryImpl implements Empre
 
 		criteria.distinct(true).select(r).where(aplicaFiltros(r, novoFiltro));
 
-		return (Page<Empresa>) geraPaginacao(paginacao, em.createQuery(criteria).getResultList());
+		return (Page<Empresa>) geraPaginacao(paginacao, em.createQuery(criteria).getResultList(), filtro);
 	}
 
 	private Predicate[] aplicaFiltros(Root<Empresa> root, EmpresaFiltroDTO filtro) {

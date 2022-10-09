@@ -36,7 +36,7 @@ public class EmpresaControllerImpl implements EmpresaController {
 			@Parameter(in = ParameterIn.QUERY, required = false, allowEmptyValue = true) EmpresaFiltroDTO filtro,
 			@ParameterObject Pageable paginacao) {
 		List<EmpresaDTO> empresas = service.buscaEmpresas(filtro, paginacao);
-		return ResponseEntity.ok(empresas);
+		return respostaPaginada(filtro.getQuantidadeTotal()).body(empresas);
 	}
 
 	@GetMapping(PATH_ID)

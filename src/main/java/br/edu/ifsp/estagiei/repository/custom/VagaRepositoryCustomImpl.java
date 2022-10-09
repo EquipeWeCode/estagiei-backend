@@ -88,7 +88,7 @@ public class VagaRepositoryCustomImpl extends RepositoryImpl implements VagaRepo
 		if (filtroVaga.hasIds()) {
 			return buscaTodosPorFiltro(filtroVaga, paginacao);
 		}
-		return (Page<Vaga>) geraPaginacao(paginacao, vagasRecomendadas);
+		return (Page<Vaga>) geraPaginacao(paginacao, vagasRecomendadas, filtroVaga);
 	}
 
 	public Page<Vaga> buscaTodosPorFiltro(VagaFiltroDTO filtro, Pageable paginacao) {
@@ -107,7 +107,7 @@ public class VagaRepositoryCustomImpl extends RepositoryImpl implements VagaRepo
 
 		criteria.distinct(true).select(r).where(aplicaFiltros(r, novoFiltro)).orderBy(cb.desc(dataInclusao));
 
-		return (Page<Vaga>) geraPaginacao(paginacao, em.createQuery(criteria).getResultList());
+		return (Page<Vaga>) geraPaginacao(paginacao, em.createQuery(criteria).getResultList(), filtro);
 	}
 
 	private Predicate[] aplicaFiltros(Root<Vaga> root, VagaFiltroDTO filtro) {

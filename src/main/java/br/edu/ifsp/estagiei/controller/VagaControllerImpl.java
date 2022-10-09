@@ -38,7 +38,7 @@ public class VagaControllerImpl implements VagaController {
 			@Parameter(in = ParameterIn.QUERY, required = false, allowEmptyValue = true) VagaFiltroDTO filtro,
 			@ParameterObject Pageable paginacao) {
 		List<VagaDTO> vagas = service.buscaTodos(filtro, paginacao);
-		return ResponseEntity.ok(vagas);
+		return respostaPaginada(filtro.getQuantidadeTotal()).body(vagas);
 	}
 
 	@GetMapping(PATH_ID)
