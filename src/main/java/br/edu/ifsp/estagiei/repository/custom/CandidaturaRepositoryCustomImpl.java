@@ -54,11 +54,23 @@ public class CandidaturaRepositoryCustomImpl implements CandidaturaRepositoryCus
 	}
 
 	private Page<Candidatura> geraPaginacao(Pageable paginacao, List<Candidatura> candidaturas) {
-		int inicio = (int) paginacao.getOffset();
-		int fim = (int) ((inicio + paginacao.getPageSize()) > candidaturas.size() ? candidaturas.size()
-				: (inicio + paginacao.getPageSize()));
+		int numPagina = paginacao.getPageNumber();
+		int tamanhoLista = candidaturas.size();
+		int tamanhoPagina = paginacao.getPageSize();
+
+		if (tamanhoPagina == 777 && numPagina == 0) {
+			return new PageImpl<Candidatura>(candidaturas.subList(0, tamanhoLista), paginacao, tamanhoLista);
+		}
+
+		int inicio = (int) ((numPagina - 1) * tamanhoPagina);
+
+		if ((inicio) > candidaturas.size()) {
+			return new PageImpl<Candidatura>(Lists.newArrayList(), paginacao, tamanhoLista);
+		}
+
+		int fim = (int) ((inicio + tamanhoPagina) > tamanhoLista ? tamanhoLista : (inicio + tamanhoPagina));
 		Page<Candidatura> pagina = new PageImpl<Candidatura>(candidaturas.subList(inicio, fim), paginacao,
-				candidaturas.size());
+				tamanhoLista);
 		return pagina;
 	}
 }

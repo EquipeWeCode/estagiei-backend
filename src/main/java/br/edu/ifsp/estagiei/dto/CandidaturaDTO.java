@@ -1,5 +1,7 @@
 package br.edu.ifsp.estagiei.dto;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -35,6 +37,7 @@ public class CandidaturaDTO implements DTOUtils {
 	private String curso;
 
 	@Schema(example = "CANDIDATADO")
+	@NotNull
 	private CandidaturaEnum status;
 
 }

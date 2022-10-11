@@ -2,6 +2,8 @@ package br.edu.ifsp.estagiei.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -56,7 +58,7 @@ public class CandidaturaControllerImpl implements CandidaturaController {
 	@PutMapping
 	@PreAuthorize("hasAnyAuthority('" + ROLE_EMPRESA + "','" + ROLE_ESTUDANTE + "')")
 	@SecurityRequirement(name = "Authorization")
-	public ResponseEntity<CandidaturaDTO> putCandidatura(@RequestBody CandidaturaDTO dto) {
+	public ResponseEntity<CandidaturaDTO> putCandidatura(@RequestBody @Valid CandidaturaDTO dto) {
 		CandidaturaDTO candidatura = service.salvaCandidatura(dto, true);
 		return ResponseEntity.ok(candidatura);
 	}
