@@ -24,6 +24,7 @@ import br.edu.ifsp.estagiei.exception.ValidacaoException;
 import br.edu.ifsp.estagiei.facade.IAuthenticationFacade;
 import br.edu.ifsp.estagiei.repository.EmpresaRepository;
 import br.edu.ifsp.estagiei.repository.UsuarioRepository;
+import br.edu.ifsp.estagiei.utils.EstagieiUtils;
 
 @Service
 @Transactional
@@ -51,12 +52,12 @@ public class EmpresaService {
 
 	private Usuario validaEmpresa(EmpresaDTO dto, boolean isEdicao) {
 		String email = dto.getEmail();
-		String cnpj = dto.getCnpj();
+		String cnpjNumeros = EstagieiUtils.retiraNaoNumericos(dto.getCnpj());
 		Long codEmpresa = dto.getCodEmpresa();
 
 		Optional<Usuario> usuarioEmail = usuarioRepositorio.findByEmail(email);
 		Optional<Usuario> usuarioBuscado = usuarioRepositorio.findByEmpresaCodEmpresa(codEmpresa);
-		Optional<Usuario> usuarioPorCnpj = usuarioRepositorio.findByEmpresaCnpj(cnpj);
+		Optional<Usuario> usuarioPorCnpj = usuarioRepositorio.findByEmpresaCnpj(cnpjNumeros);
 
 		if (!isEdicao) {
 			if (usuarioEmail.isPresent()) {

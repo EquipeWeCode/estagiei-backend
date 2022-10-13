@@ -8,9 +8,11 @@ import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,6 +50,14 @@ public class EmpresaControllerImpl implements EmpresaController {
 	@PostMapping
 	public ResponseEntity<EmpresaDTO> postEmpresa(@RequestBody @Valid EmpresaDTO dto) {
 		EmpresaDTO empresa = service.salvaEmpresa(dto, false);
+		return ResponseEntity.ok(empresa);
+	}
+
+	@PutMapping(PATH_ID)
+	@PreAuthorize("hasAnyAuthority('" + ROLE_ADMIN + "','" + ROLE_EMPRESA + "')")
+	public ResponseEntity<EmpresaDTO> putEmpresa(@PathVariable Long codEmpresa, @RequestBody @Valid EmpresaDTO dto) {
+		dto.setCodEmpresa(codEmpresa);
+		EmpresaDTO empresa = service.salvaEmpresa(dto, true);
 		return ResponseEntity.ok(empresa);
 	}
 }
