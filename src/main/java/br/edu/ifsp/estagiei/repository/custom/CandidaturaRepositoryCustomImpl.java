@@ -3,6 +3,7 @@ package br.edu.ifsp.estagiei.repository.custom;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -25,20 +26,24 @@ public class CandidaturaRepositoryCustomImpl implements CandidaturaRepositoryCus
 	private EntityManager em;
 
 	public Candidatura findByIds(Long codEstudante, Long codVaga) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Candidatura> criteria = cb.createQuery(Candidatura.class);
-		Root<Candidatura> r = criteria.from(Candidatura.class);
+		try {
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaQuery<Candidatura> criteria = cb.createQuery(Candidatura.class);
+			Root<Candidatura> r = criteria.from(Candidatura.class);
 
-		r.fetch(Candidatura_.estudante);
-		r.fetch(Candidatura_.vaga);
+			r.fetch(Candidatura_.estudante);
+			r.fetch(Candidatura_.vaga);
 
-		List<Predicate> predicates = Lists.newArrayList();
+			List<Predicate> predicates = Lists.newArrayList();
 
-		predicates.add(cb.equal(r.get(Candidatura_.codEstudante), codEstudante));
-		predicates.add(cb.equal(r.get(Candidatura_.codVaga), codVaga));
+			predicates.add(cb.equal(r.get(Candidatura_.codEstudante), codEstudante));
+			predicates.add(cb.equal(r.get(Candidatura_.codVaga), codVaga));
 
-		criteria.where(predicates.stream().toArray(Predicate[]::new));
-		return em.createQuery(criteria).getSingleResult();
+			criteria.where(predicates.stream().toArray(Predicate[]::new));
+			return em.createQuery(criteria).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 	public Page<Candidatura> findCandidaturasByCodEstudante(Long codEstudante, Pageable paginacao) {

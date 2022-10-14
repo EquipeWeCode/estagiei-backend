@@ -43,7 +43,7 @@ public class CandidaturaControllerImpl implements CandidaturaController {
 
 	@Override
 	@PostMapping(PATH_ID)
-	@PreAuthorize("hasAnyAuthority('" + ROLE_EMPRESA + "','" + ROLE_ESTUDANTE + "')")
+	@PreAuthorize("hasAnyAuthority('" + ROLE_EMPRESA + "','" + ROLE_ESTUDANTE + "','" + ROLE_ADMIN + "')")
 	public ResponseEntity<CandidaturaDTO> postCandidatura(@PathVariable Long codEstudante, @PathVariable Long codVaga) {
 		CandidaturaDTO dto = new CandidaturaDTO();
 		dto.setCodEstudante(codEstudante);
@@ -56,7 +56,7 @@ public class CandidaturaControllerImpl implements CandidaturaController {
 
 	@Override
 	@PutMapping
-	@PreAuthorize("hasAnyAuthority('" + ROLE_EMPRESA + "','" + ROLE_ESTUDANTE + "')")
+	@PreAuthorize("hasAnyAuthority('" + ROLE_EMPRESA + "','" + ROLE_ESTUDANTE + "','" + ROLE_ADMIN + "')")
 	@SecurityRequirement(name = "Authorization")
 	public ResponseEntity<CandidaturaDTO> putCandidatura(@RequestBody @Valid CandidaturaDTO dto) {
 		CandidaturaDTO candidatura = service.salvaCandidatura(dto, true);

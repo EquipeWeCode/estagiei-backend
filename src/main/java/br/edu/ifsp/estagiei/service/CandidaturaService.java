@@ -19,7 +19,9 @@ import br.edu.ifsp.estagiei.constants.TipoUsuarioEnum;
 import br.edu.ifsp.estagiei.dto.CandidaturaDTO;
 import br.edu.ifsp.estagiei.dto.factory.CandidaturaDTOFactory;
 import br.edu.ifsp.estagiei.entity.Candidatura;
+import br.edu.ifsp.estagiei.entity.Estudante;
 import br.edu.ifsp.estagiei.entity.Usuario;
+import br.edu.ifsp.estagiei.entity.Vaga;
 import br.edu.ifsp.estagiei.exception.ValidacaoException;
 import br.edu.ifsp.estagiei.facade.IAuthenticationFacade;
 import br.edu.ifsp.estagiei.repository.CandidaturaRepository;
@@ -62,13 +64,23 @@ public class CandidaturaService {
 		validaPermissaoAlterarStatus(dto);
 
 		if (!isEdicao) {
-			candidatura.setCodEstudante(dto.getCodEstudante());
-			candidatura.setCodVaga(dto.getCodVaga());
+			criaNovaCandidatura(dto, candidatura);
 		}
 
 		candidatura.setStatus(dto.getStatus());
 
 		return candidaturaFactory.buildDTO(candidaturaRepositorio.save(candidatura));
+	}
+	
+	private void criaNovaCandidatura(CandidaturaDTO dto, Candidatura candidatura) {
+		Estudante estudante = new Estudante();
+		estudante.setCodEstudante(dto.getCodEstudante());
+		Vaga vaga = new Vaga();
+		vaga.setCodVaga(dto.getCodVaga());
+		candidatura.setEstudante(estudante);
+		candidatura.setVaga(vaga);
+		candidatura.setCodEstudante(dto.getCodEstudante());
+		candidatura.setCodVaga(dto.getCodVaga());
 	}
 
 	private void validaPermissaoAlterarStatus(CandidaturaDTO dto) {
@@ -104,7 +116,7 @@ public class CandidaturaService {
 		}
 
 		Optional<Candidatura> candidatura = Optional
-				.of(candidaturaRepositorio.findByIds(dto.getCodEstudante(), dto.getCodVaga()));
+				.ofNullable(candidaturaRepositorio.findByIds(dto.getCodEstudante(), dto.getCodVaga()));
 
 		if (candidatura.isPresent() && !isEdicao) {
 			throw new ValidacaoException("Não é possível se cadastrar em um processo de candidatura já existente");
