@@ -17,6 +17,13 @@ public interface UsuarioRepository extends CrudRepository<Usuario, String> {
 			+ "LEFT JOIN FETCH u.empresa WHERE u.codUsuario = :codUsuario")
 	public Optional<Usuario> findByCodUsuario(@Param("codUsuario") Long codUsuario);
 	
-	public Optional<Usuario> findByPessoaEstudanteCodEstudante(Long codEstudante);
-	public Optional<Usuario> findByEmpresaCodEmpresa(Long codEmpresa);
+	@Query("SELECT DISTINCT u FROM Usuario u "
+			+ "JOIN FETCH u.pessoa p "
+			+ "JOIN FETCH p.estudante e "
+			+ "WHERE e.codEstudante = :codEstudante")
+	public Optional<Usuario> findByPessoaEstudanteCodEstudante(@Param("codEstudante") Long codEstudante);
+	@Query("SELECT DISTINCT u FROM Usuario u "
+			+ "JOIN FETCH u.empresa e "
+			+ "WHERE e.codEmpresa = :codEmpresa")
+	public Optional<Usuario> findByEmpresaCodEmpresa(@Param("codEmpresa") Long codEmpresa);
 }
