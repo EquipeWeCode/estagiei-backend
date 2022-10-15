@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.persistence.PostUpdate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 
 import br.edu.ifsp.estagiei.entity.Candidatura;
 import br.edu.ifsp.estagiei.entity.Estudante;
@@ -19,6 +20,7 @@ public class SendEmailVagaListener {
 	private EmailServiceImpl emailService;
 
 	@PostUpdate
+	@Async
 	public void sendEmail(Candidatura candidatura) {
 		Vaga vaga = candidatura.getVaga();
 		Estudante estudante = candidatura.getEstudante();

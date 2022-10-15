@@ -9,6 +9,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -24,6 +25,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 @EnableWebMvc
 @SpringBootApplication
 @ServletComponentScan
+@EnableAsync
 @SecurityScheme(type = SecuritySchemeType.APIKEY, name = "Authorization", in = SecuritySchemeIn.HEADER, bearerFormat = "Bearer {token}")
 @OpenAPIDefinition(info = @Info(title = "Estagiei API", version = "0.8.1", description = "Documentação do sistema de vagas de estágio - Estagiei", license = @License(name = "MIT License", url = "https://github.com/EquipeWeCode/estagiei-backend/blob/develop/LICENSE")))
 public class Application extends SpringBootServletInitializer {
