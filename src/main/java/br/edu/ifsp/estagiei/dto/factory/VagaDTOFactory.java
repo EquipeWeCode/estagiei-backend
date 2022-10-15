@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import br.edu.ifsp.estagiei.constants.ModalidadeEnum;
 import br.edu.ifsp.estagiei.dto.EmpresaDTO;
 import br.edu.ifsp.estagiei.dto.EnderecoDTO;
 import br.edu.ifsp.estagiei.dto.VagaDTO;
@@ -17,7 +16,6 @@ import br.edu.ifsp.estagiei.dto.VagaDTO.VagaDTOBuilder;
 import br.edu.ifsp.estagiei.entity.Empresa;
 import br.edu.ifsp.estagiei.entity.Endereco;
 import br.edu.ifsp.estagiei.entity.Vaga;
-import br.edu.ifsp.estagiei.exception.ValidacaoException;
 import lombok.NoArgsConstructor;
 
 @Component
