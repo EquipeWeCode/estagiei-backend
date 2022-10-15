@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
 
 import br.edu.ifsp.estagiei.constants.CandidaturaEnum;
+import br.edu.ifsp.estagiei.constants.ModalidadeEnum;
 import br.edu.ifsp.estagiei.dto.CompetenciaDTO;
 import br.edu.ifsp.estagiei.dto.VagaDTO;
 import br.edu.ifsp.estagiei.dto.factory.VagaDTOFactory;
@@ -62,6 +63,7 @@ public class VagaService {
 	}
 
 	public VagaDTO salvaVaga(VagaDTO dto, boolean isEdicao) {
+		validaDadosVaga(dto);
 		Vaga vaga = validaPermissaoEmpresa(dto.getCodVaga(), isEdicao);
 		montaVaga(vaga, dto);
 		Vaga vagaNova = vagaRepositorio.save(vaga);
@@ -72,6 +74,21 @@ public class VagaService {
 
 		Vaga vagaCadastrada = vagaRepositorio.buscaVagaPorId(vagaNova.getCodVaga());
 		return factory.buildDTO(vagaCadastrada);
+	}
+
+	private void validaDadosVaga(VagaDTO dto) {
+		List<ModalidadeEnum> modalidadesComEnderecoObrigatorio = Lists.newArrayList(ModalidadeEnum.PRESENCIAL,
+				ModalidadeEnum.HIBRIDO);
+
+		if (dto.hasEndereco()) {
+
+			if (ModalidadeEnum.REMOTO.equals(dto.getModalidade())) {
+				throw new ValidacaoException("Vagas remotas não devem ter endereço cadastrado");
+			}
+
+		} else if (modalidadesComEnderecoObrigatorio.contains(dto.getModalidade())) {
+			throw new ValidacaoException("Endereço obrigatório para vagas híbridas/presenciais");
+		}
 	}
 
 	private void cancelaTodasCandidaturasDaVaga(Long codVaga) {

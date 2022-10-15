@@ -1,4 +1,4 @@
- package br.edu.ifsp.estagiei.dto;
+package br.edu.ifsp.estagiei.dto;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import br.edu.ifsp.estagiei.constants.ModalidadeEnum;
+import br.edu.ifsp.estagiei.utils.EstagieiUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,7 +44,7 @@ public class VagaDTO implements DTOUtils {
 	private Integer cargaHoraria;
 	private ModalidadeEnum modalidade;
 	@Schema(hidden = true)
-	private EmpresaDTO empresa;	
+	private EmpresaDTO empresa;
 	private EnderecoDTO endereco;
 	private List<CompetenciaDTO> competencias;
 	private List<CandidaturaDTO> candidaturas;
@@ -52,4 +53,9 @@ public class VagaDTO implements DTOUtils {
 	private Boolean indAtivo = true;
 	@Schema(hidden = true)
 	private AuditoriaDTO auditoria;
+
+	public boolean hasEndereco() {
+		return this.endereco != null && (EstagieiUtils.isNotEmptyOrNull(endereco.getEstado())
+				&& EstagieiUtils.isNotEmptyOrNull(endereco.getCidade()));
+	}
 }

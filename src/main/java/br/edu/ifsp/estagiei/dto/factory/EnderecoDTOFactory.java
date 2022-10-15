@@ -20,7 +20,6 @@ public class EnderecoDTOFactory {
 		String cepNumeros = EstagieiUtils.retiraNaoNumericos(dto.getCep());
 
 		Endereco entidade = new Endereco();
-		entidade.setCodEndereco(dto.getCodEndereco());
 		entidade.setBairro(dto.getBairro());
 		entidade.setCep(cepNumeros);
 		entidade.setCidade(dto.getCidade());
@@ -28,7 +27,6 @@ public class EnderecoDTOFactory {
 		entidade.setEstado(dto.getEstado());
 		entidade.setLogradouro(dto.getLogradouro());
 		entidade.setNumero(dto.getNumero());
-		entidade.setIndAtivo(dto.getIndAtivo());
 		return entidade;
 	}
 

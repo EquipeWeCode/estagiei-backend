@@ -23,7 +23,6 @@ import lombok.Setter;
 public class EnderecoDTO implements DTOUtils {
 	@Schema(hidden = true)
 	private Long codEndereco;
-	@NotNull(message = MSG_NOT_NULL)
 	@Schema(example = "06123412")
 	private String cep;
 	@NotNull(message = MSG_NOT_NULL)

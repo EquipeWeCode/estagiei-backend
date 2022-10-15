@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import br.edu.ifsp.estagiei.constants.ModalidadeEnum;
 import br.edu.ifsp.estagiei.dto.EmpresaDTO;
 import br.edu.ifsp.estagiei.dto.EnderecoDTO;
 import br.edu.ifsp.estagiei.dto.VagaDTO;
@@ -16,6 +17,7 @@ import br.edu.ifsp.estagiei.dto.VagaDTO.VagaDTOBuilder;
 import br.edu.ifsp.estagiei.entity.Empresa;
 import br.edu.ifsp.estagiei.entity.Endereco;
 import br.edu.ifsp.estagiei.entity.Vaga;
+import br.edu.ifsp.estagiei.exception.ValidacaoException;
 import lombok.NoArgsConstructor;
 
 @Component
@@ -26,7 +28,7 @@ public class VagaDTOFactory {
 	private CompetenciaDTOFactory competenciaFactory;
 	@Autowired
 	private AuditoriaDTOFactory auditoriaFactory;
-	
+
 	private EmpresaDTOFactory empresaFactory;
 	@Autowired
 	private EnderecoDTOFactory enderecoFactory;
@@ -57,7 +59,7 @@ public class VagaDTOFactory {
 		vaga.setIndAtivo(dto.getIndAtivo());
 		return vaga;
 	}
-	
+
 	public Vaga buildEntitySave(Vaga entidade, VagaDTO dto) {
 		entidade.setCodVaga(dto.getCodVaga());
 		entidade.setDescricao(dto.getDescricao());
@@ -66,15 +68,15 @@ public class VagaDTOFactory {
 		entidade.setCurso(dto.getCurso());
 		entidade.setCargaHoraria(dto.getCargaHoraria());
 		entidade.setModalidade(dto.getModalidade());
-		
-		if(entidade.hasEndereco()) {
+
+		if (dto.hasEndereco()) {
 			entidade.setEndereco(enderecoFactory.buildEntity(dto.getEndereco()));
 		}
-		
+
 		entidade.setIndAtivo(dto.getIndAtivo());
 		return entidade;
 	}
-	
+
 	private Endereco buildEndereco(EnderecoDTO dto) {
 		Endereco endereco = new Endereco();
 		endereco.setCodEndereco(dto.getCodEndereco());
@@ -94,14 +96,9 @@ public class VagaDTOFactory {
 	public VagaDTO buildDTO(Vaga vaga) {
 		VagaDTOBuilder builder = VagaDTO.builder();
 
-		builder.codVaga(vaga.getCodVaga())
-				.descricao(vaga.getDescricao())
-				.salario(vaga.getSalario())
-				.titulo(vaga.getTitulo())
-				.curso(vaga.getCurso())
-				.cargaHoraria(vaga.getCargaHoraria())
-				.modalidade(vaga.getModalidade())
-				.indAtivo(vaga.getIndAtivo())
+		builder.codVaga(vaga.getCodVaga()).descricao(vaga.getDescricao()).salario(vaga.getSalario())
+				.titulo(vaga.getTitulo()).curso(vaga.getCurso()).cargaHoraria(vaga.getCargaHoraria())
+				.modalidade(vaga.getModalidade()).indAtivo(vaga.getIndAtivo())
 				.auditoria(auditoriaFactory.buildDTO(vaga.getAuditoria()));
 
 		if (vaga.hasEmpresa()) {
@@ -111,11 +108,11 @@ public class VagaDTOFactory {
 		if (vaga.hasCompetencias()) {
 			builder.competencias(competenciaFactory.buildDTOs(vaga.getCompetencias()));
 		}
-		
+
 		if (vaga.hasEndereco()) {
 			builder.endereco(enderecoFactory.buildDTO(vaga.getEndereco()));
 		}
-		
+
 		if (vaga.hasCandidaturas()) {
 			builder.candidaturas(candidaturaFactory.buildDTOs(vaga.getCandidaturas()));
 		}
