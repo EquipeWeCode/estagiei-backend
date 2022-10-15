@@ -32,6 +32,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import br.edu.ifsp.estagiei.constants.TipoUsuarioEnum;
 import br.edu.ifsp.estagiei.entity.listener.Auditavel;
 import br.edu.ifsp.estagiei.entity.listener.AuditoriaListener;
+import br.edu.ifsp.estagiei.utils.EstagieiUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -140,5 +141,9 @@ public class Usuario implements UserDetails, Auditavel {
 
 	public boolean hasEmpresa() {
 		return this.empresa != null;
+	}
+
+	public boolean hasEmail() {
+		return EstagieiUtils.isNotEmptyOrNull(email);
 	}
 }

@@ -78,10 +78,10 @@ public class Vaga implements Auditavel {
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_endereco")
 	private Endereco endereco;
-	
+
 	@OneToMany(mappedBy = "vaga", fetch = FetchType.LAZY)
-    private Set<Candidatura> candidaturas;
-	
+	private Set<Candidatura> candidaturas;
+
 	public Vaga(Empresa empresa) {
 		this.empresa = empresa;
 	}
@@ -98,21 +98,21 @@ public class Vaga implements Auditavel {
 	}
 
 	public Boolean hasCompetencias() {
-		return Persistence.getPersistenceUtil().isLoaded(this, "competencias")  && competencias != null;
+		return Persistence.getPersistenceUtil().isLoaded(this, "competencias") && competencias != null;
 	}
 
 	public Boolean hasEmpresa() {
-		return Persistence.getPersistenceUtil().isLoaded(this, "empresa")  && empresa != null;
+		return Persistence.getPersistenceUtil().isLoaded(this, "empresa") && empresa != null;
 	}
 
 	public boolean hasEndereco() {
-		return Persistence.getPersistenceUtil().isLoaded(this, "endereco")  && endereco != null;
+		return Persistence.getPersistenceUtil().isLoaded(this, "endereco") && endereco != null;
 	}
 
 	public boolean hasCandidaturas() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "candidaturas") && candidaturas != null;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(codVaga);
@@ -130,5 +130,13 @@ public class Vaga implements Auditavel {
 		return Objects.equals(codVaga, other.codVaga);
 	}
 
+	@Override
+	public String toString() {
+		return this.titulo + " - " + this.modalidade;
+	}
+
+	public boolean isActive() {
+		return this.indAtivo != null && indAtivo;
+	}
 
 }

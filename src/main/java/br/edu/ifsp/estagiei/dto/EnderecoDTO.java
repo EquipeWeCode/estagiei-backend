@@ -46,7 +46,8 @@ public class EnderecoDTO implements DTOUtils {
 	@Schema(example = "Estátua São José")
 	private String pontoReferencia;
 	@Schema(hidden = true)
-	private Boolean indAtivo;
+	@Builder.Default
+	private Boolean indAtivo = true;
 	@Schema(hidden = true)
 	private AuditoriaDTO auditoria;
 

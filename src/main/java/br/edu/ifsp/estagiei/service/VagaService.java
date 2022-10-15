@@ -14,16 +14,19 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 
+import br.edu.ifsp.estagiei.constants.CandidaturaEnum;
 import br.edu.ifsp.estagiei.dto.CompetenciaDTO;
 import br.edu.ifsp.estagiei.dto.VagaDTO;
 import br.edu.ifsp.estagiei.dto.factory.VagaDTOFactory;
 import br.edu.ifsp.estagiei.dto.filter.VagaFiltroDTO;
+import br.edu.ifsp.estagiei.entity.Candidatura;
 import br.edu.ifsp.estagiei.entity.Competencia;
 import br.edu.ifsp.estagiei.entity.Empresa;
 import br.edu.ifsp.estagiei.entity.Usuario;
 import br.edu.ifsp.estagiei.entity.Vaga;
 import br.edu.ifsp.estagiei.exception.ValidacaoException;
 import br.edu.ifsp.estagiei.facade.IAuthenticationFacade;
+import br.edu.ifsp.estagiei.repository.CandidaturaRepository;
 import br.edu.ifsp.estagiei.repository.CompetenciaRepository;
 import br.edu.ifsp.estagiei.repository.EmpresaRepository;
 import br.edu.ifsp.estagiei.repository.VagaRepository;
@@ -38,6 +41,8 @@ public class VagaService {
 	@Autowired
 	private CompetenciaRepository competenciaRepositorio;
 	@Autowired
+	private CandidaturaRepository candidaturaRepositorio;
+	@Autowired
 	private VagaDTOFactory factory;
 	@Autowired
 	private IAuthenticationFacade authentication;
@@ -48,7 +53,7 @@ public class VagaService {
 	}
 
 	public VagaDTO buscaVaga(Long codVaga) {
-		try {			
+		try {
 			Vaga vaga = vagaRepositorio.buscaVagaPorId(codVaga);
 			return factory.buildDTO(vaga);
 		} catch (NoResultException e) {
@@ -61,8 +66,19 @@ public class VagaService {
 		montaVaga(vaga, dto);
 		Vaga vagaNova = vagaRepositorio.save(vaga);
 
+		if (isEdicao && !vagaNova.isActive()) {
+			cancelaTodasCandidaturasDaVaga(vagaNova.getCodVaga());
+		}
+
 		Vaga vagaCadastrada = vagaRepositorio.buscaVagaPorId(vagaNova.getCodVaga());
 		return factory.buildDTO(vagaCadastrada);
+	}
+
+	private void cancelaTodasCandidaturasDaVaga(Long codVaga) {
+		List<Candidatura> candidaturasDaVaga = Optional.ofNullable(candidaturaRepositorio.findByCodVaga(codVaga))
+				.orElse(Lists.newArrayList());
+		candidaturasDaVaga.forEach(c -> c.setStatus(CandidaturaEnum.CANCELADO));
+		candidaturaRepositorio.saveAll(candidaturasDaVaga);
 	}
 
 	private void montaVaga(Vaga vaga, VagaDTO dto) {

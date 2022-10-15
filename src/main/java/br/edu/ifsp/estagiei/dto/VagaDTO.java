@@ -48,7 +48,8 @@ public class VagaDTO implements DTOUtils {
 	private List<CompetenciaDTO> competencias;
 	private List<CandidaturaDTO> candidaturas;
 	@Schema(hidden = true)
-	private Boolean indAtivo;
+	@Builder.Default
+	private Boolean indAtivo = true;
 	@Schema(hidden = true)
 	private AuditoriaDTO auditoria;
 }
