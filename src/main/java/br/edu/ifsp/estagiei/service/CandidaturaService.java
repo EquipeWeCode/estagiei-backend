@@ -124,8 +124,18 @@ public class CandidaturaService {
 		if (candidatura.isPresent() && !isEdicao) {
 			throw new ValidacaoException("Não é possível se cadastrar em um processo de candidatura já existente");
 		}
+		
+		if (!candidatura.isPresent() && isEdicao) {
+			throw new ValidacaoException("Candidatura não encontrada");
+		}
 
 		return candidatura.isPresent() ? candidatura.get() : new Candidatura();
+	}
+
+	public void excluiCandidatura(Long codEstudante, Long codVaga) {
+		CandidaturaDTO dto = CandidaturaDTO.builder().codEstudante(codEstudante).codVaga(codVaga).build();
+		Candidatura candidaturaValidada = validaCandidatura(dto, true);
+		candidaturaRepositorio.delete(candidaturaValidada);
 	}
 
 }

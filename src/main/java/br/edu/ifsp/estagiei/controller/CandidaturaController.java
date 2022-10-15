@@ -25,5 +25,10 @@ public interface CandidaturaController extends Controller {
 	@Operation(summary = "Atualiza o status da candidatura", tags = { CANDIDATURA })
 	@SecurityRequirement(name = "Authorization")
 	public ResponseEntity<CandidaturaDTO> putCandidatura(CandidaturaDTO dto);
+	
+	@ApiResponse(responseCode = "204")
+	@Operation(summary = "Exclui uma candidatura", tags = { CANDIDATURA })
+	@SecurityRequirement(name = "Authorization")
+	public void deleteCandidatura(Long codEstudante, Long codVaga);
 
 }
