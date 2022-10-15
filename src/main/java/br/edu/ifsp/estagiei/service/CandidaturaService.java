@@ -71,7 +71,7 @@ public class CandidaturaService {
 
 		return candidaturaFactory.buildDTO(candidaturaRepositorio.save(candidatura));
 	}
-	
+
 	private void criaNovaCandidatura(CandidaturaDTO dto, Candidatura candidatura) {
 		Estudante estudante = new Estudante();
 		estudante.setCodEstudante(dto.getCodEstudante());
@@ -106,13 +106,16 @@ public class CandidaturaService {
 		try {
 			estudanteRepository.findByCodEstudante(dto.getCodEstudante());
 		} catch (EmptyResultDataAccessException e) {
-			throw new ValidacaoException("Estudante informado não existente", e);
+			throw new ValidacaoException("Estudante informado não existente");
 		}
 
 		try {
-			vagaRepository.buscaVagaPorId(dto.getCodVaga());
+			Vaga vaga = vagaRepository.buscaVagaPorId(dto.getCodVaga());
+			if (!vaga.getIndAtivo()) {
+				throw new ValidacaoException("A vaga informada não está ativa");
+			}
 		} catch (EmptyResultDataAccessException e) {
-			throw new ValidacaoException("Vaga informada não existente", e);
+			throw new ValidacaoException("Vaga informada não existente");
 		}
 
 		Optional<Candidatura> candidatura = Optional
