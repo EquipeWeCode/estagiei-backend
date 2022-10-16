@@ -24,7 +24,7 @@ public class EmailServiceImpl {
 	private JavaMailSender emailSender;
 
 	private static final Logger logger = LoggerFactory.getLogger(GlobalControllerAdvice.class);
-	private static final String ATTACH_URL = "https://res.cloudinary.com/dlkvupjc7/image/upload/v1665797374/email-attach_ryiqfi.png";
+	private static final String ATTACH_URL = "https://res.cloudinary.com/dlkvupjc7/image/upload/v1665892935/email-attach_iwco99.png";
 
 	public void sendSimpleMessage(String to, String subject, String text) {
 		try {
