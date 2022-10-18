@@ -52,6 +52,7 @@ public class EmpresaDTOFactory {
 		entidade.setNomeFantasia(dto.getNomeFantasia());
 		entidade.setRazaoSocial(dto.getRazaoSocial());
 		entidade.setCnpj(EstagieiUtils.retiraNaoNumericos(dto.getCnpj()));
+		entidade.setIndAtivo(dto.getIndAtivo());
 
 		if (dto.hasEndereco()) {
 			entidade.setEndereco(enderecoFactory.buildEntity(dto.getEndereco()));

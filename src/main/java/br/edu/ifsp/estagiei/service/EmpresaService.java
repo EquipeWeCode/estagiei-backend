@@ -41,6 +41,24 @@ public class EmpresaService {
 
 	@Autowired
 	private EmpresaDTOFactory factory;
+	
+	public EmpresaDTO buscaEmpresa(Long codEmpresa) {
+		Empresa empresaBuscada = empresaRepositorio.findById(codEmpresa)
+				.orElseThrow(() -> new ValidacaoException("Empresa não encontrada"));
+
+		return factory.buildDTO(empresaBuscada);
+	}
+
+	public List<EmpresaDTO> buscaEmpresas(EmpresaFiltroDTO filtro, Pageable paginacao) {
+		Page<Empresa> empresas = empresaRepositorio.buscaTodosPorFiltro(filtro, paginacao);
+		return factory.buildDTOs(empresas.getContent());
+	}
+	
+	public EmpresaDTO alteraEmpresa(EmpresaDTO dto, Long codEmpresa) {
+		Empresa empresa = empresaRepositorio.findById(codEmpresa).orElseThrow(() -> new ValidacaoException("Empresa não encontrada"));
+		empresa = factory.buildEntity(empresa, dto);
+		return factory.buildDTO(empresa);
+	}
 
 	public EmpresaDTO salvaEmpresa(EmpresaDTO dto, boolean isEdicao) {
 		Usuario usuario = validaEmpresa(dto, isEdicao);
@@ -86,7 +104,7 @@ public class EmpresaService {
 		Empresa empresaDoCodUsuario = empresaRepositorio.findByUsuarioCodUsuario(codUsuario).orElse(null);
 
 		if (empresaDoCodUsuario == null) {
-			throw new ValidacaoException("Estudante não encontrado");
+			throw new ValidacaoException("Usuário não encontrado");
 		}
 
 		if (!empresaDoCodUsuario.getCodEmpresa().equals(codEmpresa)) {
@@ -110,18 +128,6 @@ public class EmpresaService {
 		Empresa empresaMontada = factory.buildEntity(empresa, dto);
 		empresaMontada.setUsuario(usuario);
 		usuario.setEmpresa(empresaMontada);
-	}
-
-	public EmpresaDTO buscaEmpresa(Long codEmpresa) {
-		Empresa empresaBuscada = empresaRepositorio.findById(codEmpresa)
-				.orElseThrow(() -> new ValidacaoException("Empresa não encontrada"));
-
-		return factory.buildDTO(empresaBuscada);
-	}
-
-	public List<EmpresaDTO> buscaEmpresas(EmpresaFiltroDTO filtro, Pageable paginacao) {
-		Page<Empresa> empresas = empresaRepositorio.buscaTodosPorFiltro(filtro, paginacao);
-		return factory.buildDTOs(empresas.getContent());
 	}
 
 }
