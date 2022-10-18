@@ -16,6 +16,7 @@ public interface Controller {
 	public static final String COMPETENCIA = "Competência";
 	public static final String USUARIO = "Usuário";
 	public static final String CANDIDATURA = "Candidatura";
+	public static final String ADMINISTRADOR = "Administrador";
 
 	public static final String ROLE_ESTUDANTE = "ESTUDANTE";
 	public static final String ROLE_EMPRESA = "EMPRESA";
@@ -25,6 +26,7 @@ public interface Controller {
 	public static final String P_COD_ESTUDANTE = "codEstudante";
 	public static final String P_COD_VAGA = "codVaga";
 	public static final String P_COD_USUARIO = "codUsuario";
+	public static final String P_OPERACAO = "operacao";
 	public static final String QUANTIDADE_TOTAL = "quantidadeTotal";
 
 	default BodyBuilder respostaPaginada(Long totalRegistros) {
