@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.edu.ifsp.estagiei.dto.CandidaturaDTO;
@@ -17,6 +18,9 @@ import lombok.NoArgsConstructor;
 @Component
 @NoArgsConstructor
 public class CandidaturaDTOFactory {
+	
+	@Autowired
+	private AuditoriaDTOFactory auditoriaFactory;
 
 	public List<CandidaturaDTO> buildDTOs(Collection<Candidatura> candidaturas) {
 		return candidaturas.stream().map(this::buildDTO).collect(Collectors.toList());
@@ -32,7 +36,8 @@ public class CandidaturaDTOFactory {
 				.nomeEstudante(estudante.getPessoa().getNome())
 				.titulo(vaga.getTitulo())
 				.curso(vaga.getCurso())
-				.status(candidatura.getStatus());
+				.status(candidatura.getStatus())
+				.auditoria(auditoriaFactory.buildDTO(candidatura.getAuditoria()));
 
 		return builder.build();
 	}
