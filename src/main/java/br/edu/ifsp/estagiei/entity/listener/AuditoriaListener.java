@@ -24,6 +24,11 @@ public class AuditoriaListener {
 	@PreUpdate
 	public void setDataAlteracao(Auditavel auditavel) {
 		Auditoria auditoria = auditavel.getAuditoria();
+		
+		if (auditoria == null) {
+			auditoria = new Auditoria();
+			auditavel.setAuditoria(auditoria);
+		}
 
 		auditoria.setDataAlteracao(LocalDateTime.now());
 	}

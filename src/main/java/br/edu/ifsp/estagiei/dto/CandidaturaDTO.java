@@ -40,4 +40,6 @@ public class CandidaturaDTO implements DTOUtils {
 	@NotNull
 	private CandidaturaEnum status;
 
+	private AuditoriaDTO auditoria;
+
 }
