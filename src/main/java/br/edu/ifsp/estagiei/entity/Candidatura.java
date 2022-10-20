@@ -1,6 +1,7 @@
 package br.edu.ifsp.estagiei.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Id;
@@ -12,6 +13,8 @@ import javax.persistence.Table;
 
 import br.edu.ifsp.estagiei.constants.CandidaturaEnum;
 import br.edu.ifsp.estagiei.entity.id.CandidaturaId;
+import br.edu.ifsp.estagiei.entity.listener.Auditavel;
+import br.edu.ifsp.estagiei.entity.listener.AuditoriaListener;
 import br.edu.ifsp.estagiei.entity.listener.SendEmailVagaListener;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +26,8 @@ import lombok.Setter;
 @Entity
 @Table(name = "tb_estud_vaga")
 @IdClass(CandidaturaId.class)
-@EntityListeners(SendEmailVagaListener.class)
-public class Candidatura {
+@EntityListeners(value = { SendEmailVagaListener.class, AuditoriaListener.class })
+public class Candidatura implements Auditavel {
 
 	@Id
 	@Column(name = "cod_estudante")
@@ -36,6 +39,9 @@ public class Candidatura {
 
 	@Column(name = "status")
 	private CandidaturaEnum status;
+
+	@Embedded
+	private Auditoria auditoria;
 
 	@ManyToOne
 	@MapsId("cod_estudante")

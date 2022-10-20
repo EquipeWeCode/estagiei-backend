@@ -39,7 +39,6 @@ public class CandidaturaDTO implements DTOUtils {
 	@Schema(example = "CANDIDATADO")
 	@NotNull
 	private CandidaturaEnum status;
-
 	@Schema(hidden = true)
 	private AuditoriaDTO auditoria;
 }
