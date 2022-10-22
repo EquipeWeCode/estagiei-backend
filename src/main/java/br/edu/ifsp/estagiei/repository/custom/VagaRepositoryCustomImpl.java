@@ -61,7 +61,7 @@ public class VagaRepositoryCustomImpl extends RepositoryImpl implements VagaRepo
 		return em.createQuery(criteria).getSingleResult();
 	}
 
-	public Page<Vaga> buscaVagasRecomendadas(Long codEstudante, Pageable paginacao) {
+	public List<Long> buscaVagasRecomendadas(Long codEstudante) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Vaga> criteria = cb.createQuery(Vaga.class);
 		Root<Vaga> r = criteria.from(Vaga.class);
@@ -75,20 +75,13 @@ public class VagaRepositoryCustomImpl extends RepositoryImpl implements VagaRepo
 		criteria.orderBy(cb.asc(r.get(Vaga_.titulo)));
 
 		List<Vaga> vagasRecomendadas = em.createQuery(criteria).getResultList();
-
-		VagaFiltroDTO filtroVaga = new VagaFiltroDTO();
 		List<Long> ids = Lists.newArrayList();
 
 		for (Vaga vaga : vagasRecomendadas) {
 			ids.add(vaga.getCodVaga());
 		}
-
-		filtroVaga.setIds(ids);
-
-		if (filtroVaga.hasIds()) {
-			return buscaTodosPorFiltro(filtroVaga, paginacao);
-		}
-		return (Page<Vaga>) geraPaginacao(paginacao, vagasRecomendadas, filtroVaga);
+		
+		return ids;
 	}
 
 	public Page<Vaga> buscaTodosPorFiltro(VagaFiltroDTO filtro, Pageable paginacao) {
@@ -135,6 +128,9 @@ public class VagaRepositoryCustomImpl extends RepositoryImpl implements VagaRepo
 		}
 		if (filtro.hasNomeEmpresa()) {
 			predicates.add(cb.equal(cb.upper(empresa.get(Empresa_.nomeFantasia)), filtro.getNomeEmpresaFiltro()));
+		}
+		if (filtro.hasCodEstudante()) {
+			predicates.add(root.get(Vaga_.codVaga).in(buscaVagasRecomendadas(filtro.getCodEstudante())));
 		}
 
 		aplicaFiltrosEndereco(filtro, cb, predicates, root);

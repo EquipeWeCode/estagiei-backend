@@ -7,8 +7,6 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,10 +20,8 @@ import br.edu.ifsp.estagiei.dto.ContatoDTO;
 import br.edu.ifsp.estagiei.dto.EstudanteDTO;
 import br.edu.ifsp.estagiei.dto.ExperienciaProfissionalDTO;
 import br.edu.ifsp.estagiei.dto.HistoricoEscolarDTO;
-import br.edu.ifsp.estagiei.dto.VagaDTO;
 import br.edu.ifsp.estagiei.dto.factory.EnderecoDTOFactory;
 import br.edu.ifsp.estagiei.dto.factory.EstudanteDTOFactory;
-import br.edu.ifsp.estagiei.dto.factory.VagaDTOFactory;
 import br.edu.ifsp.estagiei.dto.filter.EstudanteFiltroDTO;
 import br.edu.ifsp.estagiei.entity.Competencia;
 import br.edu.ifsp.estagiei.entity.Contato;
@@ -35,14 +31,12 @@ import br.edu.ifsp.estagiei.entity.HistoricoEscolar;
 import br.edu.ifsp.estagiei.entity.Permissao;
 import br.edu.ifsp.estagiei.entity.Pessoa;
 import br.edu.ifsp.estagiei.entity.Usuario;
-import br.edu.ifsp.estagiei.entity.Vaga;
 import br.edu.ifsp.estagiei.exception.ValidacaoException;
 import br.edu.ifsp.estagiei.facade.IAuthenticationFacade;
 import br.edu.ifsp.estagiei.repository.CompetenciaRepository;
 import br.edu.ifsp.estagiei.repository.EstudanteRepository;
 import br.edu.ifsp.estagiei.repository.PessoaRepository;
 import br.edu.ifsp.estagiei.repository.UsuarioRepository;
-import br.edu.ifsp.estagiei.repository.VagaRepository;
 import br.edu.ifsp.estagiei.utils.EstagieiUtils;
 
 @Service
@@ -54,13 +48,9 @@ public class EstudanteService {
 	@Autowired
 	private UsuarioRepository usuarioRepositorio;
 	@Autowired
-	private VagaRepository vagaRepositorio;
-	@Autowired
 	private PessoaRepository pessoaRepositorio;
 	@Autowired
 	private CompetenciaRepository competenciaRepositorio;
-	@Autowired
-	private VagaDTOFactory vagaFactory;
 	@Autowired
 	private EstudanteDTOFactory estudanteFactory;
 	@Autowired
@@ -77,19 +67,6 @@ public class EstudanteService {
 		} catch (EmptyResultDataAccessException e) {
 			throw new ValidacaoException("Estudante não encontrado");
 		}
-	}
-
-	public List<VagaDTO> buscaVagasRecomendadas(Long codEstudante, Pageable paginacao) {
-
-		validaEstudanteVaga(codEstudante);
-
-		Page<Vaga> vagas = vagaRepositorio.buscaVagasRecomendadas(codEstudante, paginacao);
-		return vagaFactory.buildDTOs(vagas.getContent());
-	}
-
-	private void validaEstudanteVaga(Long codEstudante) {
-		estudanteRepositorio.findById(codEstudante)
-				.orElseThrow(() -> new ValidacaoException("Estudante não encontrado"));
 	}
 
 	public EstudanteDTO salvaEstudante(EstudanteDTO dto, boolean isEdicao) {

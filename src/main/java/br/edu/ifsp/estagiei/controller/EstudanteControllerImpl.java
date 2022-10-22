@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifsp.estagiei.dto.EstudanteDTO;
-import br.edu.ifsp.estagiei.dto.VagaDTO;
 import br.edu.ifsp.estagiei.dto.filter.EstudanteFiltroDTO;
 import br.edu.ifsp.estagiei.service.EstudanteService;
 
@@ -31,7 +29,6 @@ public class EstudanteControllerImpl implements EstudanteController {
 
 	public static final String PATH = "/estudante";
 	private static final String PATH_ID = "/{codEstudante}";
-	private static final String PATH_RECOMENDACAO = "/recomendacao";
 
 	@GetMapping(PATH_ID)
 	public ResponseEntity<EstudanteDTO> getEstudante(@PathVariable Long codEstudante) {
@@ -60,11 +57,5 @@ public class EstudanteControllerImpl implements EstudanteController {
 		dto.setCodEstudante(codEstudante);
 		EstudanteDTO estudante = service.salvaEstudante(dto, true);
 		return ResponseEntity.ok(estudante);
-	}
-
-	@GetMapping(PATH_ID + PATH_RECOMENDACAO)
-	public ResponseEntity<List<VagaDTO>> getVagasRecomendadas(@PathVariable(P_COD_ESTUDANTE) Long codEstudante, @ParameterObject Pageable paginacao) {
-		List<VagaDTO> vagas = service.buscaVagasRecomendadas(codEstudante, paginacao);
-		return ResponseEntity.ok(vagas);
 	}
 }
