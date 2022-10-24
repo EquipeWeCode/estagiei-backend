@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifsp.estagiei.constants.CandidaturaEnum;
 import br.edu.ifsp.estagiei.dto.CandidaturaDTO;
+import br.edu.ifsp.estagiei.dto.filter.CandidaturaFiltroDTO;
 import br.edu.ifsp.estagiei.service.CandidaturaService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
@@ -40,8 +41,10 @@ public class CandidaturaControllerImpl implements CandidaturaController {
 	@PreAuthorize("hasAnyAuthority('" + ROLE_EMPRESA + "','" + ROLE_ESTUDANTE + "','" + ROLE_ADMIN + "')")
 	public ResponseEntity<List<CandidaturaDTO>> getCandidaturasEstudante(@PathVariable Long codEstudante,
 			@ParameterObject Pageable paginacao) {
-		List<CandidaturaDTO> candidaturas = service.findCandidaturasByCodEstudante(codEstudante, paginacao);
-		return ResponseEntity.ok(candidaturas);
+		CandidaturaFiltroDTO filtro = new CandidaturaFiltroDTO();
+		filtro.setCodEstudante(codEstudante);
+		List<CandidaturaDTO> candidaturas = service.findCandidaturasByCodEstudante(filtro, paginacao);
+		return respostaPaginada(filtro.getQuantidadeTotal()).body(candidaturas);
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import br.edu.ifsp.estagiei.dto.CandidaturaDTO;
 import br.edu.ifsp.estagiei.dto.CandidaturaDTO.CandidaturaDTOBuilder;
 import br.edu.ifsp.estagiei.entity.Candidatura;
+import br.edu.ifsp.estagiei.entity.Empresa;
 import br.edu.ifsp.estagiei.entity.Estudante;
 import br.edu.ifsp.estagiei.entity.Vaga;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,8 @@ public class CandidaturaDTOFactory {
 	
 	@Autowired
 	private AuditoriaDTOFactory auditoriaFactory;
+	@Autowired
+	private EmpresaDTOFactory empresaFactory;
 
 	public List<CandidaturaDTO> buildDTOs(Collection<Candidatura> candidaturas) {
 		return candidaturas.stream().map(this::buildDTO).collect(Collectors.toList());
@@ -28,6 +31,7 @@ public class CandidaturaDTOFactory {
 
 	public CandidaturaDTO buildDTO(Candidatura candidatura) {
 		Vaga vaga = Optional.ofNullable(candidatura.getVaga()).orElse(new Vaga());
+		Empresa empresa = Optional.ofNullable(vaga.getEmpresa()).orElse(new Empresa());
 		Estudante estudante = Optional.ofNullable(candidatura.getEstudante()).orElse(new Estudante());
 
 		CandidaturaDTOBuilder builder = CandidaturaDTO.builder()
@@ -35,7 +39,10 @@ public class CandidaturaDTOFactory {
 				.codVaga(candidatura.getCodVaga())
 				.nomeEstudante(estudante.getPessoa().getNome())
 				.titulo(vaga.getTitulo())
+				.modalidade(vaga.getModalidade())
+				.salario(vaga.getSalario())
 				.curso(vaga.getCurso())
+				.empresa(empresaFactory.buildDTO(empresa))
 				.status(candidatura.getStatus())
 				.auditoria(auditoriaFactory.buildDTO(candidatura.getAuditoria()));
 

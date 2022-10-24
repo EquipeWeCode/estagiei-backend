@@ -18,6 +18,7 @@ import br.edu.ifsp.estagiei.constants.CandidaturaEnum;
 import br.edu.ifsp.estagiei.constants.TipoUsuarioEnum;
 import br.edu.ifsp.estagiei.dto.CandidaturaDTO;
 import br.edu.ifsp.estagiei.dto.factory.CandidaturaDTOFactory;
+import br.edu.ifsp.estagiei.dto.filter.CandidaturaFiltroDTO;
 import br.edu.ifsp.estagiei.entity.Candidatura;
 import br.edu.ifsp.estagiei.entity.Estudante;
 import br.edu.ifsp.estagiei.entity.Usuario;
@@ -49,9 +50,10 @@ public class CandidaturaService {
 	private static final List<CandidaturaEnum> statusQueEstudantePodeAlterar = Lists
 			.newArrayList(CandidaturaEnum.CANCELADO, CandidaturaEnum.CANDIDATADO);
 
-	public List<CandidaturaDTO> findCandidaturasByCodEstudante(Long id, Pageable paginacao) {
+	public List<CandidaturaDTO> findCandidaturasByCodEstudante(CandidaturaFiltroDTO filtro, Pageable paginacao) {
 		try {
-			Page<Candidatura> candidaturas = candidaturaRepositorio.findCandidaturasByCodEstudante(id, paginacao);
+			Page<Candidatura> candidaturas = candidaturaRepositorio
+					.findCandidaturasByCodEstudante(filtro, paginacao);
 			return candidaturaFactory.buildDTOs(candidaturas.getContent());
 		} catch (EmptyResultDataAccessException e) {
 			throw new ValidacaoException("Estudante não encontrado");
@@ -124,7 +126,7 @@ public class CandidaturaService {
 		if (candidatura.isPresent() && !isEdicao) {
 			throw new ValidacaoException("Não é possível se cadastrar em um processo de candidatura já existente");
 		}
-		
+
 		if (!candidatura.isPresent() && isEdicao) {
 			throw new ValidacaoException("Candidatura não encontrada");
 		}
