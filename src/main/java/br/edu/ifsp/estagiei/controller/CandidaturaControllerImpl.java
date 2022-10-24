@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,6 +25,8 @@ import br.edu.ifsp.estagiei.constants.CandidaturaEnum;
 import br.edu.ifsp.estagiei.dto.CandidaturaDTO;
 import br.edu.ifsp.estagiei.dto.filter.CandidaturaFiltroDTO;
 import br.edu.ifsp.estagiei.service.CandidaturaService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
@@ -40,9 +43,11 @@ public class CandidaturaControllerImpl implements CandidaturaController {
 	@GetMapping(PATH_ID_ESTUDANTE)
 	@PreAuthorize("hasAnyAuthority('" + ROLE_EMPRESA + "','" + ROLE_ESTUDANTE + "','" + ROLE_ADMIN + "')")
 	public ResponseEntity<List<CandidaturaDTO>> getCandidaturasEstudante(@PathVariable Long codEstudante,
-			@ParameterObject Pageable paginacao) {
+			@ParameterObject Pageable paginacao,
+			@Parameter(in = ParameterIn.QUERY, required = false, allowEmptyValue = true) @RequestParam(required = false) Boolean indAtivo) {
 		CandidaturaFiltroDTO filtro = new CandidaturaFiltroDTO();
 		filtro.setCodEstudante(codEstudante);
+		filtro.setIndAtivo(indAtivo);
 		List<CandidaturaDTO> candidaturas = service.findCandidaturasByCodEstudante(filtro, paginacao);
 		return respostaPaginada(filtro.getQuantidadeTotal()).body(candidaturas);
 	}

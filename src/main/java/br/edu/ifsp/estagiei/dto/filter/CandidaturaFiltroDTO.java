@@ -11,6 +11,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @ParameterObject
-public class CandidaturaFiltroDTO extends FiltroDTO  {
+public class CandidaturaFiltroDTO extends FiltroDTO {
 	private Long codEstudante;
+	private Boolean indAtivo;
+
+	public boolean isAtivo() {
+		return this.indAtivo != null && indAtivo;
+	}
+	
+	public boolean isNotAtivo() {
+		return this.indAtivo != null && !indAtivo;
+	}
 }

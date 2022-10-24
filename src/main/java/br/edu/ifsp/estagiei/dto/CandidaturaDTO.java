@@ -48,6 +48,9 @@ public class CandidaturaDTO implements DTOUtils {
 
 	@Schema(hidden = true, example = "Ciência da Computação")
 	private String curso;
+	
+	@Schema(hidden = true)
+	private Boolean indAtivo;
 
 	@Schema(hidden = true)
 	private EmpresaDTO empresa;

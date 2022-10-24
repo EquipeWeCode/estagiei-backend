@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 
 import com.google.common.collect.Lists;
 
+import br.edu.ifsp.estagiei.constants.CandidaturaEnum;
 import br.edu.ifsp.estagiei.dto.filter.CandidaturaFiltroDTO;
 import br.edu.ifsp.estagiei.entity.Auditoria_;
 import br.edu.ifsp.estagiei.entity.Candidatura;
@@ -60,7 +61,6 @@ public class CandidaturaRepositoryCustomImpl extends RepositoryImpl implements C
 
 	@SuppressWarnings("unchecked")
 	public Page<Candidatura> findCandidaturasByCodEstudante(CandidaturaFiltroDTO filtro, Pageable paginacao) {
-		Long codEstudante = filtro.getCodEstudante();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Candidatura> criteria = cb.createQuery(Candidatura.class);
 		Root<Candidatura> r = criteria.from(Candidatura.class);
@@ -72,7 +72,24 @@ public class CandidaturaRepositoryCustomImpl extends RepositoryImpl implements C
 
 		Path<LocalDateTime> dataInclusao = r.get(Candidatura_.auditoria).get(Auditoria_.dataInclusao);
 
-		criteria.where(cb.equal(r.get(Candidatura_.codEstudante), codEstudante)).orderBy(cb.desc(dataInclusao));
+		criteria.where(aplicaFiltros(r, filtro)).orderBy(cb.desc(dataInclusao));
 		return (Page<Candidatura>) geraPaginacao(paginacao, em.createQuery(criteria).getResultList(), filtro);
+	}
+
+	private Predicate[] aplicaFiltros(Root<Candidatura> root, CandidaturaFiltroDTO filtro) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		List<Predicate> predicates = Lists.newArrayList();
+
+		predicates.add(cb.equal(root.get(Candidatura_.codEstudante), filtro.getCodEstudante()));
+
+		if (filtro.isAtivo()) {
+			predicates.add(cb.notEqual(root.get(Candidatura_.status), CandidaturaEnum.CANCELADO));
+		}
+
+		if (filtro.isNotAtivo()) {
+			predicates.add(cb.equal(root.get(Candidatura_.status), CandidaturaEnum.CANCELADO));
+		}
+
+		return predicates.stream().toArray(Predicate[]::new);
 	}
 }

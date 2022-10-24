@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.edu.ifsp.estagiei.constants.CandidaturaEnum;
 import br.edu.ifsp.estagiei.dto.CandidaturaDTO;
 import br.edu.ifsp.estagiei.dto.CandidaturaDTO.CandidaturaDTOBuilder;
 import br.edu.ifsp.estagiei.entity.Candidatura;
@@ -44,6 +45,7 @@ public class CandidaturaDTOFactory {
 				.curso(vaga.getCurso())
 				.empresa(empresaFactory.buildDTO(empresa))
 				.status(candidatura.getStatus())
+				.indAtivo(!CandidaturaEnum.CANCELADO.equals(candidatura.getStatus()))
 				.auditoria(auditoriaFactory.buildDTO(candidatura.getAuditoria()));
 
 		return builder.build();
