@@ -80,7 +80,7 @@ public class VagaRepositoryCustomImpl extends RepositoryImpl implements VagaRepo
 		for (Vaga vaga : vagasRecomendadas) {
 			ids.add(vaga.getCodVaga());
 		}
-		
+
 		return ids;
 	}
 
@@ -131,6 +131,11 @@ public class VagaRepositoryCustomImpl extends RepositoryImpl implements VagaRepo
 		}
 		if (filtro.hasCodEstudante()) {
 			predicates.add(root.get(Vaga_.codVaga).in(buscaVagasRecomendadas(filtro.getCodEstudante())));
+		}
+		if (filtro.isAtivo()) {
+			predicates.add(cb.isTrue(root.get(Vaga_.indAtivo)));
+		} else if (filtro.isNotAtivo()) {
+			predicates.add(cb.isFalse(root.get(Vaga_.indAtivo)));
 		}
 
 		aplicaFiltrosEndereco(filtro, cb, predicates, root);

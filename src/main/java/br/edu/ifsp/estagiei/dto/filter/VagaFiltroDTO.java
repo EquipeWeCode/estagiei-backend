@@ -28,6 +28,7 @@ public class VagaFiltroDTO extends FiltroDTO {
 	private String nomeEmpresa;
 	private Long codEmpresa;
 	private Long codEstudante;
+	private Boolean indAtivo;
 
 	public String getTituloFiltro() {
 		return getStringFiltro(getTitulo());
@@ -71,6 +72,14 @@ public class VagaFiltroDTO extends FiltroDTO {
 
 	public Boolean hasModalidade() {
 		return modalidade != null;
+	}
+	
+	public Boolean isAtivo() {
+		return indAtivo != null && indAtivo;
+	}
+	
+	public Boolean isNotAtivo() {
+		return indAtivo != null && !indAtivo;
 	}
 	
 	public Boolean hasNomeEmpresa() {
