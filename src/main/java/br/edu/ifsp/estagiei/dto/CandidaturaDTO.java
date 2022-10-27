@@ -28,19 +28,19 @@ public class CandidaturaDTO implements DTOUtils {
 	private Long codEstudante;
 
 	@Schema(example = "77667")
-	private Long codVaga;	
-	
+	private Long codVaga;
+
 	@Schema(example = "CANDIDATADO")
 	@NotNull
 	private CandidaturaEnum status;
-	
+
 	@Schema(hidden = true, example = "1231.21")
 	private BigDecimal salario;
-	
+
 	@Schema(hidden = true, example = "REMOTO")
 	private ModalidadeEnum modalidade;
 
-	@Schema(example = "Mario dos Santos")
+	@Schema(hidden = true, example = "Mario dos Santos")
 	private String nomeEstudante;
 
 	@Schema(hidden = true, example = "Desenvolvedor de software")
@@ -48,7 +48,7 @@ public class CandidaturaDTO implements DTOUtils {
 
 	@Schema(hidden = true, example = "Ciência da Computação")
 	private String curso;
-	
+
 	@Schema(hidden = true)
 	private Boolean indAtivo;
 
