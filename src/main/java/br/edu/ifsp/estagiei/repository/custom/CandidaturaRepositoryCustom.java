@@ -10,5 +10,5 @@ public interface CandidaturaRepositoryCustom {
 	
 	public Candidatura findByIds(Long codEstudante, Long codVaga);
 	
-	public Page<Candidatura> findCandidaturasByCodEstudante(CandidaturaFiltroDTO filtro, Pageable paginacao);
+	public Page<Candidatura> findCandidaturas(CandidaturaFiltroDTO filtro, Pageable paginacao);
 }

@@ -28,6 +28,7 @@ import br.edu.ifsp.estagiei.entity.Empresa_;
 import br.edu.ifsp.estagiei.entity.Estudante_;
 import br.edu.ifsp.estagiei.entity.Pessoa_;
 import br.edu.ifsp.estagiei.entity.Usuario_;
+import br.edu.ifsp.estagiei.entity.Vaga;
 import br.edu.ifsp.estagiei.entity.Vaga_;
 import br.edu.ifsp.estagiei.repository.RepositoryImpl;
 
@@ -60,7 +61,7 @@ public class CandidaturaRepositoryCustomImpl extends RepositoryImpl implements C
 	}
 
 	@SuppressWarnings("unchecked")
-	public Page<Candidatura> findCandidaturasByCodEstudante(CandidaturaFiltroDTO filtro, Pageable paginacao) {
+	public Page<Candidatura> findCandidaturas(CandidaturaFiltroDTO filtro, Pageable paginacao) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Candidatura> criteria = cb.createQuery(Candidatura.class);
 		Root<Candidatura> r = criteria.from(Candidatura.class);
@@ -80,7 +81,15 @@ public class CandidaturaRepositoryCustomImpl extends RepositoryImpl implements C
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		List<Predicate> predicates = Lists.newArrayList();
 
-		predicates.add(cb.equal(root.get(Candidatura_.codEstudante), filtro.getCodEstudante()));
+		if (filtro.hasCodEstudante()) {
+			predicates.add(cb.equal(root.get(Candidatura_.codEstudante), filtro.getCodEstudante()));
+		}
+
+		if (filtro.hasCodEmpresa()) {
+			Path<Vaga> vaga = root.get(Candidatura_.vaga);
+			Path<Long> codEmpresa = vaga.get(Vaga_.codEmpresa);
+			predicates.add(cb.equal(codEmpresa, filtro.getCodEmpresa()));
+		}
 
 		if (filtro.isAtivo()) {
 			predicates.add(cb.notEqual(root.get(Candidatura_.status), CandidaturaEnum.CANCELADO));

@@ -14,6 +14,15 @@ import lombok.Setter;
 public class CandidaturaFiltroDTO extends FiltroDTO {
 	private Long codEstudante;
 	private Boolean indAtivo;
+	private Long codEmpresa;
+	
+	public boolean hasCodEmpresa() {
+		return codEmpresa != null;
+	}
+	
+	public boolean hasCodEstudante() {
+		return codEstudante != null;
+	}
 
 	public boolean isAtivo() {
 		return this.indAtivo != null && indAtivo;
