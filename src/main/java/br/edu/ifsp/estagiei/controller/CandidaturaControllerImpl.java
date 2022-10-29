@@ -39,6 +39,14 @@ public class CandidaturaControllerImpl implements CandidaturaController {
 	public static final String PATH = "/candidatura";
 	public static final String PATH_ID = "/{codEstudante}/{codVaga}";
 	private static final String PATH_ID_ESTUDANTE = "/{codEstudante}";
+	
+	@GetMapping
+	@PreAuthorize("hasAnyAuthority('" + ROLE_EMPRESA + "','" + ROLE_ADMIN + "')")
+	public ResponseEntity<List<CandidaturaDTO>> getCandidaturasFiltro(CandidaturaFiltroDTO filtro,
+			@ParameterObject Pageable paginacao) {
+		List<CandidaturaDTO> candidaturas = service.buscaCandidaturas(filtro, paginacao);
+		return respostaPaginada(filtro.getQuantidadeTotal()).body(candidaturas);
+	}
 
 	@GetMapping(PATH_ID_ESTUDANTE)
 	@PreAuthorize("hasAnyAuthority('" + ROLE_EMPRESA + "','" + ROLE_ESTUDANTE + "','" + ROLE_ADMIN + "')")
