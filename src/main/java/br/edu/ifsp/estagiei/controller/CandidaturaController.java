@@ -2,7 +2,6 @@ package br.edu.ifsp.estagiei.controller;
 
 import java.util.List;
 
-import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
