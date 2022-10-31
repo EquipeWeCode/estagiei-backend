@@ -25,6 +25,8 @@ public class CandidaturaDTOFactory {
 	private AuditoriaDTOFactory auditoriaFactory;
 	@Autowired
 	private EmpresaDTOFactory empresaFactory;
+	@Autowired
+	private CompetenciaDTOFactory competenciaFactory;
 
 	public List<CandidaturaDTO> buildDTOs(Collection<Candidatura> candidaturas) {
 		return candidaturas.stream().map(this::buildDTO).collect(Collectors.toList());
@@ -43,6 +45,7 @@ public class CandidaturaDTOFactory {
 				.modalidade(vaga.getModalidade())
 				.salario(vaga.getSalario())
 				.curso(vaga.getCurso())
+				.competenciasEstudante(competenciaFactory.buildDTOs(estudante.getCompetencias()))
 				.empresa(empresaFactory.buildDTO(empresa))
 				.status(candidatura.getStatus())
 				.indAtivo(!CandidaturaEnum.CANCELADO.equals(candidatura.getStatus()))

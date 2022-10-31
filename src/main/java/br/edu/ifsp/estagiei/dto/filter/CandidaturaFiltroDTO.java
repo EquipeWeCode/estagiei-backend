@@ -15,6 +15,7 @@ public class CandidaturaFiltroDTO extends FiltroDTO {
 	private Long codEstudante;
 	private Boolean indAtivo;
 	private Long codEmpresa;
+	private Long codVaga;
 	
 	public boolean hasCodEmpresa() {
 		return codEmpresa != null;
@@ -22,6 +23,10 @@ public class CandidaturaFiltroDTO extends FiltroDTO {
 	
 	public boolean hasCodEstudante() {
 		return codEstudante != null;
+	}
+	
+	public boolean hasCodVaga() {
+		return codVaga != null;
 	}
 
 	public boolean isAtivo() {
