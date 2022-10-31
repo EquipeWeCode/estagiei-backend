@@ -8,6 +8,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.FetchParent;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
@@ -25,7 +26,9 @@ import br.edu.ifsp.estagiei.entity.Auditoria_;
 import br.edu.ifsp.estagiei.entity.Candidatura;
 import br.edu.ifsp.estagiei.entity.Candidatura_;
 import br.edu.ifsp.estagiei.entity.Empresa_;
+import br.edu.ifsp.estagiei.entity.Estudante;
 import br.edu.ifsp.estagiei.entity.Estudante_;
+import br.edu.ifsp.estagiei.entity.Pessoa;
 import br.edu.ifsp.estagiei.entity.Pessoa_;
 import br.edu.ifsp.estagiei.entity.Usuario_;
 import br.edu.ifsp.estagiei.entity.Vaga;
@@ -43,8 +46,10 @@ public class CandidaturaRepositoryCustomImpl extends RepositoryImpl implements C
 			CriteriaQuery<Candidatura> criteria = cb.createQuery(Candidatura.class);
 			Root<Candidatura> r = criteria.from(Candidatura.class);
 
-			r.fetch(Candidatura_.estudante, JoinType.LEFT).fetch(Estudante_.pessoa, JoinType.LEFT)
-					.fetch(Pessoa_.usuario, JoinType.LEFT).fetch(Usuario_.permissoes, JoinType.LEFT);
+			FetchParent<Candidatura, Estudante> fetchEstudante = r.fetch(Candidatura_.estudante, JoinType.LEFT);
+			fetchEstudante.fetch(Estudante_.competencias, JoinType.LEFT);
+			FetchParent<Estudante, Pessoa> fetchPessoaEstudante = fetchEstudante.fetch(Estudante_.pessoa, JoinType.LEFT);
+			fetchPessoaEstudante.fetch(Pessoa_.usuario, JoinType.LEFT).fetch(Usuario_.permissoes, JoinType.LEFT);
 			r.fetch(Candidatura_.vaga, JoinType.LEFT).fetch(Vaga_.empresa, JoinType.LEFT)
 					.fetch(Empresa_.usuario, JoinType.LEFT).fetch(Usuario_.permissoes, JoinType.LEFT);
 
@@ -53,7 +58,7 @@ public class CandidaturaRepositoryCustomImpl extends RepositoryImpl implements C
 			predicates.add(cb.equal(r.get(Candidatura_.codEstudante), codEstudante));
 			predicates.add(cb.equal(r.get(Candidatura_.codVaga), codVaga));
 
-			criteria.where(predicates.stream().toArray(Predicate[]::new));
+			criteria.distinct(true).where(predicates.stream().toArray(Predicate[]::new));
 			return em.createQuery(criteria).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
@@ -66,14 +71,16 @@ public class CandidaturaRepositoryCustomImpl extends RepositoryImpl implements C
 		CriteriaQuery<Candidatura> criteria = cb.createQuery(Candidatura.class);
 		Root<Candidatura> r = criteria.from(Candidatura.class);
 
-		r.fetch(Candidatura_.estudante, JoinType.LEFT).fetch(Estudante_.pessoa, JoinType.LEFT)
-				.fetch(Pessoa_.usuario, JoinType.LEFT).fetch(Usuario_.permissoes, JoinType.LEFT);
+		FetchParent<Candidatura, Estudante> fetchEstudante = r.fetch(Candidatura_.estudante, JoinType.LEFT);
+		fetchEstudante.fetch(Estudante_.competencias, JoinType.LEFT);
+		FetchParent<Estudante, Pessoa> fetchPessoaEstudante = fetchEstudante.fetch(Estudante_.pessoa, JoinType.LEFT);
+		fetchPessoaEstudante.fetch(Pessoa_.usuario, JoinType.LEFT).fetch(Usuario_.permissoes, JoinType.LEFT);
 		r.fetch(Candidatura_.vaga, JoinType.LEFT).fetch(Vaga_.empresa, JoinType.LEFT)
 				.fetch(Empresa_.usuario, JoinType.LEFT).fetch(Usuario_.permissoes, JoinType.LEFT);
 
 		Path<LocalDateTime> dataInclusao = r.get(Candidatura_.auditoria).get(Auditoria_.dataInclusao);
 
-		criteria.where(aplicaFiltros(r, filtro)).orderBy(cb.desc(dataInclusao));
+		criteria.distinct(true).where(aplicaFiltros(r, filtro)).orderBy(cb.desc(dataInclusao));
 		return (Page<Candidatura>) geraPaginacao(paginacao, em.createQuery(criteria).getResultList(), filtro);
 	}
 
@@ -83,6 +90,10 @@ public class CandidaturaRepositoryCustomImpl extends RepositoryImpl implements C
 
 		if (filtro.hasCodEstudante()) {
 			predicates.add(cb.equal(root.get(Candidatura_.codEstudante), filtro.getCodEstudante()));
+		}
+
+		if (filtro.hasCodVaga()) {
+			predicates.add(cb.equal(root.get(Candidatura_.codVaga), filtro.getCodVaga()));
 		}
 
 		if (filtro.hasCodEmpresa()) {

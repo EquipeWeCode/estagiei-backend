@@ -1,6 +1,7 @@
 package br.edu.ifsp.estagiei.dto;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
@@ -54,6 +55,9 @@ public class CandidaturaDTO implements DTOUtils {
 
 	@Schema(hidden = true)
 	private EmpresaDTO empresa;
+	
+	@Schema(hidden = true)
+	private List<CompetenciaDTO> competenciasEstudante;
 
 	@Schema(hidden = true)
 	private AuditoriaDTO auditoria;
