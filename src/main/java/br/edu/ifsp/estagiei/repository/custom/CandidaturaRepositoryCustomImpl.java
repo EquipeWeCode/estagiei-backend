@@ -8,7 +8,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Fetch;
+import javax.persistence.criteria.FetchParent;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
@@ -46,9 +46,9 @@ public class CandidaturaRepositoryCustomImpl extends RepositoryImpl implements C
 			CriteriaQuery<Candidatura> criteria = cb.createQuery(Candidatura.class);
 			Root<Candidatura> r = criteria.from(Candidatura.class);
 
-			Fetch<Candidatura, Estudante> fetchEstudante = r.fetch(Candidatura_.estudante, JoinType.LEFT);
+			FetchParent<Candidatura, Estudante> fetchEstudante = r.fetch(Candidatura_.estudante, JoinType.LEFT);
 			fetchEstudante.fetch(Estudante_.competencias, JoinType.LEFT);
-			Fetch<Estudante, Pessoa> fetchPessoaEstudante = fetchEstudante.fetch(Estudante_.pessoa, JoinType.LEFT);
+			FetchParent<Estudante, Pessoa> fetchPessoaEstudante = fetchEstudante.fetch(Estudante_.pessoa, JoinType.LEFT);
 			fetchPessoaEstudante.fetch(Pessoa_.usuario, JoinType.LEFT).fetch(Usuario_.permissoes, JoinType.LEFT);
 			r.fetch(Candidatura_.vaga, JoinType.LEFT).fetch(Vaga_.empresa, JoinType.LEFT)
 					.fetch(Empresa_.usuario, JoinType.LEFT).fetch(Usuario_.permissoes, JoinType.LEFT);
@@ -71,9 +71,9 @@ public class CandidaturaRepositoryCustomImpl extends RepositoryImpl implements C
 		CriteriaQuery<Candidatura> criteria = cb.createQuery(Candidatura.class);
 		Root<Candidatura> r = criteria.from(Candidatura.class);
 
-		Fetch<Candidatura, Estudante> fetchEstudante = r.fetch(Candidatura_.estudante, JoinType.LEFT);
+		FetchParent<Candidatura, Estudante> fetchEstudante = r.fetch(Candidatura_.estudante, JoinType.LEFT);
 		fetchEstudante.fetch(Estudante_.competencias, JoinType.LEFT);
-		Fetch<Estudante, Pessoa> fetchPessoaEstudante = fetchEstudante.fetch(Estudante_.pessoa, JoinType.LEFT);
+		FetchParent<Estudante, Pessoa> fetchPessoaEstudante = fetchEstudante.fetch(Estudante_.pessoa, JoinType.LEFT);
 		fetchPessoaEstudante.fetch(Pessoa_.usuario, JoinType.LEFT).fetch(Usuario_.permissoes, JoinType.LEFT);
 		r.fetch(Candidatura_.vaga, JoinType.LEFT).fetch(Vaga_.empresa, JoinType.LEFT)
 				.fetch(Empresa_.usuario, JoinType.LEFT).fetch(Usuario_.permissoes, JoinType.LEFT);
