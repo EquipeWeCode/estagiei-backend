@@ -95,6 +95,10 @@ public class CandidaturaRepositoryCustomImpl extends RepositoryImpl implements C
 		if (filtro.hasCodVaga()) {
 			predicates.add(cb.equal(root.get(Candidatura_.codVaga), filtro.getCodVaga()));
 		}
+		
+		if (filtro.hasStatus()) {
+			predicates.add(cb.equal(root.get(Candidatura_.status), filtro.getStatus()));
+		}
 
 		if (filtro.hasCodEmpresa()) {
 			Path<Vaga> vaga = root.get(Candidatura_.vaga);

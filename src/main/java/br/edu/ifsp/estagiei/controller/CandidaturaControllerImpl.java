@@ -39,7 +39,7 @@ public class CandidaturaControllerImpl implements CandidaturaController {
 	public static final String PATH = "/candidatura";
 	public static final String PATH_ID = "/{codEstudante}/{codVaga}";
 	private static final String PATH_ID_ESTUDANTE = "/{codEstudante}";
-	
+
 	@GetMapping
 	@PreAuthorize("hasAnyAuthority('" + ROLE_EMPRESA + "','" + ROLE_ADMIN + "')")
 	public ResponseEntity<List<CandidaturaDTO>> getCandidaturasFiltro(CandidaturaFiltroDTO filtro,
@@ -52,10 +52,12 @@ public class CandidaturaControllerImpl implements CandidaturaController {
 	@PreAuthorize("hasAnyAuthority('" + ROLE_EMPRESA + "','" + ROLE_ESTUDANTE + "','" + ROLE_ADMIN + "')")
 	public ResponseEntity<List<CandidaturaDTO>> getCandidaturasEstudante(@PathVariable Long codEstudante,
 			@ParameterObject Pageable paginacao,
-			@Parameter(in = ParameterIn.QUERY, required = false, allowEmptyValue = true) @RequestParam(required = false) Boolean indAtivo) {
+			@Parameter(in = ParameterIn.QUERY, required = false, allowEmptyValue = true) @RequestParam(required = false) Boolean indAtivo,
+			@RequestParam(required = false) CandidaturaEnum status) {
 		CandidaturaFiltroDTO filtro = new CandidaturaFiltroDTO();
 		filtro.setCodEstudante(codEstudante);
 		filtro.setIndAtivo(indAtivo);
+		filtro.setStatus(status);
 		List<CandidaturaDTO> candidaturas = service.findCandidaturasByCodEstudante(filtro, paginacao);
 		return respostaPaginada(filtro.getQuantidadeTotal()).body(candidaturas);
 	}

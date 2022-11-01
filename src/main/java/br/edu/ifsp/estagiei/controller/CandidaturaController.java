@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
+import br.edu.ifsp.estagiei.constants.CandidaturaEnum;
 import br.edu.ifsp.estagiei.dto.CandidaturaDTO;
 import br.edu.ifsp.estagiei.dto.filter.CandidaturaFiltroDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,7 +17,7 @@ public interface CandidaturaController extends Controller {
 	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Retorna todas as candidaturas do estudante", tags = { CANDIDATURA })
 	public ResponseEntity<List<CandidaturaDTO>> getCandidaturasEstudante(Long codEstudante, Pageable paginacao,
-			Boolean indAtivo);
+			Boolean indAtivo, CandidaturaEnum status);
 
 	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Retorna candidaturas por filtro", tags = { CANDIDATURA })
