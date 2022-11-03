@@ -48,7 +48,7 @@ public class CandidaturaService {
 	private IAuthenticationFacade authentication;
 
 	private static final List<CandidaturaEnum> statusQueEstudantePodeAlterar = Lists
-			.newArrayList(CandidaturaEnum.CANCELADO, CandidaturaEnum.CANDIDATADO);
+			.newArrayList(CandidaturaEnum.CANCELADO_ESTUDANTE, CandidaturaEnum.CANDIDATADO);
 
 	public List<CandidaturaDTO> findCandidaturasByCodEstudante(CandidaturaFiltroDTO filtro, Pageable paginacao) {
 		try {
