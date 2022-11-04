@@ -3,7 +3,6 @@ package br.edu.ifsp.estagiei.service;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +56,7 @@ public class VagaService {
 		try {
 			Vaga vaga = vagaRepositorio.buscaVagaPorId(codVaga);
 			return factory.buildDTO(vaga);
-		} catch (NoResultException e) {
+		} catch (Exception e) {
 			throw new ValidacaoException("Vaga não encontrada");
 		}
 	}

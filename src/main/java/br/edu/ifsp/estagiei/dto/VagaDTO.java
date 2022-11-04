@@ -47,6 +47,7 @@ public class VagaDTO implements DTOUtils {
 	private EmpresaDTO empresa;
 	private EnderecoDTO endereco;
 	private List<CompetenciaDTO> competencias;
+	@Schema(hidden = true)
 	private List<CandidaturaDTO> candidaturas;
 	@Schema(hidden = true)
 	@Builder.Default
@@ -56,6 +57,8 @@ public class VagaDTO implements DTOUtils {
 
 	public boolean hasEndereco() {
 		return this.endereco != null && (EstagieiUtils.isNotEmptyOrNull(endereco.getEstado())
-				&& EstagieiUtils.isNotEmptyOrNull(endereco.getCidade()));
+				|| EstagieiUtils.isNotEmptyOrNull(endereco.getCidade())
+				|| EstagieiUtils.isNotEmptyOrNull(endereco.getCep())
+				|| EstagieiUtils.isNotEmptyOrNull(endereco.getBairro()));
 	}
 }

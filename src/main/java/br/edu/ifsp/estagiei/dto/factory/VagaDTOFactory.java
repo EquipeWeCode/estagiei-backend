@@ -69,6 +69,8 @@ public class VagaDTOFactory {
 
 		if (dto.hasEndereco()) {
 			entidade.setEndereco(enderecoFactory.buildEntity(dto.getEndereco()));
+		} else {
+			entidade.setEndereco(null);
 		}
 
 		entidade.setIndAtivo(dto.getIndAtivo());
