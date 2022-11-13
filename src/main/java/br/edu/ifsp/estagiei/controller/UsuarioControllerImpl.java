@@ -34,7 +34,6 @@ public class UsuarioControllerImpl implements UsuarioController {
 
 	@Override
 	@GetMapping
-	@PreAuthorize("hasAnyAuthority('" + ROLE_ADMIN + "','" + ROLE_ESTUDANTE + "','" + ROLE_EMPRESA + "')")
 	public ResponseEntity<List<UsuarioDTO>> getUsuarios(UsuarioFiltroDTO filtroDTO) {
 		List<UsuarioDTO> usuarios = service.findByFiltro(filtroDTO);
 		return ResponseEntity.ok(usuarios);

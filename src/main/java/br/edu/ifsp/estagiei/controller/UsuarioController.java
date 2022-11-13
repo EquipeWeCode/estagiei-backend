@@ -18,6 +18,5 @@ public interface UsuarioController extends Controller {
 
 	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Busca usuários por filtro", tags = { USUARIO })
-	@SecurityRequirement(name = "Authorization")
 	public ResponseEntity<List<UsuarioDTO>> getUsuarios(UsuarioFiltroDTO filtroDTO);
 }
