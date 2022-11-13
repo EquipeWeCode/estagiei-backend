@@ -135,6 +135,7 @@ public class EstudanteService {
 
 	private void montaEstudante(Usuario usuario, EstudanteDTO dto, boolean isEdicao) {
 		usuario.setTipoUsuario(TipoUsuarioEnum.ESTUDANTE);
+		usuario.setAvatar(dto.getAvatar());
 
 		if (!isEdicao) {
 			usuario.setEmail(dto.getEmail());
