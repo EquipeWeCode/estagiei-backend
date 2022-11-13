@@ -17,6 +17,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.edu.ifsp.estagiei.constants.NvlEscolaridadeHistoricoEnum;
+import br.edu.ifsp.estagiei.constants.StatusHistoricoEnum;
 import br.edu.ifsp.estagiei.entity.listener.Auditavel;
 import br.edu.ifsp.estagiei.entity.listener.AuditoriaListener;
 import lombok.Getter;
@@ -47,7 +48,7 @@ public class HistoricoEscolar implements Auditavel {
 	@Column(name = "data_fim")
 	private LocalDate dataFim;
 	@Column(name = "status")
-	private String status;
+	private StatusHistoricoEnum status;
 	@Embedded
 	private Auditoria auditoria;
 

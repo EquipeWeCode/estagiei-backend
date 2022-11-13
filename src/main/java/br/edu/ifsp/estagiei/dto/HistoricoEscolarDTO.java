@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import br.edu.ifsp.estagiei.constants.NvlEscolaridadeHistoricoEnum;
+import br.edu.ifsp.estagiei.constants.StatusHistoricoEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,8 +40,8 @@ public class HistoricoEscolarDTO implements DTOUtils {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Schema(example = "2023-01-01")
 	private LocalDate dataFim;
-	@Schema(example = "Completo")
-	private String status;
+	@Schema(example = "CONCLUIDO")
+	private StatusHistoricoEnum status;
 	@Schema(hidden = true)
 	private AuditoriaDTO auditoria;
 }
