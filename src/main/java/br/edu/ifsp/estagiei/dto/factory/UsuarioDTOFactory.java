@@ -1,6 +1,8 @@
 package br.edu.ifsp.estagiei.dto.factory;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,6 +19,10 @@ public class UsuarioDTOFactory {
 
 	@Autowired
 	AuditoriaDTOFactory auditoriaFactory;
+
+	public List<UsuarioDTO> buildDTOs(List<Usuario> usuarios) {
+		return usuarios.stream().map(this::buildDTO).collect(Collectors.toList());
+	}
 
 	public UsuarioDTO buildDTO(Usuario usuario) {
 		Pessoa pessoa = Optional.ofNullable(usuario.getPessoa()).orElse(new Pessoa());

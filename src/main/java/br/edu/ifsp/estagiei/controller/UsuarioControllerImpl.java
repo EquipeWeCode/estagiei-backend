@@ -1,5 +1,7 @@
 package br.edu.ifsp.estagiei.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifsp.estagiei.dto.UsuarioDTO;
+import br.edu.ifsp.estagiei.dto.filter.UsuarioFiltroDTO;
 import br.edu.ifsp.estagiei.service.UsuarioService;
 
 @RestController
@@ -27,6 +30,14 @@ public class UsuarioControllerImpl implements UsuarioController {
 	public ResponseEntity<UsuarioDTO> getUsuario(@PathVariable(P_COD_USUARIO) Long codUsuario) {
 		UsuarioDTO usuario = service.findByCodUsuario(codUsuario);
 		return ResponseEntity.ok(usuario);
+	}
+
+	@Override
+	@GetMapping
+	@PreAuthorize("hasAnyAuthority('" + ROLE_ADMIN + "','" + ROLE_ESTUDANTE + "','" + ROLE_EMPRESA + "')")
+	public ResponseEntity<List<UsuarioDTO>> getUsuarios(UsuarioFiltroDTO filtroDTO) {
+		List<UsuarioDTO> usuarios = service.findByFiltro(filtroDTO);
+		return ResponseEntity.ok(usuarios);
 	}
 
 }

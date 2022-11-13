@@ -1,5 +1,7 @@
 package br.edu.ifsp.estagiei.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.edu.ifsp.estagiei.dto.UsuarioDTO;
 import br.edu.ifsp.estagiei.dto.factory.UsuarioDTOFactory;
+import br.edu.ifsp.estagiei.dto.filter.UsuarioFiltroDTO;
 import br.edu.ifsp.estagiei.entity.Usuario;
 import br.edu.ifsp.estagiei.exception.ValidacaoException;
 import br.edu.ifsp.estagiei.repository.UsuarioRepository;
@@ -24,5 +27,10 @@ public class UsuarioService {
 				.orElseThrow(() -> new ValidacaoException("Usuário não encontrado"));
 
 		return usuarioFactory.buildDTO(usuario);
+	}
+
+	public List<UsuarioDTO> findByFiltro(UsuarioFiltroDTO filtroDTO) {
+		List<Usuario> usuarios = usuarioRepositorio.buscaTodosPorFiltro(filtroDTO);
+		return usuarioFactory.buildDTOs(usuarios);
 	}
 }

@@ -7,8 +7,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import br.edu.ifsp.estagiei.entity.Usuario;
+import br.edu.ifsp.estagiei.repository.custom.UsuarioRepositoryCustom;
 
-public interface UsuarioRepository extends CrudRepository<Usuario, String> {
+public interface UsuarioRepository extends CrudRepository<Usuario, String>, UsuarioRepositoryCustom {
 	public Optional<Usuario> findByEmail(@Param("email") String email);
 	public Optional<Usuario> findByEmpresaCnpj(@Param("cnpj") String cnpj);
 	@Query("SELECT DISTINCT u FROM Usuario u "
