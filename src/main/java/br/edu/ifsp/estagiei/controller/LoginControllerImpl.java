@@ -40,7 +40,7 @@ public class LoginControllerImpl implements LoginController {
 		String email = loginDTO.getEmail();
 		Empresa empresa = empresaRepositorio.findByUsuarioEmail(email);
 		if (empresa != null && !empresa.getIndAtivo()) {
-			throw new ValidacaoException("A empresa está inativa, aguarde a liberação dos administradores");
+			throw new ValidacaoException("A empresa está inativa. Aguarde a liberação dos administradores");
 		}
 
 		try {
