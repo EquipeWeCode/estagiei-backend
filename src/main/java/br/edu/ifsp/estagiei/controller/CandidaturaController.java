@@ -23,12 +23,12 @@ public interface CandidaturaController extends Controller {
 	@Operation(summary = "Retorna candidaturas por filtro", tags = { CANDIDATURA })
 	ResponseEntity<List<CandidaturaDTO>> getCandidaturasFiltro(CandidaturaFiltroDTO filtro, Pageable paginacao);
 
-	@ApiResponse(responseCode = "201")
+	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Inicia um novo processo de candidatura de um estudante", tags = { CANDIDATURA })
 	@SecurityRequirement(name = "Authorization")
 	public ResponseEntity<CandidaturaDTO> postCandidatura(Long codEstudante, Long codVaga);
 
-	@ApiResponse(responseCode = "201")
+	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Atualiza o status da candidatura", tags = { CANDIDATURA })
 	@SecurityRequirement(name = "Authorization")
 	public ResponseEntity<CandidaturaDTO> putCandidatura(CandidaturaDTO dto);

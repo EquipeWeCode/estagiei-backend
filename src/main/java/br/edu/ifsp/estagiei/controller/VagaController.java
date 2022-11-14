@@ -21,7 +21,7 @@ public interface VagaController extends Controller {
 	@Operation(summary = "Retorna uma vaga por codVaga", tags = { VAGA })
 	public ResponseEntity<VagaDTO> getVaga(@PathVariable(P_COD_VAGA) Long codVaga);
 
-	@ApiResponse(responseCode = "201")
+	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Cria uma nova vaga", tags = { VAGA })
 	@SecurityRequirement(name = "Authorization")
 	public ResponseEntity<VagaDTO> postVaga(VagaDTO dto);

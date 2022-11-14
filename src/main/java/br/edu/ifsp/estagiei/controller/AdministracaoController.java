@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 public interface AdministracaoController extends Controller {
 	
-	@ApiResponse(responseCode = "201")
+	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Realizar operação administrativa no nível da empresa", tags = { ADMINISTRADOR })
 	@SecurityRequirement(name = "Authorization")
 	public ResponseEntity<EmpresaDTO> putOperacaoEmpresa(OperacaoAdministradorEnum operacao, Long codEmpresa);

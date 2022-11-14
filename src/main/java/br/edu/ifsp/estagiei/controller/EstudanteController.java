@@ -19,11 +19,11 @@ public interface EstudanteController extends Controller {
 	@Operation(summary = "Retorna todos os estudantes", tags = { ESTUDANTE })
 	public ResponseEntity<List<EstudanteDTO>> getEstudantes(EstudanteFiltroDTO filtro);
 
-	@ApiResponse(responseCode = "201")
+	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Cadastra um novo estudante", tags = { ESTUDANTE })
 	public ResponseEntity<EstudanteDTO> postEstudante(EstudanteDTO dto);
 
-	@ApiResponse(responseCode = "201")
+	@ApiResponse(responseCode = "200")
 	@Operation(summary = "Atualiza um estudante", tags = { ESTUDANTE })
 	@SecurityRequirement(name = "Authorization")
 	public ResponseEntity<EstudanteDTO> putEstudante(Long codEstudante, EstudanteDTO body);
