@@ -19,7 +19,7 @@ public class AdministracaoService {
 	@Autowired
 	private EmpresaRepository empresaRepositorio;
 	@Autowired
-	EmpresaDTOFactory empresaDTOFactory;
+	private EmpresaDTOFactory empresaDTOFactory;
 
 	public EmpresaDTO realizarOperacaoEmpresa(OperacaoAdministradorEnum operacao, Long codEmpresa) {
 		Empresa empresa = empresaRepositorio.findById(codEmpresa)
@@ -34,7 +34,7 @@ public class AdministracaoService {
 		}
 
 		empresaRepositorio.save(empresa);
-		return empresaDTOFactory.buildDTO(empresa);
+		EmpresaDTO dto = empresaDTOFactory.buildDTO(empresa);
+		return dto;
 	}
-
 }

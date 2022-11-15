@@ -22,8 +22,11 @@ public class NovaEmpresaListener {
 		Usuario usuarioEmpresa = Optional.ofNullable(empresa.getUsuario()).orElse(new Usuario());
 		if (!empresa.isAtiva()) {
 			emailService.sendSimpleMessage("wecodetrabalho@gmail.com", "Estagiei - Solicitação de nova empresa",
-					 empresa.getNomeFantasia() + " " + "(" + empresa.getCodEmpresa() + " - " + usuarioEmpresa.getEmail() + ")"
-							+ " acabou de se cadastrar, faça a análise para ativar ou não essa empresa.");
+					empresa.getNomeFantasia() + " " + "(" + empresa.getCodEmpresa() + " - " + usuarioEmpresa.getEmail()
+							+ ")" + " acabou de se cadastrar, faça a análise para ativar ou não essa empresa.");
+
+			emailService.sendSimpleMessage(usuarioEmpresa.getEmail(), "Estagiei",
+					"Obrigado por se cadastrar no Estagiei! Sua solicitação está em análise e retornaremos em até dois dias úteis.");
 		}
 	}
 }

@@ -54,4 +54,8 @@ public class EmpresaDTO implements DTOUtils {
 	public boolean hasEndereco() {
 		return endereco != null;
 	}
+	
+	public boolean isAtiva() {
+		return indAtivo != null && indAtivo;
+	}
 }
