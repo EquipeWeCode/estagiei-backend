@@ -47,7 +47,7 @@ public class EstudanteControllerImpl implements EstudanteController {
 	@PostMapping
 	public ResponseEntity<EstudanteDTO> postEstudante(@RequestBody @Valid EstudanteDTO dto) {
 		EstudanteDTO estudante = service.salvaEstudante(dto, false);
-		URI uriCreated = URICreated(PATH + "/" + PATH_ID, estudante.getCodEstudante());
+		URI uriCreated = uriCreated(PATH + "/" + PATH_ID, estudante.getCodEstudante());
 		return ResponseEntity.created(uriCreated).body(estudante);
 	}
 

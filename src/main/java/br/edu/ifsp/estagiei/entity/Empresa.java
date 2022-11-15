@@ -19,6 +19,7 @@ import javax.persistence.Table;
 
 import br.edu.ifsp.estagiei.entity.listener.Auditavel;
 import br.edu.ifsp.estagiei.entity.listener.AuditoriaListener;
+import br.edu.ifsp.estagiei.entity.listener.NovaEmpresaListener;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,7 +29,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_empresa")
-@EntityListeners(AuditoriaListener.class)
+@EntityListeners(value = { NovaEmpresaListener.class, AuditoriaListener.class })
 public class Empresa implements Auditavel {
 
 	@Id
@@ -59,6 +60,10 @@ public class Empresa implements Auditavel {
 
 	public boolean hasEndereco() {
 		return Persistence.getPersistenceUtil().isLoaded(this, "endereco") && endereco != null;
+	}
+
+	public boolean isAtiva() {
+		return indAtivo != null && indAtivo;
 	}
 
 	@Override

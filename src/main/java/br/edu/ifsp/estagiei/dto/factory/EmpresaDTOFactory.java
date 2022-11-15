@@ -47,11 +47,14 @@ public class EmpresaDTOFactory {
 		return builder.build();
 	}
 
-	public Empresa buildEntity(Empresa entidade, EmpresaDTO dto) {
+	public Empresa buildEntity(Empresa entidade, EmpresaDTO dto, boolean isEdicao) {
 		entidade.setCodEmpresa(dto.getCodEmpresa());
 		entidade.setNomeFantasia(dto.getNomeFantasia());
 		entidade.setRazaoSocial(dto.getRazaoSocial());
-		entidade.setCnpj(EstagieiUtils.retiraNaoNumericos(dto.getCnpj()));
+		
+		if(!isEdicao) {
+			entidade.setCnpj(EstagieiUtils.retiraNaoNumericos(dto.getCnpj()));
+		}
 
 		if (dto.hasEndereco()) {
 			entidade.setEndereco(enderecoFactory.buildEntity(dto.getEndereco()));

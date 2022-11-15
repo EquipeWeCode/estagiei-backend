@@ -51,7 +51,7 @@ public class EmpresaControllerImpl implements EmpresaController {
 	@PostMapping
 	public ResponseEntity<EmpresaDTO> postEmpresa(@RequestBody @Valid EmpresaDTO dto) {
 		EmpresaDTO empresa = service.salvaEmpresa(dto, false);
-		URI uriCreated = URICreated(PATH + "/" + PATH_ID, empresa.getCodEmpresa());
+		URI uriCreated = uriCreated(PATH + "/" + PATH_ID, empresa.getCodEmpresa());
 		return ResponseEntity.created(uriCreated).body(empresa);
 	}
 

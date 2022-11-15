@@ -74,7 +74,7 @@ public class CandidaturaControllerImpl implements CandidaturaController {
 
 		CandidaturaDTO candidatura = service.salvaCandidatura(dto, false);
 
-		URI uriCreated = URICreated(PATH + "/" + PATH_ID, candidatura.getCodEstudante(), candidatura.getCodVaga());
+		URI uriCreated = uriCreated(PATH + "/" + PATH_ID, candidatura.getCodEstudante(), candidatura.getCodVaga());
 		return ResponseEntity.created(uriCreated).body(candidatura);
 	}
 

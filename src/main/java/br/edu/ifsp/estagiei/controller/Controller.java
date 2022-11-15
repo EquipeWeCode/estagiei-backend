@@ -42,7 +42,7 @@ public interface Controller {
 		return ResponseEntity.ok().headers(responseHeaders);
 	}
 
-	default URI URICreated(String path, Object... id) {
+	default URI uriCreated(String path, Object... id) {
 		String uriString = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
 		UriComponents uriNovaEntidade = UriComponentsBuilder.newInstance().path(uriString + "/" + path)
 				.buildAndExpand(id);

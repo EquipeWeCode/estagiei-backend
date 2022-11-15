@@ -52,7 +52,7 @@ public class VagaControllerImpl implements VagaController {
 	@PreAuthorize("hasAuthority('" + ROLE_EMPRESA + "')")
 	public ResponseEntity<VagaDTO> postVaga(@RequestBody @Valid VagaDTO dto) {
 		VagaDTO vaga = service.salvaVaga(dto, false);
-		URI uriCreated = URICreated(PATH + "/" + PATH_ID, vaga.getCodVaga());
+		URI uriCreated = uriCreated(PATH + "/" + PATH_ID, vaga.getCodVaga());
 		return ResponseEntity.created(uriCreated).body(vaga);
 	}
 

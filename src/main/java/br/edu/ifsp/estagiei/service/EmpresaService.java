@@ -53,12 +53,6 @@ public class EmpresaService {
 		Page<Empresa> empresas = empresaRepositorio.buscaTodosPorFiltro(filtro, paginacao);
 		return factory.buildDTOs(empresas.getContent());
 	}
-	
-	public EmpresaDTO alteraEmpresa(EmpresaDTO dto, Long codEmpresa) {
-		Empresa empresa = empresaRepositorio.findById(codEmpresa).orElseThrow(() -> new ValidacaoException("Empresa não encontrada"));
-		empresa = factory.buildEntity(empresa, dto);
-		return factory.buildDTO(empresa);
-	}
 
 	public EmpresaDTO salvaEmpresa(EmpresaDTO dto, boolean isEdicao) {
 		Usuario usuario = validaEmpresa(dto, isEdicao);
@@ -125,7 +119,7 @@ public class EmpresaService {
 
 		usuario.setAvatar(dto.getAvatar());
 		Empresa empresa = usuario.hasEmpresa() ? usuario.getEmpresa() : new Empresa();
-		Empresa empresaMontada = factory.buildEntity(empresa, dto);
+		Empresa empresaMontada = factory.buildEntity(empresa, dto, isEdicao);
 		empresaMontada.setUsuario(usuario);
 		usuario.setEmpresa(empresaMontada);
 	}
