@@ -1,5 +1,6 @@
 package br.edu.ifsp.estagiei.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -51,7 +52,8 @@ public class VagaControllerImpl implements VagaController {
 	@PreAuthorize("hasAuthority('" + ROLE_EMPRESA + "')")
 	public ResponseEntity<VagaDTO> postVaga(@RequestBody @Valid VagaDTO dto) {
 		VagaDTO vaga = service.salvaVaga(dto, false);
-		return ResponseEntity.ok(vaga);
+		URI uriCreated = URICreated(PATH + "/" + PATH_ID, vaga.getCodVaga());
+		return ResponseEntity.created(uriCreated).body(vaga);
 	}
 
 	@PutMapping(PATH_ID)

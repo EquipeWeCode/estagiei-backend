@@ -19,7 +19,7 @@ public interface EstudanteController extends Controller {
 	@Operation(summary = "Retorna todos os estudantes", tags = { ESTUDANTE })
 	public ResponseEntity<List<EstudanteDTO>> getEstudantes(EstudanteFiltroDTO filtro);
 
-	@ApiResponse(responseCode = "200")
+	@ApiResponse(responseCode = "201")
 	@Operation(summary = "Cadastra um novo estudante", tags = { ESTUDANTE })
 	public ResponseEntity<EstudanteDTO> postEstudante(EstudanteDTO dto);
 

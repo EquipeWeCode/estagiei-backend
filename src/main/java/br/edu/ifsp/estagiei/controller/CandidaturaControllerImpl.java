@@ -1,5 +1,6 @@
 package br.edu.ifsp.estagiei.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -72,7 +73,9 @@ public class CandidaturaControllerImpl implements CandidaturaController {
 		dto.setStatus(CandidaturaEnum.CANDIDATADO);
 
 		CandidaturaDTO candidatura = service.salvaCandidatura(dto, false);
-		return ResponseEntity.ok(candidatura);
+
+		URI uriCreated = URICreated(PATH + "/" + PATH_ID, candidatura.getCodEstudante(), candidatura.getCodVaga());
+		return ResponseEntity.created(uriCreated).body(candidatura);
 	}
 
 	@Override

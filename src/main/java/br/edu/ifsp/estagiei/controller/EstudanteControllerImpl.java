@@ -1,5 +1,6 @@
 package br.edu.ifsp.estagiei.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -46,8 +47,8 @@ public class EstudanteControllerImpl implements EstudanteController {
 	@PostMapping
 	public ResponseEntity<EstudanteDTO> postEstudante(@RequestBody @Valid EstudanteDTO dto) {
 		EstudanteDTO estudante = service.salvaEstudante(dto, false);
-		return ResponseEntity.ok(estudante);
-
+		URI uriCreated = URICreated(PATH + "/" + PATH_ID, estudante.getCodEstudante());
+		return ResponseEntity.created(uriCreated).body(estudante);
 	}
 
 	@PutMapping(PATH_ID)

@@ -1,5 +1,6 @@
 package br.edu.ifsp.estagiei.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -50,7 +51,8 @@ public class EmpresaControllerImpl implements EmpresaController {
 	@PostMapping
 	public ResponseEntity<EmpresaDTO> postEmpresa(@RequestBody @Valid EmpresaDTO dto) {
 		EmpresaDTO empresa = service.salvaEmpresa(dto, false);
-		return ResponseEntity.ok(empresa);
+		URI uriCreated = URICreated(PATH + "/" + PATH_ID, empresa.getCodEmpresa());
+		return ResponseEntity.created(uriCreated).body(empresa);
 	}
 
 	@PutMapping(PATH_ID)
