@@ -52,14 +52,13 @@ public class CandidaturaService {
 
 	public List<CandidaturaDTO> findCandidaturasByCodEstudante(CandidaturaFiltroDTO filtro, Pageable paginacao) {
 		try {
-			Page<Candidatura> candidaturas = candidaturaRepositorio
-					.findCandidaturas(filtro, paginacao);
+			Page<Candidatura> candidaturas = candidaturaRepositorio.findCandidaturas(filtro, paginacao);
 			return candidaturaFactory.buildDTOs(candidaturas.getContent());
 		} catch (EmptyResultDataAccessException e) {
 			throw new ValidacaoException("Estudante não encontrado");
 		}
 	}
-	
+
 	public List<CandidaturaDTO> buscaCandidaturas(CandidaturaFiltroDTO filtro, Pageable paginacao) {
 		Page<Candidatura> candidaturas = candidaturaRepositorio.findCandidaturas(filtro, paginacao);
 		return candidaturaFactory.buildDTOs(candidaturas.getContent());

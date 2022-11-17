@@ -2,6 +2,7 @@ package br.edu.ifsp.estagiei.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -47,6 +48,9 @@ public class VagaService {
 	@Autowired
 	private IAuthenticationFacade authentication;
 
+	private List<CandidaturaEnum> statusQuePodemSerDesativados = Lists.newArrayList(CandidaturaEnum.CANDIDATADO,
+			CandidaturaEnum.CANCELADO, CandidaturaEnum.CANCELADO_ESTUDANTE);
+
 	public List<VagaDTO> buscaTodos(VagaFiltroDTO filtro, Pageable paginacao) {
 		Page<Vaga> vagas = vagaRepositorio.buscaTodosPorFiltro(filtro, paginacao);
 		return factory.buildDTOs(vagas.getContent());
@@ -68,11 +72,19 @@ public class VagaService {
 		Vaga vagaNova = vagaRepositorio.save(vaga);
 
 		if (isEdicao && !vagaNova.isActive()) {
-			cancelaTodasCandidaturasDaVaga(vagaNova.getCodVaga());
+			desativaCandidaturasDaVaga(vagaNova.getCodVaga());
 		}
 
 		Vaga vagaCadastrada = vagaRepositorio.buscaVagaPorId(vagaNova.getCodVaga());
 		return factory.buildDTO(vagaCadastrada);
+	}
+
+	public void desativaCandidaturasDaVaga(Long codVaga) {
+		List<Candidatura> candidaturasDaVaga = Optional.ofNullable(candidaturaRepositorio.findByCodVaga(codVaga))
+				.orElse(Lists.newArrayList()).stream()
+				.filter(cand -> statusQuePodemSerDesativados.contains(cand.getStatus())).collect(Collectors.toList());
+		candidaturasDaVaga.forEach(c -> c.setStatus(CandidaturaEnum.DESATIVADO));
+		candidaturaRepositorio.saveAll(candidaturasDaVaga);
 	}
 
 	private void validaDadosVaga(VagaDTO dto) {
@@ -88,13 +100,6 @@ public class VagaService {
 		} else if (modalidadesComEnderecoObrigatorio.contains(dto.getModalidade())) {
 			throw new ValidacaoException("Endereço obrigatório para vagas híbridas/presenciais");
 		}
-	}
-
-	private void cancelaTodasCandidaturasDaVaga(Long codVaga) {
-		List<Candidatura> candidaturasDaVaga = Optional.ofNullable(candidaturaRepositorio.findByCodVaga(codVaga))
-				.orElse(Lists.newArrayList());
-		candidaturasDaVaga.forEach(c -> c.setStatus(CandidaturaEnum.CANCELADO));
-		candidaturaRepositorio.saveAll(candidaturasDaVaga);
 	}
 
 	private void montaVaga(Vaga vaga, VagaDTO dto) {
