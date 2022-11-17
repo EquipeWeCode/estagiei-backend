@@ -48,7 +48,7 @@ public class CandidaturaDTOFactory {
 				.competenciasEstudante(competenciaFactory.buildDTOs(estudante.getCompetencias()))
 				.empresa(empresaFactory.buildDTO(empresa))
 				.status(candidatura.getStatus())
-				.indAtivo(!CandidaturaEnum.CANCELADO.equals(candidatura.getStatus()))
+				.indAtivo(CandidaturaEnum.CANDIDATADO.equals(candidatura.getStatus()))
 				.auditoria(auditoriaFactory.buildDTO(candidatura.getAuditoria()));
 
 		return builder.build();
