@@ -130,9 +130,18 @@ public class Vaga implements Auditavel {
 		return Objects.equals(codVaga, other.codVaga);
 	}
 
+	private String getModalidadeNullSafe() {
+		if (this.modalidade != null) {
+			String modalidadeCapitalizada = modalidade.toString().substring(0, 1).toUpperCase()
+					+ modalidade.toString().substring(1).toLowerCase();
+			return modalidadeCapitalizada;
+		}
+		return "";
+	}
+
 	@Override
 	public String toString() {
-		return this.titulo + " - " + this.modalidade;
+		return this.titulo + " (" + getModalidadeNullSafe() + ")";
 	}
 
 	public boolean isActive() {

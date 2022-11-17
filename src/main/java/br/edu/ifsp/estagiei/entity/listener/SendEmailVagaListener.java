@@ -27,9 +27,9 @@ public class SendEmailVagaListener {
 		Pessoa pessoaEstudante = Optional.ofNullable(estudante.getPessoa()).orElse(new Pessoa());
 		Usuario usuarioPessoa = Optional.ofNullable(pessoaEstudante.getUsuario()).orElse(new Usuario());
 		if (usuarioPessoa.hasEmail()) {
-			emailService.sendMailWithAttachment(usuarioPessoa.getEmail(),
+			emailService.sendSimpleMessage(usuarioPessoa.getEmail(),
 					"Estagiei - Aviso de alteração de status da candidatura",
-					"O status da vaga: " + vaga.toString() + " foi alterado para: " + candidatura.getStatus());
+					"O status da vaga: \"" + vaga.toString() + "\" foi alterado para: " + candidatura.getStatus());
 		}
 	}
 }
