@@ -27,7 +27,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 @ServletComponentScan
 @EnableAsync
 @SecurityScheme(type = SecuritySchemeType.APIKEY, name = "Authorization", in = SecuritySchemeIn.HEADER, bearerFormat = "Bearer {token}")
-@OpenAPIDefinition(info = @Info(title = "Estagiei API", version = "0.8.1", description = "Documentação do sistema de vagas de estágio - Estagiei", license = @License(name = "MIT License", url = "https://github.com/EquipeWeCode/estagiei-backend/blob/develop/LICENSE")))
+@OpenAPIDefinition(info = @Info(title = "Estagiei API", version = "0.9.3", description = "Documentação do sistema de vagas de estágio - Estagiei", license = @License(name = "MIT License", url = "https://github.com/EquipeWeCode/estagiei-backend/blob/develop/LICENSE")))
 public class Application extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {

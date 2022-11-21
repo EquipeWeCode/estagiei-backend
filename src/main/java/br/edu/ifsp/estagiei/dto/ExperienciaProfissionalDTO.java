@@ -2,7 +2,6 @@ package br.edu.ifsp.estagiei.dto;
 
 import java.time.LocalDate;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -46,7 +45,7 @@ public class ExperienciaProfissionalDTO implements DTOUtils {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Schema(example = "2021-02-02")
 	private LocalDate dataFim;
-	@Valid
+	@Schema(hidden = true)
 	private EnderecoDTO endereco;
 	@Schema(hidden = true)
 	private AuditoriaDTO auditoria;

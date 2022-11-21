@@ -39,7 +39,7 @@ public class EstudanteDTO implements DTOUtils {
 	@Schema(example = "alunoSwagger@aluno.com")
 	private String email;
 	private NvlEscolaridadeEnum nvlEscolaridade;
-	@Length(min = 8, max = 25, message = MSG_LENGTH_SENHA)
+	@Length(min = 8, message = MSG_LENGTH_SENHA)
 	@Schema(example = "senha1234")
 	private String senha;
 	@CPF(message = "Inválido")

@@ -2,6 +2,7 @@ package br.edu.ifsp.estagiei.dto.factory;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import br.edu.ifsp.estagiei.dto.EstudanteDTO;
 import br.edu.ifsp.estagiei.dto.EstudanteDTO.EstudanteDTOBuilder;
+import br.edu.ifsp.estagiei.entity.Endereco;
 import br.edu.ifsp.estagiei.entity.Estudante;
 import br.edu.ifsp.estagiei.entity.Pessoa;
 import br.edu.ifsp.estagiei.entity.Usuario;
@@ -19,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class EstudanteDTOFactory {
 
 	@Autowired
-	CompetenciaDTOFactory competenciaFactory;
+	private CompetenciaDTOFactory competenciaFactory;
 	@Autowired
 	private AuditoriaDTOFactory auditoriaFactory;
 	@Autowired
@@ -28,6 +30,8 @@ public class EstudanteDTOFactory {
 	private HistoricoEscolarDTOFactory histEscolarFactory;
 	@Autowired
 	private ExperienciaProfissionalFactory expProfissionalFactory;
+	@Autowired
+	private EnderecoDTOFactory enderecoFactory;
 
 	public List<EstudanteDTO> buildDTOs(Collection<Estudante> estudantes) {
 		return estudantes.stream().map(this::buildDTO).collect(Collectors.toList());
@@ -54,6 +58,12 @@ public class EstudanteDTOFactory {
 		
 		if (estudante.hasCompetencias()) {
 			builder.competencias(competenciaFactory.buildDTOs(estudante.getCompetencias()));
+		}
+		
+
+		if (pessoaEstudante.hasEndereco()) {
+			Endereco enderecoEstudante = Optional.ofNullable(pessoaEstudante.getEndereco()).orElse(new Endereco());
+			builder.endereco(enderecoFactory.buildDTO(enderecoEstudante));
 		}
 
 		return builder.build();

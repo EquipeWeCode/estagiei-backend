@@ -8,7 +8,7 @@ public interface DTOUtils {
 					+ "|^(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))$"
 					+ "|^(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30))$");
 	
-	public static final String MSG_LENGTH_SENHA = "Deve estar entre 8 e 25 caracteres";
+	public static final String MSG_LENGTH_SENHA = "Deve ser maior ou igual à 8 caracteres";
 	public static final String MSG_DATE_FORMAT = "Formato errado (yyyy-mm-dd)";
 
 }

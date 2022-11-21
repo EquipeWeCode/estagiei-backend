@@ -28,9 +28,8 @@ public class EmpresaDTO implements DTOUtils {
 	@NotBlank(message = MSG_NOT_NULL)
 	@Schema(example = "empresaSwagger@empresa.com")
 	private String email;
-	@NotBlank(message = MSG_NOT_NULL)
-	@Length(min = 8, max = 25, message = MSG_LENGTH_SENHA)
 	@Schema(example = "senha1234")
+	@Length(min = 8, message = MSG_LENGTH_SENHA)
 	private String senha;
 	@Schema(example = "https://dummyimage.com/600x400/000/fff&text=company")
 	private String avatar;

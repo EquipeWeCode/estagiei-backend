@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Persistence;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -80,6 +81,10 @@ public class Pessoa implements Auditavel {
 
 	public void retemContatos(List<Contato> lista) {
 		contatos.retainAll(lista);
+	}
+	
+	public boolean hasEndereco() {
+		return Persistence.getPersistenceUtil().isLoaded(this, "endereco") && endereco != null;
 	}
 
 	@Override
