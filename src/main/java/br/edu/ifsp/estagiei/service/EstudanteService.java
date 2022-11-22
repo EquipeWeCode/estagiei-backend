@@ -100,11 +100,10 @@ public class EstudanteService {
 			if (usuarioEmail.isPresent()) {
 				throw new ValidacaoException("Este e-mail já está sendo usado");
 			}
-
-		} else {
 			if (pessoaCpf.isPresent()) {
 				throw new ValidacaoException("CPF já está sendo usado");
 			}
+		} else {
 			if (!usuarioBuscado.isPresent()) {
 				throw new ValidacaoException("Estudante não encontrado");
 			}
